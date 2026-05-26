@@ -481,57 +481,97 @@
       margin-bottom: clamp(32px, 4vw, 48px);
       max-width: 720px;
     }
-    .cap-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border-top: 1px solid var(--border);
-    }
-    .cap-list li { border-bottom: 1px solid var(--border); }
-    .cap-list a {
+    /* Asymmetric 5-up capability overview grid */
+    .cap-overview-grid {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) 2fr auto;
-      gap: clamp(16px, 3vw, 40px);
-      padding: clamp(20px, 2.5vw, 28px) 4px;
-      align-items: baseline;
-      transition: background 0.15s ease, padding-left 0.15s ease;
+      grid-template-columns: repeat(6, 1fr);
+      gap: clamp(14px, 1.6vw, 20px);
     }
-    .cap-list a:hover {
-      background: linear-gradient(90deg, rgba(123,224,190,0.04), transparent 80%);
-      padding-left: 12px;
+    .cap-card {
+      grid-column: span 3;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: clamp(24px, 3vw, 32px);
+      background: var(--bg-elev);
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .cap-list .cap-name {
+    .cap-card.span-2 { grid-column: span 2; }
+    .cap-card:hover {
+      border-color: var(--border-strong);
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+    .cap-card-name {
       font-family: var(--font-display);
       font-weight: 600;
       color: var(--text);
-      font-size: clamp(1.1rem, 1.7vw, 1.35rem);
-      letter-spacing: -0.015em;
+      font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+      letter-spacing: -0.012em;
+      line-height: 1.25;
       transition: color 0.15s ease;
     }
-    .cap-list a:hover .cap-name { color: var(--accent); }
-    .cap-list .cap-desc {
+    .cap-card-desc {
       color: var(--text-secondary);
-      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+      font-size: clamp(0.9rem, 1.25vw, 0.98rem);
       line-height: 1.55;
+      flex-grow: 1;
     }
-    .cap-list .cap-arrow {
+    .cap-card-arrow {
       color: var(--text-tertiary);
-      font-size: 1.1rem;
+      font-size: 1rem;
+      align-self: flex-start;
       transition: color 0.15s ease, transform 0.2s ease;
     }
-    .cap-list a:hover .cap-arrow {
-      color: var(--accent);
+    .cap-card:hover .cap-card-arrow {
+      color: var(--accent-deep);
       transform: translateX(4px);
     }
-    @media (max-width: 760px) {
-      .cap-list a {
-        grid-template-columns: 1fr auto;
-        grid-template-areas: "name arrow" "desc desc";
-        row-gap: 8px;
-      }
-      .cap-list .cap-name { grid-area: name; }
-      .cap-list .cap-arrow { grid-area: arrow; align-self: center; }
-      .cap-list .cap-desc { grid-area: desc; }
+
+    /* Featured card — dark treatment for Threat Actor Intelligence */
+    .cap-card-featured {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    .cap-card-featured .cap-card-name { color: var(--dark-text); }
+    .cap-card-featured .cap-card-desc { color: var(--dark-text-secondary); }
+    .cap-card-featured .cap-card-arrow { color: var(--accent); }
+    .cap-card-featured:hover {
+      background: var(--dark-bg-elev);
+      border-color: var(--dark-border);
+    }
+    .cap-card-featured::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(123,224,190,0.10) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .cap-card-featured > * { position: relative; }
+
+    /* Accent card — mint tinge for Smart Alerts */
+    .cap-card-accent {
+      background: var(--accent-dim);
+      border-color: rgba(123,224,190,0.25);
+    }
+    .cap-card-accent:hover {
+      background: rgba(123,224,190,0.28);
+      border-color: rgba(123,224,190,0.4);
+    }
+    .cap-card-accent .cap-card-arrow { color: var(--accent-deep); }
+
+    @media (max-width: 880px) {
+      .cap-overview-grid { grid-template-columns: 1fr 1fr; }
+      .cap-card, .cap-card.span-2 { grid-column: span 1; }
+    }
+    @media (max-width: 560px) {
+      .cap-overview-grid { grid-template-columns: 1fr; }
     }
     .overview-close {
       margin-top: clamp(40px, 5vw, 56px);
@@ -1075,8 +1115,6 @@
     .scenario-num,
     .conv.is-new .conv-label,
     .principle .yes,
-    .cap-list a:hover .cap-arrow,
-    .cap-list a:hover .cap-name { color: var(--accent-deep); }
     .conv.is-new { border-left-color: var(--accent-deep); }
     /* Dropdown active item: deep green text on soft mint background */
     .nav-dropdown-menu a[aria-current="page"] { color: var(--accent-deep); }
@@ -1139,43 +1177,33 @@
       <div class="container">
         <p class="overview-lead">Five capabilities work together to make Cytidel the early warning layer:</p>
 
-        <ul class="cap-list">
-          <li>
-            <a href="#vulnerability-intelligence">
-              <span class="cap-name">Vulnerability Intelligence</span>
-              <span class="cap-desc">every vulnerability tagged and rated by real-world signals, in real time</span>
-              <span class="cap-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-          <li>
-            <a href="#threat-actor-intelligence">
-              <span class="cap-name">Threat Actor Intelligence</span>
-              <span class="cap-desc">every known adversary mapped to the vulnerabilities they're using</span>
-              <span class="cap-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-          <li>
-            <a href="#supplier-software-monitoring">
-              <span class="cap-name">Supplier &amp; Software Monitoring</span>
-              <span class="cap-desc">watches the parts of your stack your scanner can't see</span>
-              <span class="cap-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-          <li>
-            <a href="#bulk-analyser">
-              <span class="cap-name">Bulk Analyser</span>
-              <span class="cap-desc">applies the intelligence to your scanner backlog</span>
-              <span class="cap-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-          <li>
-            <a href="#smart-alerts">
-              <span class="cap-name">Smart Alerts</span>
-              <span class="cap-desc">routes the right intelligence to the right person, in their existing workflow</span>
-              <span class="cap-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-        </ul>
+        <div class="cap-overview-grid">
+          <a href="#vulnerability-intelligence" class="cap-card">
+            <span class="cap-card-name">Vulnerability Intelligence</span>
+            <span class="cap-card-desc">Every vulnerability tagged and rated by real-world signals, in real time.</span>
+            <span class="cap-card-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#threat-actor-intelligence" class="cap-card cap-card-featured">
+            <span class="cap-card-name">Threat Actor Intelligence</span>
+            <span class="cap-card-desc">Every known adversary mapped to the vulnerabilities they're using.</span>
+            <span class="cap-card-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#supplier-software-monitoring" class="cap-card span-2">
+            <span class="cap-card-name">Supplier &amp; Software Monitoring</span>
+            <span class="cap-card-desc">Watches the parts of your stack your scanner can't see.</span>
+            <span class="cap-card-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#bulk-analyser" class="cap-card span-2">
+            <span class="cap-card-name">Bulk Analyser</span>
+            <span class="cap-card-desc">Applies the intelligence to your scanner backlog.</span>
+            <span class="cap-card-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#smart-alerts" class="cap-card span-2 cap-card-accent">
+            <span class="cap-card-name">Smart Alerts</span>
+            <span class="cap-card-desc">Routes the right intelligence to the right person, in their existing workflow.</span>
+            <span class="cap-card-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
 
         <p class="overview-close">Each runs on real-time intelligence from thousands of sources. None of them works as a standalone feed. Together, they give your team the speed, the coverage, and the context to act before the rest of the industry catches up.</p>
       </div>
