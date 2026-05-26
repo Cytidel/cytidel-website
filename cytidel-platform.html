@@ -772,6 +772,27 @@
     @media (max-width: 880px) {
       .cap-visual { position: static; aspect-ratio: 4 / 3; }
     }
+    /* When the cap-visual contains a real image, drop placeholder chrome */
+    .cap-visual-img {
+      background: transparent;
+      border: none;
+      aspect-ratio: auto;
+      min-height: 0;
+      padding: 0;
+      overflow: visible;
+      display: block;
+    }
+    .cap-visual-img picture { display: block; }
+    .cap-visual-img img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow:
+        0 20px 50px -15px rgba(20,30,20,0.15),
+        0 8px 20px -8px rgba(20,30,20,0.08);
+    }
 
     /* ------- HOW IT FITS YOUR STACK (contained dark card) ------- */
     .stack-section { border-top: 1px solid var(--border); }
@@ -1189,7 +1210,26 @@
             </div>
           </div>
 
-          <div class="cap-visual" aria-hidden="true">Product visual — Vulnerability Intelligence</div>
+          <div class="cap-visual cap-visual-img">
+            <picture>
+              <source type="image/avif"
+                      srcset="img/cve-intelligence-600.avif 600w,
+                              img/cve-intelligence-1000.avif 1000w,
+                              img/cve-intelligence-1400.avif 1400w,
+                              img/cve-intelligence-1800.avif 1800w"
+                      sizes="(max-width: 880px) 100vw, 460px">
+              <source type="image/webp"
+                      srcset="img/cve-intelligence-600.webp 600w,
+                              img/cve-intelligence-1000.webp 1000w,
+                              img/cve-intelligence-1400.webp 1400w,
+                              img/cve-intelligence-1800.webp 1800w"
+                      sizes="(max-width: 880px) 100vw, 460px">
+              <img src="img/cve-intelligence-1000.jpg"
+                   alt="Cytidel Vulnerability Intelligence view — CVEs tagged with exploitation evidence, threat actor association, and risk rating in real time."
+                   width="2768" height="1312"
+                   loading="lazy">
+            </picture>
+          </div>
         </div>
       </div>
     </section>
