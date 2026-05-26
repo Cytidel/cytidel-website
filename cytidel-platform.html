@@ -663,34 +663,6 @@
       box-shadow: 0 8px 22px rgba(22,61,42,0.22);
     }
 
-    /* Bulk Analyser enrichment list — visual proof of supported scanners */
-    .enrichment-list {
-      display: grid;
-      gap: 8px;
-      margin: clamp(20px, 2.5vw, 32px) 0 0;
-    }
-    .enrichment-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 18px;
-      background: var(--bg-elev);
-      border-radius: 10px;
-      gap: 12px;
-    }
-    .enrichment-name {
-      font-weight: 600;
-      color: var(--text);
-      font-size: clamp(0.95rem, 1.3vw, 1.02rem);
-    }
-    .enrichment-status {
-      font-weight: 600;
-      color: var(--accent-deep);
-      font-size: 0.85rem;
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-
     /* Smart Alerts channel line — replaces the prose channel listing */
     .channel-line {
       margin-top: clamp(20px, 2.5vw, 28px);
@@ -1237,7 +1209,7 @@
             </div>
 
             <div class="cap-body">
-              <p>Every vulnerability, tagged and rated by what's actually happening. Cytidel enables a threat-led approach where prioritisation is driven by evidence, not theory.</p>
+              <p>A threat-led approach where prioritisation is driven by evidence, not theory.</p>
 
               <ul>
                 <li><b>Exploitation evidence</b> — is this being used right now, in the wild? Real-time confirmation from thousands of sources.</li>
@@ -1282,7 +1254,7 @@
             </div>
 
             <div class="cap-body">
-              <p>Know who's targeting your world, before they get to you. Map known adversaries to the vulnerabilities in their arsenal with full TTP context.</p>
+              <p>Map known adversaries to the vulnerabilities in their arsenal with full TTP context, alias tracking, and campaign history.</p>
 
               <aside class="callout" role="note">
                 <p>30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium by CVSS. Threat actors don't pick by score.</p>
@@ -1313,7 +1285,7 @@
             </div>
 
             <div class="cap-body">
-              <p>Early warning across the parts of your stack your scanner can't see. The moment a vendor advisory drops or a breach is detected, the right people are alerted instantly.</p>
+              <p>The moment a vendor advisory drops, a breach is detected, or a threat actor starts targeting software your team depends on — the right people are alerted instantly.</p>
 
               <div class="chip-row" aria-label="Regulatory compliance">
                 <span class="chip"><span class="chip-dot" aria-hidden="true"></span>NIS2 Ready</span>
@@ -1338,22 +1310,9 @@
             </div>
 
             <div class="cap-body">
-              <p>Upload scanner output from Tenable, Qualys, or Rapid7. Enrich every vulnerability with real-world risk ratings and evidence trails in minutes.</p>
+              <p>Upload your scanner backlog. Cytidel enriches every vulnerability with real-world risk ratings and evidence trails — in minutes, not weeks.</p>
 
-              <div class="enrichment-list" role="list">
-                <div class="enrichment-row" role="listitem">
-                  <span class="enrichment-name">Tenable.io Output</span>
-                  <span class="enrichment-status">Enriched 100%</span>
-                </div>
-                <div class="enrichment-row" role="listitem">
-                  <span class="enrichment-name">Qualys VMDR</span>
-                  <span class="enrichment-status">Enriched 100%</span>
-                </div>
-                <div class="enrichment-row" role="listitem">
-                  <span class="enrichment-name">Rapid7 Nexpose</span>
-                  <span class="enrichment-status">Enriched 100%</span>
-                </div>
-              </div>
+              <p>Works with output from <strong>Tenable</strong>, <strong>Qualys</strong>, <strong>Rapid7</strong>, and other scanners. Save reports, track risk profile changes over time, and bring evidence to your next remediation conversation.</p>
             </div>
           </div>
 
@@ -1434,8 +1393,8 @@
     <section class="final-cta" aria-labelledby="final-cta-h2">
       <div class="container">
         <div class="final-cta-card">
-          <h2 id="final-cta-h2">See Cytidel for your stack</h2>
-          <p>Bring your environment, the suppliers you care about, and the questions you've been trying to answer.</p>
+          <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
+          <p>Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand the latest threat actor activity relevant to your business, and monitor critical software and suppliers 24/7.</p>
           <a href="book-a-demo.html" class="btn btn-primary">
             Book a Demo
             <span class="arrow" aria-hidden="true">→</span>
