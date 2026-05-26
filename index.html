@@ -447,7 +447,6 @@
     .hero h1 .line-1 { color: var(--text); display: block; }
     .hero h1 .line-2 { color: var(--text); display: block; }
     .hero-sub {
-      max-width: 680px;
       margin-top: 28px;
       font-size: clamp(1.05rem, 1.6vw, 1.25rem);
       line-height: 1.55;
@@ -463,7 +462,6 @@
       letter-spacing: 0.06em;
       color: var(--accent);
       margin-bottom: 22px;
-      max-width: 720px;
       line-height: 1.4;
     }
 
@@ -626,7 +624,7 @@
     }
 
     /* ------- SECTION 4 — WHERE THE GAPS LIVE ------- */
-    .gaps h2 { max-width: 760px; margin-bottom: clamp(48px, 6vw, 72px); }
+    .gaps h2 { margin-bottom: clamp(48px, 6vw, 72px); }
     .gap-list {
       display: grid;
       grid-template-columns: 1fr;
@@ -662,7 +660,6 @@
       line-height: 1.4;
       letter-spacing: -0.015em;
       color: var(--text);
-      max-width: 760px;
     }
 
     /* ------- SECTION 5 — WHAT CYTIDEL DOES ------- */
@@ -724,7 +721,6 @@
     /* ------- V2 §5 — SPOTLIGHT HEADLINE + SUPPORTING ------- */
     .spotlight-headline {
       margin: clamp(40px, 5vw, 64px) 0 6px;
-      max-width: 880px;
       font-family: var(--font-display);
       font-size: clamp(1.4rem, 2.5vw, 1.95rem);
       font-weight: 600;
@@ -733,7 +729,6 @@
       color: var(--text);
     }
     .spotlight-supporting {
-      max-width: 780px;
       margin-top: 0;
       margin-bottom: 0;
       font-size: clamp(1.02rem, 1.5vw, 1.18rem);
@@ -913,7 +908,6 @@
     /* ------- SECTION 6 — PROOF ------- */
     .proof-quote {
       position: relative;
-      max-width: 880px;
       margin: 0 auto clamp(48px, 6vw, 72px);
       text-align: left;
       padding-top: clamp(48px, 7vw, 88px);
@@ -1251,8 +1245,8 @@
       --bg: var(--dark-bg);
     }
     .spotlight-card .eyebrow { color: var(--accent); margin-bottom: 18px; }
-    .spotlight-card .spotlight-headline { margin-top: 0; max-width: 880px; }
-    .spotlight-card .spotlight-supporting { max-width: 880px; }
+    .spotlight-card .spotlight-headline { margin-top: 0; }
+    .spotlight-card .spotlight-supporting { }
     .spotlight-card .spotlight-chart {
       background: rgba(255,255,255,0.03);
       border-color: var(--dark-border);
