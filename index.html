@@ -200,20 +200,19 @@
       border-radius: 2px;
     }
     .nav-links a.nav-cta, .nav-cta {
-      background: var(--accent);
-      color: #0b0e0a !important;
+      background: linear-gradient(135deg, #82FF14 0%, #6FE000 100%);
+      color: #0b2000 !important;
       padding: 14px 24px;
       border-radius: 8px;
       font-size: 0.9rem;
       font-weight: 600;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
     }
     .nav-links a.nav-cta:hover, .nav-cta:hover {
-      background: #93e6c9;
       transform: translateY(-1px);
-      box-shadow: 0 8px 22px rgba(45,138,82,0.18);
+      box-shadow: 0 8px 22px rgba(130, 255, 20, 0.35);
     }
     .nav-links a.nav-cta::after, .nav-cta::after { display: none !important; }
 
@@ -407,17 +406,13 @@
       border: 1px solid transparent;
     }
     .btn-primary {
-      background: var(--accent);
-      color: #0b0e0a;
+      background: linear-gradient(135deg, #82FF14 0%, #6FE000 100%);
+      color: #0b2000;
     }
     .btn-primary:hover {
-      background: #93e6c9;
       transform: translateY(-1px);
-      box-shadow: 0 8px 30px rgba(45,138,82,0.20);
+      box-shadow: 0 8px 30px rgba(130, 255, 20, 0.35);
     }
-    /* On dark sections, primary button keeps mint bg + dark text */
-    .section-dark .btn-primary { background: var(--accent); color: #0b0e0a; }
-    .section-dark .btn-primary:hover { background: #93e6c9; }
     .btn .arrow { transition: transform 0.2s ease; }
     .btn:hover .arrow { transform: translateX(3px); }
 
@@ -1127,8 +1122,6 @@
       margin: 0 auto 36px;
       max-width: 640px;
     }
-    .final-cta-card .btn-primary { background: var(--accent); color: #0b0e0a; }
-    .final-cta-card .btn-primary:hover { background: #93e6c9; }
 
     /* ------- FOOTER ------- */
     footer {
