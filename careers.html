@@ -426,9 +426,8 @@
       pointer-events: none;
       z-index: 0;
     }
-    .hero-inner { position: relative; z-index: 1; max-width: 900px; }
+    .hero-inner { position: relative; z-index: 1; }
     .hero-sub {
-      max-width: 720px;
       margin-top: 28px;
       font-size: clamp(1.05rem, 1.55vw, 1.22rem);
       line-height: 1.55;
@@ -437,7 +436,7 @@
     .hero-cta { margin-top: 40px; }
 
     /* ------- SECTION LEAD ------- */
-    .section-head { margin-bottom: clamp(40px, 5vw, 64px); max-width: 760px; }
+    .section-head { margin-bottom: clamp(40px, 5vw, 64px); }
     .section-head h2 { margin-bottom: 18px; }
     .section-head .lead {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
@@ -447,7 +446,6 @@
 
     /* ------- SECTION 2 — PAIN GRID ------- */
     .pains { border-top: 1px solid var(--border); }
-    .pains .container { max-width: 1100px; }
     .pain-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -484,7 +482,6 @@
 
     /* ------- SECTION 3 — CAPABILITIES LIST ------- */
     .capabilities { border-top: 1px solid var(--border); }
-    .capabilities .container { max-width: 1000px; }
     .capabilities-list {
       display: grid;
       gap: 0;
@@ -498,7 +495,6 @@
       font-size: clamp(1rem, 1.45vw, 1.1rem);
       line-height: 1.7;
       color: var(--text-secondary);
-      max-width: 880px;
     }
     .cap-item p b {
       color: var(--text);
@@ -509,7 +505,6 @@
 
     /* ------- SECTION 4 — SCENARIOS ------- */
     .scenarios { border-top: 1px solid var(--border); }
-    .scenarios .container { max-width: 1100px; }
     .scenario-list { display: grid; gap: 0; }
     .scenario {
       display: grid;
@@ -537,7 +532,6 @@
       font-size: clamp(1rem, 1.4vw, 1.08rem);
       line-height: 1.7;
       color: var(--text-secondary);
-      max-width: 820px;
     }
     @media (max-width: 720px) {
       .scenario { grid-template-columns: 1fr; gap: 10px; }
@@ -546,7 +540,6 @@
 
     /* ------- SECTION 5 — CONVERSATION CONTRAST ------- */
     .conversation { border-top: 1px solid var(--border); }
-    .conversation .container { max-width: 1100px; }
     .conversation-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -584,7 +577,6 @@
     }
     .conv p + p { margin-top: 10px; color: var(--text-secondary); font-weight: 400; font-family: var(--font-sans); font-size: 0.96rem; line-height: 1.55; letter-spacing: 0; }
     .conversation-close {
-      max-width: 820px;
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.65;
       color: var(--text-secondary);
@@ -596,7 +588,6 @@
 
     /* ------- SECTION 6 — FINAL CTA ------- */
     .final-cta { text-align: center; border-top: 1px solid var(--border); }
-    .final-cta .container { max-width: 760px; }
     .final-cta h2 { margin-bottom: 20px; }
     .final-cta p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
@@ -758,7 +749,6 @@
       padding-top: clamp(64px, 8vw, 110px);
       padding-bottom: clamp(64px, 8vw, 110px);
     }
-    .spotlight-section .container { max-width: 980px; }
     .spotlight-section .eyebrow { color: var(--accent); margin-bottom: 18px; }
     .spotlight-section .spotlight-headline { margin-top: 0; }
 
@@ -790,14 +780,13 @@
     .careers-building .container,
     .careers-team .container,
     .careers-values .container,
-    .careers-roles .container { max-width: 980px; }
 
     .careers-hero {
       padding-top: clamp(100px, 14vw, 180px);
       padding-bottom: clamp(80px, 10vw, 140px);
     }
-    .careers-hero h1 { max-width: 920px; }
-    .careers-hero .hero-sub { max-width: 740px; margin-top: 28px; }
+    .careers-hero h1 { }
+    .careers-hero .hero-sub { margin-top: 28px; }
 
     /* Section 2 — What we are building */
     .careers-building h2 { margin-bottom: clamp(28px, 4vw, 40px); }
@@ -848,12 +837,11 @@
     }
 
     /* Section 4 — Values (visual centrepiece) */
-    .careers-values h2 { max-width: 720px; margin-bottom: 18px; }
+    .careers-values h2 { margin-bottom: 18px; }
     .careers-values .lead {
       font-size: clamp(1rem, 1.4vw, 1.1rem);
       color: var(--text-secondary);
       margin-bottom: clamp(48px, 6vw, 72px);
-      max-width: 640px;
     }
     .values-list {
       list-style: none;
@@ -892,7 +880,6 @@
       font-size: clamp(1rem, 1.45vw, 1.12rem);
       line-height: 1.65;
       color: var(--text-secondary);
-      max-width: 680px;
     }
     @media (max-width: 720px) {
       .value { grid-template-columns: 1fr; gap: 16px; }
@@ -1110,9 +1097,11 @@
         <div class="footer-col">
           <h4>Resources</h4>
           <ul>
+            <li><a href="why-cytidel.html">Why Cytidel</a></li>
             <li><a href="https://blog.cytidel.com">Blog</a></li>
             <li><a href="faq.html">FAQs</a></li>
-            <li><a href="#">Trust</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
           </ul>
         </div>
       </div>

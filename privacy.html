@@ -1,29 +1,21 @@
 <!doctype html>
 <!--
-  Cytidel persona page: CISOs
+  Cytidel Book a Demo page
   ---------------------------------------------------------
-  Open items flagged (per brief Section 13):
-    1. Bulk Analyser naming under review with Cytidel team. Not updated.
-    2. 4.8 CVSS specific for Threat Actor Intelligence still pending CVE
-       ID from Gary. Not used on persona pages.
-    3. Customer logos and quotes on persona pages: deliberately not in
-       scope. Persona pages focus on role-specific argument.
-
   Build notes:
-    - Visual language inherited from index.html / cytidel-platform.html.
-    - Six sections per brief: Hero, What's getting in your way, What Cytidel
-      does, How [role] uses Cytidel, The conversation it changes, Final CTA.
-    - No visual placeholder boxes; typography and layout carry interest.
-    - Nav dropdown "For your role" lists four leaf pages; no /for/ parent.
-    - This page sets the dropdown trigger to data-active="true" and marks
-      the VM dropdown link with aria-current="page".
+    - Hero + HubSpot Meetings iframe embed.
+    - The embed div + script come from HubSpot; the script finds the
+      .meetings-iframe-container element and replaces it with the iframe.
+    - No final CTA — the embed is the CTA.
+    - Nav: Book a Demo CTA stays in place (we don't hide it on the page
+      itself; visitors who land deep may still want to use it as a back-anchor).
 -->
 <html lang="en-GB">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cytidel for CISOs</title>
-  <meta name="description" content="Your team gets the speed and the coverage to act on what matters. You get the evidence and the language to defend every decision — to your board, your auditors, and your regulators." />
+  <title>Privacy Policy · Cytidel</title>
+  <meta name="description" content="Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7." />
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
   <meta name="theme-color" content="#f1f1ec" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -603,29 +595,6 @@
       margin-bottom: 36px;
     }
 
-    /* Final CTA card — dark green, consistent with homepage/platform */
-    .final-cta-card {
-      background: linear-gradient(135deg, #1f2823 0%, var(--cta-bg) 100%);
-      border-radius: 16px;
-      padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
-      text-align: center;
-      color: #f7f9f3;
-      position: relative;
-      overflow: hidden;
-    }
-    .final-cta-card h2 {
-      color: #f7f9f3;
-      margin-bottom: 20px;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .final-cta-card p {
-      color: rgba(247,249,243,0.82);
-      margin: 0 auto 36px;
-      max-width: 640px;
-    }
-
     /* ------- FOOTER ------- */
     footer {
       border-top: 1px solid var(--border);
@@ -804,6 +773,31 @@
     .cap-tab[aria-selected="true"] { color: var(--accent-deep); }
     .cap-tab[aria-selected="true"]::after { background: var(--accent-deep); }
 
+    /* ------- BOOK A DEMO ------- */
+    .demo-hero {
+      padding-top: clamp(80px, 10vw, 120px);
+      padding-bottom: clamp(32px, 4vw, 48px);
+    }
+    .demo-hero h1 { }
+    .demo-hero .hero-sub { margin-top: 20px; }
+
+    .demo-embed {
+      padding-top: 0;
+      padding-bottom: clamp(72px, 9vw, 120px);
+    }
+    .meetings-iframe-container {
+      width: 100%;
+      min-height: 720px;
+      background: var(--bg-elev);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .meetings-iframe-container iframe {
+      width: 100% !important;
+      border: 0;
+      display: block;
+    }
+
     /* Additional accent-deep overrides — light-bg items missed earlier */
     .pain-num,
     .scenario-num,
@@ -814,6 +808,15 @@
     .conv.is-new { border-left-color: var(--accent-deep); }
     /* Dropdown active item: deep green text on soft mint background */
     .nav-dropdown-menu a[aria-current="page"] { color: var(--accent-deep); }
+    /* ------- LEGAL / PRIVACY ------- */
+    .legal { border-top: 1px solid var(--border); padding-top: clamp(48px, 6vw, 80px); }
+    .legal-body p { font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.3em; }
+    .legal-body h2 { font-size: clamp(1.3rem, 2vw, 1.65rem); margin: clamp(36px, 4vw, 52px) 0 16px; color: var(--text); }
+    .legal-body h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); margin: clamp(28px, 3vw, 36px) 0 12px; color: var(--text); }
+    .legal-body a { color: var(--accent-deep); }
+    .legal-updated { font-size: 0.92rem; color: var(--text-tertiary); margin-bottom: 2em; }
+    .legal-body ul { margin: 0 0 1.3em; padding-left: 1.2em; }
+    .legal-body li { font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.5em; }
   </style>
 </head>
 <body>
@@ -827,14 +830,14 @@
         <a href="cytidel-platform.html">Platform</a>
         <a href="why-cytidel.html">Why Cytidel</a>
         <div class="nav-dropdown" data-dropdown>
-          <button class="nav-dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="role-menu" data-active="true">
+          <button class="nav-dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="role-menu">
             For your role
             <svg class="caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="nav-dropdown-menu" id="role-menu" role="menu">
             <a href="cytidel-for-vulnerability-management.html" role="menuitem">For Vulnerability Management</a>
             <a href="cytidel-for-threat-intelligence.html" role="menuitem">For Threat Intelligence</a>
-            <a href="cytidel-for-cisos.html" role="menuitem" aria-current="page">For CISOs</a>
+            <a href="cytidel-for-cisos.html" role="menuitem">For CISOs</a>
             <a href="cytidel-for-analysts.html" role="menuitem">For Analysts</a>
           </div>
         </div>
@@ -850,132 +853,81 @@
 
   <main id="main">
 
-    <!-- ============ SECTION 1 — HERO ============ -->
+    <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-h1">
       <div class="container">
         <div class="hero-inner">
-          <span class="eyebrow">For CISOs</span>
-          <h1 id="hero-h1">Cytidel for CISOs</h1>
-          <p class="hero-sub">Your team gets the speed and the coverage to act on what matters. You get the evidence and the language to defend every decision — to your board, your auditors, and your regulators.</p>
-          <div class="hero-cta">
-            <a href="book-a-demo.html" class="btn btn-primary">
-              Book a Demo
-              <span class="arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
+          <span class="eyebrow">Legal</span>
+          <h1 id="hero-h1">Privacy Policy</h1>
+          <p class="hero-sub">How Cytidel collects, uses, and protects your information.</p>
         </div>
       </div>
     </section>
 
-    <!-- ============ SECTION 2 — WHAT'S GETTING IN YOUR WAY ============ -->
-    <section class="pains" aria-labelledby="pains-h2">
+    <!-- ============ POLICY BODY ============ -->
+    <section class="legal" aria-label="Privacy policy">
       <div class="container">
-        <div class="section-head">
-          <h2 id="pains-h2">What's getting in your way</h2>
-          <p class="lead">Three problems every CISO is sitting with right now.</p>
-        </div>
-        <div class="pain-grid">
-          <article class="pain">
-            <span class="pain-num">Pain 1</span>
-            <h3>Your team is producing the right answers to the wrong questions.</h3>
-            <p>The vulnerability management programme is patching what it can. The threat intelligence team is producing strong analysis. The supplier risk function is checking the boxes. And yet — when the board asks "are we exposed to the threat actor in the news this week?", the answer is a four-day research project, not a structured response.</p>
-          </article>
-          <article class="pain">
-            <span class="pain-num">Pain 2</span>
-            <h3>The board is at the table now, and they're asking sharper questions.</h3>
-            <p>Every breach in the news, every supplier failure, every regulatory shift puts the question back on them: are we at risk? You're being asked to translate technical exposure into business risk — every quarter, sometimes every month, occasionally in real time during an incident. CVSS doesn't translate. CVE IDs don't translate. You need a different language.</p>
-          </article>
-          <article class="pain">
-            <span class="pain-num">Pain 3</span>
-            <h3>Your regulators don't accept "we patched the criticals" anymore.</h3>
-            <p>NIS2 and DORA both made supplier and software monitoring a continuous obligation. ISO 27001 auditors want evidence behind every prioritisation decision. The bar has moved from "do you have a policy" to "show us how the policy is enforced in real time." Your team can't manually generate that evidence trail every quarter.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+        <div class="legal-body">
+          <p class="legal-updated">Last updated: April 13, 2023</p>
 
-    <!-- ============ SECTION 3 — WHAT CYTIDEL DOES FOR CISOS ============ -->
-    <section class="capabilities" aria-labelledby="cap-h2">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="cap-h2">What Cytidel does for CISOs</h2>
-          <p class="lead">A platform that turns raw threat and vulnerability data into the language the board, the auditor, and the regulator actually need.</p>
-        </div>
-        <div class="capabilities-list">
-          <div class="cap-item"><p><b>Real-time Vulnerability Intelligence</b> gives your team a threat-led prioritisation engine — and gives you a real-time picture of what your organisation is exposed to, refreshed continuously. The board's question stops being a research project.</p></div>
-          <div class="cap-item"><p><b>Threat Actor Intelligence</b> translates threat exposure into the language that matters. Not "we have 14,000 high-severity CVEs" — instead, "these are the threat actors targeting our industry, here's what they're using, and here's where we stand." Cytidel does the translation. You bring it to the board.</p></div>
-          <div class="cap-item"><p><b>Smart Alerts</b> ensures the right intelligence reaches the right people, every time. Your team isn't checking dashboards out of anxiety — the signal comes to them when it matters. Your governance posture becomes evidenceable, not aspirational.</p></div>
-          <div class="cap-item"><p><b>Bulk Analyser</b> turns the audit conversation. When an ISO 27001 or NIS2 auditor asks how you prioritise, you show them the methodology, the evidence, and the data trail behind every decision. Not a score and a gut feeling.</p></div>
-          <div class="cap-item"><p><b>Supplier &amp; Software Monitoring</b> makes third-party risk a continuous discipline, not an annual exercise. NIS2 and DORA both require it. Cytidel delivers it.</p></div>
-        </div>
-      </div>
-    </section>
+          <p>Welcome to www.cytidel.com ("Cytidel", "we", "us", or "our"). We understand the importance of protecting your privacy and personal information. This Privacy Policy ("Policy") outlines the types of information we collect, how we use it, and the measures we take to safeguard it when you visit and interact with our website.</p>
 
-    <!-- ============ SECTION 4 — HOW CISOS USE CYTIDEL ============ -->
-    <section class="scenarios" aria-labelledby="scen-h2">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="scen-h2">How CISOs use Cytidel</h2>
-          <p class="lead">Three moments where the conversation changes.</p>
-        </div>
-        <div class="scenario-list">
-          <article class="scenario">
-            <div class="scenario-num">01</div>
-            <div>
-              <h3>The board question, mid-meeting</h3>
-              <p>A board member asks about a ransomware group in the news. You pull the actor's profile from Threat Actor Intelligence on your phone — see the vulnerabilities in their arsenal, see what's in your stack, see where your team stands on remediation. You answer in the meeting, with data. The conversation moves to strategy, not panic.</p>
-            </div>
-          </article>
-          <article class="scenario">
-            <div class="scenario-num">02</div>
-            <div>
-              <h3>The quarterly board report</h3>
-              <p>Instead of a slide deck full of CVE counts and CVSS distributions, you bring a report that says "these are the threat actors active in our industry this quarter, here's our exposure to each, here's what's been remediated, and here's our forward-looking risk." The board engages on risk, not on remediation theatre.</p>
-            </div>
-          </article>
-          <article class="scenario">
-            <div class="scenario-num">03</div>
-            <div>
-              <h3>The audit conversation</h3>
-              <p>The NIS2 or ISO 27001 auditor asks how vulnerability management decisions are made. You walk them through Cytidel's evidence trail — exploitation status, threat actor association, real-time signal — and the audit shifts from "explain your gaps" to "explain your methodology." You're demonstrating a system, not defending a queue.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+          <p>By using www.cytidel.com and providing us with your personal information, you consent to the collection, storage, use, and disclosure of your information as described in this Policy.</p>
 
-    <!-- ============ SECTION 5 — CONVERSATION IT CHANGES ============ -->
-    <section class="conversation" aria-labelledby="conv-h2">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="conv-h2">The conversation it changes</h2>
-          <p class="lead">The board wants to know which threats are real. Cytidel tells you, in their language.</p>
-        </div>
-        <div class="conversation-grid">
-          <div class="conv">
-            <span class="conv-label">The old conversation</span>
-            <p>"We're patching to policy. CVSS criticals are being addressed. We have an annual vendor review process."</p>
-            <p>Accurate. Doesn't answer the question the board is actually asking.</p>
-          </div>
-          <div class="conv is-new">
-            <span class="conv-label">The new conversation</span>
-            <p>"Three threat actors are active in our industry. We have exposure to two — both remediated, with the evidence trail. The third doesn't affect our stack. Our supplier monitoring flagged a vendor advisory yesterday; we've reached out for confirmation. Here's what we're watching for next quarter."</p>
-          </div>
-        </div>
-        <p class="conversation-close">Same team. Same posture. Same regulatory obligations. Completely different conversation with the people who matter most.</p>
-      </div>
-    </section>
+          <h2>1. Information We Collect</h2>
+          <p>We may collect the following types of information:</p>
+          <p><strong>a. Personal Information:</strong> Personal information is any information that can be used to identify you or that we can link to you as an individual. We may collect personal information such as your name, email address, phone number, and mailing address when you voluntarily provide it to us, for example, when you sign up for our newsletter, create an account, or make a purchase, or any other personal information that you elect to disclose to us directly during your communications with us or use of the Services.</p>
+          <p><strong>b. Personal Information from Third Party Sources:</strong> In certain cases, we may obtain personal information from third party sources such as third parties that collect or provide personal information in connection with the work they do on our behalf or public sources of personal information such as open government databases.</p>
+          <p><strong>c. Non-Personal Information:</strong> Non-personal information is any information that cannot be used to identify you. We may collect non-personal information such as browser type, operating system, device type, and IP address when you visit our website. This information helps us analyze and optimize our website's performance.</p>
+          <p><strong>d. Cookies and Similar Technologies:</strong> We may use cookies and other tracking technologies to collect information about your browsing behavior, preferences, and the pages you visit on our website. You can learn more about cookies and how to manage them in our Cookie Policy.</p>
+          <p>If you choose to provide us with personal information about another person, you shall ensure that you have obtained the consent of that person to share their information with us.</p>
 
-    <!-- ============ SECTION 6 — FINAL CTA ============ -->
-    <section class="final-cta" aria-labelledby="final-cta-h2">
-      <div class="container">
-        <div class="final-cta-card">
-          <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
-          <p>Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand the latest threat actor activity relevant to your business, and monitor critical software and suppliers 24/7.</p>
-          <a href="book-a-demo.html" class="btn btn-primary">
-            Book a Demo
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
+          <h2>2. How We Use Your Information</h2>
+          <p>We may use the information we collect for the following purposes:</p>
+          <ul>
+            <li>To provide and improve our products and services.</li>
+            <li>To communicate with you and respond to your inquiries.</li>
+            <li>To personalize your experience on our website.</li>
+            <li>To process transactions and fulfill orders.</li>
+            <li>To send you promotional materials, newsletters, and other information about our products and services.</li>
+            <li>To analyze and optimize our website's performance and user experience.</li>
+            <li>To protect the security and integrity of our website.</li>
+            <li>To comply with applicable laws, regulations, and legal processes.</li>
+          </ul>
+
+          <h2>3. Sharing Your Information</h2>
+          <p>We may share your information with:</p>
+          <ul>
+            <li>Third-party service providers who help us operate our website, provide our services, or perform functions on our behalf.</li>
+            <li>Third parties for marketing, advertising, or analytics purposes.</li>
+            <li>Law enforcement agencies, government authorities, or other parties when required by law or when we believe disclosure is necessary to protect our rights or the rights of others.</li>
+          </ul>
+          <p>We will not sell or share your personal information with third parties for their marketing purposes without your consent.</p>
+
+          <h2>4. Security</h2>
+          <p>We employ reasonable security measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of data transmission or storage is 100% secure, and we cannot guarantee the absolute security of your information.</p>
+
+          <h2>5. Third-Party Websites</h2>
+          <p>Our website may contain links to other websites operated by third parties. We are not responsible for the privacy practices of these third-party websites. We encourage you to review the privacy policies of any websites you visit.</p>
+
+          <h2>6. Children's Privacy</h2>
+          <p>Our website is not intended for use by children under the age of 13, and we do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information from our records.</p>
+
+          <h2>7. Changes to This Privacy Policy</h2>
+          <p>We may update this Privacy Policy from time to time to reflect changes in our practices, applicable laws, or other factors. We will notify you of any material changes by updating the "Last Updated" date at the top of this Policy. Your continued use of our website following any updates to this Policy constitutes your acceptance of the revised Privacy Policy.</p>
+
+          <h2>8. Your Rights and Choices</h2>
+          <p>Depending on your jurisdiction, you may have certain rights regarding your personal information, such as the right to access, correct, delete, or restrict the use of your personal information. To exercise these rights, please contact us using the contact information provided below. If you no longer wish to receive promotional emails or other communications from us, you can opt-out by following the unsubscribe instructions provided in those communications or by contacting us.</p>
+
+          <h2>9. Data Retention</h2>
+          <p>We will retain your personal information for as long as necessary to fulfill the purposes for which it was collected or as required by applicable laws and regulations. When your personal information is no longer required, we will take appropriate steps to securely delete, dispose of, or anonymize your personal information.</p>
+
+          <h2>10. International Data Transfers</h2>
+          <p>Our website is operated from the United States. If you are visiting our website from outside the United States, please be aware that your information may be transferred to, stored, and processed in the United States and other countries where our servers and service providers are located. By using our website, you consent to the transfer of your information to these countries.</p>
+
+          <h2>11. Contact Us</h2>
+          <p>If you have any questions, concerns, or comments about this Privacy Policy or our privacy practices, please contact us at: <a href="mailto:info@cytidel.com">info@cytidel.com</a></p>
+          <p>We are committed to addressing your concerns and working to resolve any issues related to your privacy.</p>
         </div>
       </div>
     </section>
@@ -1038,6 +990,7 @@
 
   <script>
     (function() {
+
       // Subtle nav border when scrolled
       var nav = document.getElementById('nav');
       var onScroll = function() {
