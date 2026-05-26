@@ -43,10 +43,10 @@
       --text-tertiary: #7a807a;
 
       /* Accents */
-      --accent: #7BE0BE;
-      --accent-soft: #9bd9b8;
-      --accent-deep: #2d8a52;
-      --accent-dim: rgba(123, 224, 190, 0.18);
+      --accent: #63CF24;
+      --accent-soft: #7fd94a;
+      --accent-deep: #63CF24;
+      --accent-dim: rgba(99, 207, 36, 0.18);
 
       /* Dark sections (used via .section-dark wrapper) */
       --dark-bg: #0e1612;
@@ -435,7 +435,7 @@
       transform: translateX(-50%);
       width: 1200px;
       height: 800px;
-      background: radial-gradient(ellipse at center, rgba(123,224,190,0.08) 0%, transparent 60%);
+      background: radial-gradient(ellipse at center, rgba(99, 207, 36,0.08) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -483,7 +483,7 @@
       transform: translateX(-50%);
       width: 70%;
       height: 140px;
-      background: radial-gradient(ellipse at center, rgba(123,224,190,0.18) 0%, transparent 65%);
+      background: radial-gradient(ellipse at center, rgba(99, 207, 36,0.18) 0%, transparent 65%);
       pointer-events: none;
       filter: blur(28px);
       z-index: 0;
@@ -1291,7 +1291,7 @@
 
     /* Hero background glow stays subtle on light */
     .hero::before {
-      background: radial-gradient(ellipse at center, rgba(123,224,190,0.18) 0%, transparent 65%);
+      background: radial-gradient(ellipse at center, rgba(99, 207, 36,0.18) 0%, transparent 65%);
     }
 
     /* Accent links: use deeper green on light bg for contrast */
@@ -1469,7 +1469,7 @@
             <div class="icon" aria-hidden="true">
               <svg viewBox="0 0 36 36" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
                 <rect x="5" y="8" width="26" height="4" rx="1"/>
-                <rect x="5" y="16" width="26" height="4" rx="1" stroke="#7BE0BE"/>
+                <rect x="5" y="16" width="26" height="4" rx="1" stroke="#63CF24"/>
                 <rect x="5" y="24" width="17" height="4" rx="1"/>
               </svg>
             </div>
@@ -1484,7 +1484,7 @@
                 <line x1="9" y1="10" x2="18" y2="27"/>
                 <line x1="27" y1="13" x2="18" y2="27"/>
                 <circle cx="9" cy="10" r="3" fill="var(--bg-elev)"/>
-                <circle cx="27" cy="13" r="3" fill="#7BE0BE" stroke="#7BE0BE"/>
+                <circle cx="27" cy="13" r="3" fill="#63CF24" stroke="#63CF24"/>
                 <circle cx="18" cy="27" r="3" fill="var(--bg-elev)"/>
               </svg>
             </div>
@@ -1496,7 +1496,7 @@
             <div class="icon" aria-hidden="true">
               <svg viewBox="0 0 36 36" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
                 <rect x="3" y="13" width="8" height="10" rx="1.5"/>
-                <rect x="14" y="13" width="8" height="10" rx="1.5" stroke="#7BE0BE"/>
+                <rect x="14" y="13" width="8" height="10" rx="1.5" stroke="#63CF24"/>
                 <rect x="25" y="13" width="8" height="10" rx="1.5"/>
                 <line x1="11" y1="18" x2="14" y2="18"/>
                 <line x1="22" y1="18" x2="25" y2="18"/>
@@ -1532,11 +1532,11 @@
             <text x="20" y="112" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="12">Signal surfaces</text>
 
             <!-- Top line: accent, fading -->
-            <line x1="180" y1="100" x2="720" y2="100" stroke="#7BE0BE" stroke-width="2" stroke-linecap="round" stroke-opacity="0.55"/>
+            <line x1="180" y1="100" x2="720" y2="100" stroke="#63CF24" stroke-width="2" stroke-linecap="round" stroke-opacity="0.55"/>
 
             <!-- Cytidel marker at Day 0 -->
-            <circle cx="180" cy="100" r="11" fill="#7BE0BE" fill-opacity="0.18"/>
-            <circle cx="180" cy="100" r="5.5" fill="#7BE0BE"/>
+            <circle cx="180" cy="100" r="11" fill="#63CF24" fill-opacity="0.18"/>
+            <circle cx="180" cy="100" r="5.5" fill="#63CF24"/>
 
             <!-- Bottom row: CISA KEV -->
             <text x="20" y="174" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600">CISA KEV</text>
@@ -1548,13 +1548,13 @@
             <!-- KEV markers: median, mean, longest -->
             <circle cx="245" cy="162" r="5" fill="#a1a1aa"/>
             <circle cx="390" cy="162" r="5" fill="#a1a1aa"/>
-            <circle cx="680" cy="162" r="6.5" fill="#7BE0BE" fill-opacity="0.18"/>
-            <circle cx="680" cy="162" r="5.5" fill="#7BE0BE"/>
+            <circle cx="680" cy="162" r="6.5" fill="#63CF24" fill-opacity="0.18"/>
+            <circle cx="680" cy="162" r="5.5" fill="#63CF24"/>
 
             <!-- Tick connectors from markers down to labels -->
             <line x1="245" y1="168" x2="245" y2="196" stroke="#34343b" stroke-width="1"/>
             <line x1="390" y1="168" x2="390" y2="196" stroke="#34343b" stroke-width="1"/>
-            <line x1="680" y1="168" x2="680" y2="196" stroke="#7BE0BE" stroke-width="1" stroke-opacity="0.4"/>
+            <line x1="680" y1="168" x2="680" y2="196" stroke="#63CF24" stroke-width="1" stroke-opacity="0.4"/>
 
             <!-- Label group: MEDIAN -->
             <text x="245" y="212" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">MEDIAN</text>
@@ -1565,7 +1565,7 @@
             <text x="390" y="232" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">51 days</text>
 
             <!-- Label group: LONGEST (highlighted) -->
-            <text x="680" y="212" fill="#7BE0BE" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">LONGEST</text>
+            <text x="680" y="212" fill="#63CF24" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">LONGEST</text>
             <text x="680" y="232" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">19 months</text>
             <text x="680" y="250" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-style="italic" text-anchor="middle">≈ 578 days</text>
 
