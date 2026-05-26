@@ -603,6 +603,124 @@
       font-weight: 600;
     }
 
+    /* Villain Vault module callout — branded named module inside Threat Actor Intelligence */
+    .module-callout {
+      margin: clamp(28px, 3.5vw, 40px) 0 0;
+      padding: clamp(24px, 3vw, 32px) clamp(26px, 3.5vw, 36px);
+      background: var(--dark-bg);
+      border-radius: 12px;
+      display: grid;
+      gap: 8px;
+      color: var(--dark-text);
+      position: relative;
+      overflow: hidden;
+    }
+    .module-callout::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(123,224,190,0.10) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .module-callout > * { position: relative; }
+    .module-callout-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .module-callout-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--dark-text);
+      margin-bottom: 4px;
+    }
+    .module-callout p {
+      margin: 0;
+      font-size: clamp(0.95rem, 1.35vw, 1.02rem);
+      color: var(--dark-text-secondary);
+      line-height: 1.55;
+    }
+
+    /* Smart Alerts funnel viz: 300 → 3 → 1 */
+    .funnel {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: clamp(12px, 2vw, 24px);
+      margin: clamp(20px, 2.5vw, 32px) 0 8px;
+      padding: clamp(28px, 4vw, 40px) clamp(20px, 3vw, 32px);
+      background: var(--bg-elev);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .funnel-stage {
+      text-align: center;
+      padding: 8px 4px;
+    }
+    .funnel-stage .num {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+    }
+    .funnel-stage .label {
+      margin-top: 10px;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .funnel-stage.final {
+      background: var(--accent-dim);
+      border-radius: 10px;
+    }
+    .funnel-stage.final .num { color: var(--accent-deep); }
+    .funnel-arrow {
+      color: var(--text-tertiary);
+      font-size: 1.4rem;
+      opacity: 0.6;
+      line-height: 1;
+    }
+    @media (max-width: 600px) {
+      .funnel { grid-template-columns: 1fr; gap: 12px; }
+      .funnel-arrow { transform: rotate(90deg); justify-self: center; }
+    }
+
+    /* Compliance / pillar chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 4px 0 0;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-deep);
+    }
+
     .callout {
       margin: 8px 0 0;
       padding: clamp(20px, 2.5vw, 26px) clamp(22px, 3vw, 30px);
@@ -1097,7 +1215,11 @@
                 <p>30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium by CVSS. Threat actors don't pick by score. Your prioritisation shouldn't either.</p>
               </aside>
 
-              <p>The full module is called Villain Vault. Available as part of the platform.</p>
+              <aside class="module-callout" role="note" aria-label="Villain Vault module">
+                <div class="module-callout-label">Module</div>
+                <div class="module-callout-name">Villain Vault</div>
+                <p>The full Threat Actor Intelligence module inside the Cytidel platform — mapping every known adversary to the vulnerabilities they're using, with aliases, TTPs, and campaign history.</p>
+              </aside>
             </div>
           </div>
 
@@ -1122,6 +1244,11 @@
               <p>Supplier &amp; Software Monitoring runs continuously across the vendors and products you care about. The moment something matters — a breach, a targeted threat actor campaign, a critical advisory — the right people are alerted. Not days later from a news article.</p>
 
               <p>NIS2 and DORA both made supplier and software monitoring a board-level obligation. Annual vendor reviews used to be enough. They aren't anymore.</p>
+
+              <div class="chip-row" aria-label="Regulatory compliance">
+                <span class="chip"><span class="chip-dot" aria-hidden="true"></span>NIS2 Ready</span>
+                <span class="chip"><span class="chip-dot" aria-hidden="true"></span>DORA Ready</span>
+              </div>
             </div>
           </div>
 
@@ -1169,7 +1296,22 @@
 
               <p>Smart Alerts changes that. Configure by vendor, product, and risk threshold. Build rules with AND/OR logic so alerts match your exact definition of critical — not a generic one. Route alerts to the people who own the affected technology, not everyone.</p>
 
-              <blockquote class="pull-quote">300 vulnerabilities trending today → 3 relevant to your stack → 1 person notified.</blockquote>
+              <div class="funnel" role="figure" aria-label="From 300 trending vulnerabilities, 3 relevant to your stack, 1 person notified">
+                <div class="funnel-stage">
+                  <div class="num">300</div>
+                  <div class="label">Trending today</div>
+                </div>
+                <span class="funnel-arrow" aria-hidden="true">→</span>
+                <div class="funnel-stage">
+                  <div class="num">3</div>
+                  <div class="label">Relevant to your stack</div>
+                </div>
+                <span class="funnel-arrow" aria-hidden="true">→</span>
+                <div class="funnel-stage final">
+                  <div class="num">1</div>
+                  <div class="label">Person notified</div>
+                </div>
+              </div>
 
               <p>Channels: email, webhook, Slack, Teams. The intelligence flows into where your team already works.</p>
             </div>
