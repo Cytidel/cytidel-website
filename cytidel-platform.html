@@ -475,7 +475,6 @@
 
     /* ------- OVERVIEW ------- */
     .overview { padding-top: clamp(56px, 8vw, 100px); padding-bottom: clamp(56px, 8vw, 100px); }
-    .overview .container { max-width: 1000px; }
     .overview-lead {
       font-size: clamp(1.05rem, 1.55vw, 1.2rem);
       color: var(--text-secondary);
@@ -546,7 +545,6 @@
     .capability {
       border-top: 1px solid var(--border);
     }
-    .capability .container { max-width: 1100px; }
     .cap-grid {
       display: grid;
       grid-template-columns: 3fr 2fr;
@@ -657,10 +655,23 @@
       .cap-visual { position: static; aspect-ratio: 4 / 3; }
     }
 
-    /* ------- HOW IT FITS YOUR STACK ------- */
+    /* ------- HOW IT FITS YOUR STACK (contained dark card) ------- */
     .stack-section { border-top: 1px solid var(--border); }
-    .stack-section .container { max-width: 1000px; }
-    .stack-section h2 { margin-bottom: 18px; max-width: 760px; }
+    .stack-card {
+      position: relative;
+      background: var(--dark-bg);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+      color: var(--dark-text);
+      --text: var(--dark-text);
+      --text-secondary: var(--dark-text-secondary);
+      --text-tertiary: var(--dark-text-tertiary);
+      --border: var(--dark-border);
+      --border-strong: var(--dark-border-strong);
+      --surface: var(--dark-surface);
+    }
+    .stack-card h2 { margin-bottom: 18px; max-width: 760px; }
     .stack-lead {
       font-size: clamp(1.05rem, 1.55vw, 1.18rem);
       line-height: 1.6;
@@ -704,16 +715,33 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ------- FINAL CTA ------- */
-    .final-cta { text-align: center; border-top: 1px solid var(--border); }
-    .final-cta .container { max-width: 760px; }
-    .final-cta h2 { margin-bottom: 20px; }
-    .final-cta p {
+    /* ------- FINAL CTA (contained dark green card) ------- */
+    .final-cta { border-top: 1px solid var(--border); }
+    .final-cta-card {
+      background: var(--cta-bg);
+      border-radius: 16px;
+      padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
+      text-align: center;
+      color: #f7f9f3;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta-card h2 {
+      color: #f7f9f3;
+      margin-bottom: 20px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .final-cta-card p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.6;
-      color: var(--text-secondary);
-      margin-bottom: 36px;
+      color: rgba(247,249,243,0.82);
+      margin: 0 auto 36px;
+      max-width: 640px;
     }
+    .final-cta-card .btn-primary { background: var(--accent); color: #0b0e0a; }
+    .final-cta-card .btn-primary:hover { background: #93e6c9; }
 
     /* ------- FOOTER ------- */
     footer {
@@ -1152,44 +1180,48 @@
       </div>
     </section>
 
-    <!-- ============ SECTION 8 — HOW IT FITS YOUR STACK ============ -->
-    <section class="stack-section section-dark" aria-labelledby="stack-h2">
+    <!-- ============ SECTION 8 — HOW IT FITS YOUR STACK (dark card) ============ -->
+    <section class="stack-section" aria-labelledby="stack-h2">
       <div class="container">
-        <h2 id="stack-h2">How it fits your stack</h2>
-        <p class="stack-lead">Cytidel works alongside the tools your team already uses. No agents to deploy. No infrastructure changes. No data ingestion.</p>
+        <div class="stack-card">
+          <h2 id="stack-h2">How it fits your stack</h2>
+          <p class="stack-lead">Cytidel works alongside the tools your team already uses. No agents to deploy. No infrastructure changes. No data ingestion.</p>
 
-        <dl class="stack-list">
-          <div class="stack-item">
-            <dt>Scanners</dt>
-            <dd>Tenable, Qualys, Rapid7, and other scanner output flows through Bulk Analyser for enrichment.</dd>
-          </div>
-          <div class="stack-item">
-            <dt>Alerting channels</dt>
-            <dd>Email, webhook, Slack, and Teams.</dd>
-          </div>
-          <div class="stack-item">
-            <dt>Workflow tools</dt>
-            <dd>API access into your SIEM, SOAR, or ticketing system for customers on enterprise plans. Deeper workflow integrations are on the roadmap.</dd>
-          </div>
-          <div class="stack-item">
-            <dt>Deployment</dt>
-            <dd>SaaS platform, ISO 27001:2022 certified, hosted in the EU. Most customers fully configured within a day.</dd>
-          </div>
-        </dl>
+          <dl class="stack-list">
+            <div class="stack-item">
+              <dt>Scanners</dt>
+              <dd>Tenable, Qualys, Rapid7, and other scanner output flows through Bulk Analyser for enrichment.</dd>
+            </div>
+            <div class="stack-item">
+              <dt>Alerting channels</dt>
+              <dd>Email, webhook, Slack, and Teams.</dd>
+            </div>
+            <div class="stack-item">
+              <dt>Workflow tools</dt>
+              <dd>API access into your SIEM, SOAR, or ticketing system for customers on enterprise plans. Deeper workflow integrations are on the roadmap.</dd>
+            </div>
+            <div class="stack-item">
+              <dt>Deployment</dt>
+              <dd>SaaS platform, ISO 27001:2022 certified, hosted in the EU. Most customers fully configured within a day.</dd>
+            </div>
+          </dl>
 
-        <p class="stack-close">We don't ask you to rip out anything. We sit alongside what you already have, and we make the output of those tools more useful.</p>
+          <p class="stack-close">We don't ask you to rip out anything. We sit alongside what you already have, and we make the output of those tools more useful.</p>
+        </div>
       </div>
     </section>
 
-    <!-- ============ SECTION 9 — FINAL CTA ============ -->
+    <!-- ============ SECTION 9 — FINAL CTA (contained dark green card) ============ -->
     <section class="final-cta" aria-labelledby="final-cta-h2">
       <div class="container">
-        <h2 id="final-cta-h2">See Cytidel for your stack</h2>
-        <p>Bring your environment, the suppliers you care about, and the questions you've been trying to answer. We'll show you what Cytidel sees that the rest of the industry hasn't caught up to yet.</p>
-        <a href="book-a-demo.html" class="btn btn-primary">
-          Book a Demo
-          <span class="arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="final-cta-card">
+          <h2 id="final-cta-h2">See Cytidel for your stack</h2>
+          <p>Bring your environment, the suppliers you care about, and the questions you've been trying to answer. We'll show you what Cytidel sees that the rest of the industry hasn't caught up to yet.</p>
+          <a href="book-a-demo.html" class="btn btn-primary">
+            Book a Demo
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </section>
 
