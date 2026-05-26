@@ -473,6 +473,43 @@
       line-height: 1.4;
     }
 
+    /* ------- HERO PRODUCT PREVIEW (Linear-style, below hero) ------- */
+    .hero-product {
+      padding-top: 0;
+      padding-bottom: clamp(48px, 6vw, 80px);
+      position: relative;
+    }
+    .hero-product .container { max-width: var(--max); position: relative; z-index: 1; }
+    .hero-product::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 140px;
+      background: radial-gradient(ellipse at center, rgba(123,224,190,0.18) 0%, transparent 65%);
+      pointer-events: none;
+      filter: blur(28px);
+      z-index: 0;
+    }
+    .product-frame {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow:
+        0 30px 80px -20px rgba(20,30,20,0.18),
+        0 12px 30px -10px rgba(20,30,20,0.08);
+    }
+    .product-frame picture,
+    .product-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     /* ------- V2: PROOF STRIP (under hero, no heading) ------- */
     .proof-strip {
       padding-top: 0;
@@ -1306,6 +1343,32 @@
               <span class="arrow" aria-hidden="true">→</span>
             </a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HERO PRODUCT PREVIEW ============ -->
+    <section class="hero-product" aria-label="Product preview">
+      <div class="container">
+        <div class="product-frame">
+          <picture>
+            <source type="image/avif"
+                    srcset="img/product-hero-600.avif 600w,
+                            img/product-hero-1200.avif 1200w,
+                            img/product-hero-1800.avif 1800w,
+                            img/product-hero-2400.avif 2400w"
+                    sizes="(max-width: 1232px) 100vw, 1200px">
+            <source type="image/webp"
+                    srcset="img/product-hero-600.webp 600w,
+                            img/product-hero-1200.webp 1200w,
+                            img/product-hero-1800.webp 1800w,
+                            img/product-hero-2400.webp 2400w"
+                    sizes="(max-width: 1232px) 100vw, 1200px">
+            <img src="img/product-hero-1200.jpg"
+                 alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
+                 width="2746" height="1410"
+                 loading="eager" fetchpriority="high">
+          </picture>
         </div>
       </div>
     </section>
