@@ -441,6 +441,22 @@
       color: var(--text-secondary);
     }
     .hero-cta { margin-top: 40px; }
+    /* Hero pill eyebrow + green role word */
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 15px;
+      background: var(--accent-dim);
+      border-radius: 999px;
+      color: var(--accent-deep);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .hero h1 .role { color: var(--accent-deep); }
 
     /* ------- SECTION LEAD ------- */
     .section-head { margin-bottom: clamp(40px, 5vw, 64px); }
@@ -451,30 +467,34 @@
       color: var(--text-secondary);
     }
 
-    /* ------- SECTION 2 — PAIN GRID ------- */
+    /* ------- SECTION 2 — PAIN CARDS (bento) ------- */
     .pains { border-top: 1px solid var(--border); }
     .pain-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: clamp(28px, 4vw, 48px);
+      gap: clamp(16px, 2vw, 24px);
     }
     .pain {
       display: grid;
-      gap: 14px;
+      gap: 18px;
       align-content: start;
-      padding-top: 28px;
-      border-top: 1px solid var(--border);
+      padding: clamp(28px, 3vw, 38px);
+      background: var(--surface);
+      border-radius: var(--radius);
+      border-bottom: 3px solid var(--accent);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
     }
-    .pain-num {
-      font-family: var(--font-display);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      text-transform: uppercase;
+    .pain:hover { box-shadow: 0 18px 44px -18px rgba(20,30,20,0.16); transform: translateY(-2px); }
+    .pain-icon {
+      width: 46px; height: 46px;
+      border-radius: 11px;
+      background: var(--bg-elev);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--accent-deep);
     }
+    .pain-icon svg { width: 24px; height: 24px; }
     .pain h3 {
-      font-size: clamp(1.08rem, 1.55vw, 1.25rem);
+      font-size: clamp(1.15rem, 1.7vw, 1.35rem);
       line-height: 1.3;
     }
     .pain p {
@@ -483,49 +503,69 @@
       color: var(--text-secondary);
     }
     @media (max-width: 880px) {
-      .pain-grid { grid-template-columns: 1fr; gap: 0; }
-      .pain { padding-top: 24px; padding-bottom: 8px; }
+      .pain-grid { grid-template-columns: 1fr; }
     }
 
-    /* ------- SECTION 3 — CAPABILITIES LIST ------- */
+    /* ------- SECTION 3 — CAPABILITIES (numbered) ------- */
     .capabilities { border-top: 1px solid var(--border); }
     .capabilities-list {
       display: grid;
-      gap: 0;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(28px, 3.5vw, 48px) clamp(40px, 5vw, 72px);
     }
     .cap-item {
-      padding: clamp(22px, 2.8vw, 30px) 0;
-      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(16px, 2vw, 24px);
+      align-items: start;
     }
-    .cap-item:first-child { border-top: none; padding-top: 0; }
+    .cap-item .cap-no {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+      font-weight: 700;
+      color: var(--accent-deep);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .cap-item h3 {
+      font-size: clamp(1.1rem, 1.5vw, 1.22rem);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
     .cap-item p {
-      font-size: clamp(1rem, 1.45vw, 1.1rem);
-      line-height: 1.7;
+      font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+      line-height: 1.65;
       color: var(--text-secondary);
     }
-    .cap-item p b {
-      color: var(--text);
-      font-weight: 600;
-      font-family: var(--font-display);
-      letter-spacing: -0.005em;
+    @media (max-width: 760px) {
+      .capabilities-list { grid-template-columns: 1fr; }
     }
 
-    /* ------- SECTION 4 — SCENARIOS ------- */
+    /* ------- SECTION 4 — SCENARIOS (contained dark timeline card) ------- */
     .scenarios { border-top: 1px solid var(--border); }
+    .scenario-card {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      border-radius: 16px;
+      padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+      color: var(--dark-text);
+    }
+    .scenario-card .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
+    .scenario-card .section-head h2 { color: var(--dark-text); }
+    .scenario-card .section-head .lead { color: var(--dark-text-secondary); }
     .scenario-list { display: grid; gap: 0; }
     .scenario {
       display: grid;
-      grid-template-columns: 100px 1fr;
+      grid-template-columns: 90px 1fr;
       gap: clamp(20px, 4vw, 48px);
       padding: clamp(28px, 3.5vw, 40px) 0;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--dark-border);
       align-items: start;
     }
     .scenario:first-child { border-top: none; padding-top: 0; }
     .scenario-num {
       font-family: var(--font-display);
       font-size: clamp(2rem, 3.4vw, 2.8rem);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       letter-spacing: -0.04em;
       line-height: 1;
@@ -534,11 +574,12 @@
       font-size: clamp(1.12rem, 1.7vw, 1.35rem);
       letter-spacing: -0.012em;
       margin-bottom: 12px;
+      color: var(--dark-text);
     }
     .scenario p {
       font-size: clamp(1rem, 1.4vw, 1.08rem);
       line-height: 1.7;
-      color: var(--text-secondary);
+      color: var(--dark-text-secondary);
     }
     @media (max-width: 720px) {
       .scenario { grid-template-columns: 1fr; gap: 10px; }
@@ -583,6 +624,19 @@
       font-weight: 500;
     }
     .conv p + p { margin-top: 10px; color: var(--text-secondary); font-weight: 400; font-family: var(--font-sans); font-size: 0.96rem; line-height: 1.55; letter-spacing: 0; }
+    .conv-verdict {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      font-family: var(--font-sans);
+      letter-spacing: 0;
+    }
+    .conv-verdict svg { width: 19px; height: 19px; flex-shrink: 0; }
+    .conv .conv-verdict { color: #cf4b3c; }
+    .conv.is-new .conv-verdict { color: var(--accent-deep); }
     .conversation-close {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.65;
@@ -854,8 +908,8 @@
     <section class="hero" aria-labelledby="hero-h1">
       <div class="container">
         <div class="hero-inner">
-          <span class="eyebrow">For Threat Intelligence</span>
-          <h1 id="hero-h1">Cytidel for Threat Intelligence</h1>
+          <span class="eyebrow">Solution Guide</span>
+          <h1 id="hero-h1">Cytidel for <span class="role">Threat Intelligence</span></h1>
           <p class="hero-sub">Stop manually stitching intel together from a dozen sources. Cytidel correlates thousands of sources in real time, ties them to the vulnerabilities that matter, and routes the signal directly to the people who can act.</p>
           <div class="hero-cta">
             <a href="book-a-demo.html" class="btn btn-primary">
@@ -876,17 +930,17 @@
         </div>
         <div class="pain-grid">
           <article class="pain">
-            <span class="pain-num">Pain 1</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
             <h3>Your intel doesn't operationalise.</h3>
             <p>You produce strong analysis. It lands in briefings, Slack threads, and PDFs that get read, nodded at, and forgotten. The vulnerability management team is still prioritising by CVSS because your intelligence doesn't flow into their workflow as a structured signal — it stays as context.</p>
           </article>
           <article class="pain">
-            <span class="pain-num">Pain 2</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg></span>
             <h3>Manual correlation eats your week.</h3>
             <p>You're pulling from vendor advisories, exploit repos, social media, news, threat actor feeds, and your own internal sources — then manually cross-referencing against scanner output to figure out what's trending and what's actually being exploited. It's the work of a 10-person team, run from spreadsheets and willpower.</p>
           </article>
           <article class="pain">
-            <span class="pain-num">Pain 3</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></span>
             <h3>The signal you need is in places you don't have time to watch.</h3>
             <p>Exploit code drops on forums your team doesn't read. Threat actor TTPs shift in places that don't get indexed. By the time the headline appears, the work has already happened — and you weren't watching when it did.</p>
           </article>
@@ -902,11 +956,26 @@
           <p class="lead">Intelligence that operationalises automatically — and reaches the people who need to act, without you having to broker it.</p>
         </div>
         <div class="capabilities-list">
-          <div class="cap-item"><p><b>Real-time Vulnerability Intelligence</b> monitors thousands of sources continuously — exploit code, threat actor activity, vendor advisories, social channels, news. Cytidel correlates everything in real time and surfaces what's actually being exploited, not what's theoretically critical.</p></div>
-          <div class="cap-item"><p><b>Threat Actor Intelligence</b> maps every known adversary to the vulnerabilities in their arsenal, with TTP context, alias tracking, and campaign history. When a threat actor starts targeting your industry or a supplier in your stack, you know — and so does the engineer who needs to act.</p></div>
-          <div class="cap-item"><p><b>Smart Alerts</b> turns your intelligence into operational signal. Configure rules that route intelligence to the people who own the affected technology — by vendor, by product, by risk threshold. Your analysis doesn't stop at a briefing; it lands in the workflow.</p></div>
-          <div class="cap-item"><p><b>Bulk Analyser</b> lets you take any scanner output and apply Cytidel intelligence in minutes. Useful when leadership asks "are we exposed to this campaign?" — and you need an answer in real time, not a research project.</p></div>
-          <div class="cap-item"><p><b>Supplier &amp; Software Monitoring</b> runs 24/7 across the vendors and products that matter to your organisation. Threat actor activity against a supplier reaches the right team the moment it matters.</p></div>
+          <div class="cap-item">
+            <span class="cap-no">01</span>
+            <div><h3>Real-time Vulnerability Intelligence</h3><p>monitors thousands of sources continuously — exploit code, threat actor activity, vendor advisories, social channels, news. Cytidel correlates everything in real time and surfaces what's actually being exploited, not what's theoretically critical.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">02</span>
+            <div><h3>Threat Actor Intelligence</h3><p>maps every known adversary to the vulnerabilities in their arsenal, with TTP context, alias tracking, and campaign history. When a threat actor starts targeting your industry or a supplier in your stack, you know — and so does the engineer who needs to act.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">03</span>
+            <div><h3>Smart Alerts</h3><p>turns your intelligence into operational signal. Configure rules that route intelligence to the people who own the affected technology — by vendor, by product, by risk threshold. Your analysis doesn't stop at a briefing; it lands in the workflow.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">04</span>
+            <div><h3>Bulk Analyser</h3><p>lets you take any scanner output and apply Cytidel intelligence in minutes. Useful when leadership asks "are we exposed to this campaign?" — and you need an answer in real time, not a research project.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">05</span>
+            <div><h3>Supplier &amp; Software Monitoring</h3><p>runs 24/7 across the vendors and products that matter to your organisation. Threat actor activity against a supplier reaches the right team the moment it matters.</p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -914,6 +983,7 @@
     <!-- ============ SECTION 4 — HOW TI TEAMS USE CYTIDEL ============ -->
     <section class="scenarios" aria-labelledby="scen-h2">
       <div class="container">
+        <div class="scenario-card">
         <div class="section-head">
           <h2 id="scen-h2">How Threat Intelligence teams use Cytidel</h2>
           <p class="lead">Three moments where the work changes.</p>
@@ -941,6 +1011,7 @@
             </div>
           </article>
         </div>
+        </div>
       </div>
     </section>
 
@@ -955,11 +1026,12 @@
           <div class="conv">
             <span class="conv-label">The old conversation</span>
             <p>"Did we send the threat actor brief to the VM team?" / "It's in the channel. I'm not sure they've read it."</p>
-            <p>You're managing the gap between intelligence and action manually.</p>
+            <div class="conv-verdict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Managing the gap between intel and action by hand.</div>
           </div>
           <div class="conv is-new">
             <span class="conv-label">The new conversation</span>
             <p>"The team patched the relevant vulnerabilities yesterday. The alert routed straight to the engineer who owns that part of the stack. Our brief this week is on the broader campaign patterns — here's what's changing strategically."</p>
+            <div class="conv-verdict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Intelligence that operationalises itself.</div>
           </div>
         </div>
         <p class="conversation-close">Same intelligence team, same sources, completely different leverage. Your work flows into the organisation as structured signal, and you get to spend your time on the analysis only you can do.</p>

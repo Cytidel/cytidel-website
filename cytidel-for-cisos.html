@@ -441,6 +441,22 @@
       color: var(--text-secondary);
     }
     .hero-cta { margin-top: 40px; }
+    /* Hero pill eyebrow + green role word */
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 15px;
+      background: var(--accent-dim);
+      border-radius: 999px;
+      color: var(--accent-deep);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .hero h1 .role { color: var(--accent-deep); }
 
     /* ------- SECTION LEAD ------- */
     .section-head { margin-bottom: clamp(40px, 5vw, 64px); }
@@ -451,30 +467,34 @@
       color: var(--text-secondary);
     }
 
-    /* ------- SECTION 2 — PAIN GRID ------- */
+    /* ------- SECTION 2 — PAIN CARDS (bento) ------- */
     .pains { border-top: 1px solid var(--border); }
     .pain-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: clamp(28px, 4vw, 48px);
+      gap: clamp(16px, 2vw, 24px);
     }
     .pain {
       display: grid;
-      gap: 14px;
+      gap: 18px;
       align-content: start;
-      padding-top: 28px;
-      border-top: 1px solid var(--border);
+      padding: clamp(28px, 3vw, 38px);
+      background: var(--surface);
+      border-radius: var(--radius);
+      border-bottom: 3px solid var(--accent);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
     }
-    .pain-num {
-      font-family: var(--font-display);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      text-transform: uppercase;
+    .pain:hover { box-shadow: 0 18px 44px -18px rgba(20,30,20,0.16); transform: translateY(-2px); }
+    .pain-icon {
+      width: 46px; height: 46px;
+      border-radius: 11px;
+      background: var(--bg-elev);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--accent-deep);
     }
+    .pain-icon svg { width: 24px; height: 24px; }
     .pain h3 {
-      font-size: clamp(1.08rem, 1.55vw, 1.25rem);
+      font-size: clamp(1.15rem, 1.7vw, 1.35rem);
       line-height: 1.3;
     }
     .pain p {
@@ -483,49 +503,69 @@
       color: var(--text-secondary);
     }
     @media (max-width: 880px) {
-      .pain-grid { grid-template-columns: 1fr; gap: 0; }
-      .pain { padding-top: 24px; padding-bottom: 8px; }
+      .pain-grid { grid-template-columns: 1fr; }
     }
 
-    /* ------- SECTION 3 — CAPABILITIES LIST ------- */
+    /* ------- SECTION 3 — CAPABILITIES (numbered) ------- */
     .capabilities { border-top: 1px solid var(--border); }
     .capabilities-list {
       display: grid;
-      gap: 0;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(28px, 3.5vw, 48px) clamp(40px, 5vw, 72px);
     }
     .cap-item {
-      padding: clamp(22px, 2.8vw, 30px) 0;
-      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(16px, 2vw, 24px);
+      align-items: start;
     }
-    .cap-item:first-child { border-top: none; padding-top: 0; }
+    .cap-item .cap-no {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+      font-weight: 700;
+      color: var(--accent-deep);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .cap-item h3 {
+      font-size: clamp(1.1rem, 1.5vw, 1.22rem);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
     .cap-item p {
-      font-size: clamp(1rem, 1.45vw, 1.1rem);
-      line-height: 1.7;
+      font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+      line-height: 1.65;
       color: var(--text-secondary);
     }
-    .cap-item p b {
-      color: var(--text);
-      font-weight: 600;
-      font-family: var(--font-display);
-      letter-spacing: -0.005em;
+    @media (max-width: 760px) {
+      .capabilities-list { grid-template-columns: 1fr; }
     }
 
-    /* ------- SECTION 4 — SCENARIOS ------- */
+    /* ------- SECTION 4 — SCENARIOS (contained dark timeline card) ------- */
     .scenarios { border-top: 1px solid var(--border); }
+    .scenario-card {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      border-radius: 16px;
+      padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+      color: var(--dark-text);
+    }
+    .scenario-card .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
+    .scenario-card .section-head h2 { color: var(--dark-text); }
+    .scenario-card .section-head .lead { color: var(--dark-text-secondary); }
     .scenario-list { display: grid; gap: 0; }
     .scenario {
       display: grid;
-      grid-template-columns: 100px 1fr;
+      grid-template-columns: 90px 1fr;
       gap: clamp(20px, 4vw, 48px);
       padding: clamp(28px, 3.5vw, 40px) 0;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--dark-border);
       align-items: start;
     }
     .scenario:first-child { border-top: none; padding-top: 0; }
     .scenario-num {
       font-family: var(--font-display);
       font-size: clamp(2rem, 3.4vw, 2.8rem);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       letter-spacing: -0.04em;
       line-height: 1;
@@ -534,11 +574,12 @@
       font-size: clamp(1.12rem, 1.7vw, 1.35rem);
       letter-spacing: -0.012em;
       margin-bottom: 12px;
+      color: var(--dark-text);
     }
     .scenario p {
       font-size: clamp(1rem, 1.4vw, 1.08rem);
       line-height: 1.7;
-      color: var(--text-secondary);
+      color: var(--dark-text-secondary);
     }
     @media (max-width: 720px) {
       .scenario { grid-template-columns: 1fr; gap: 10px; }
@@ -583,6 +624,19 @@
       font-weight: 500;
     }
     .conv p + p { margin-top: 10px; color: var(--text-secondary); font-weight: 400; font-family: var(--font-sans); font-size: 0.96rem; line-height: 1.55; letter-spacing: 0; }
+    .conv-verdict {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      font-family: var(--font-sans);
+      letter-spacing: 0;
+    }
+    .conv-verdict svg { width: 19px; height: 19px; flex-shrink: 0; }
+    .conv .conv-verdict { color: #cf4b3c; }
+    .conv.is-new .conv-verdict { color: var(--accent-deep); }
     .conversation-close {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.65;
@@ -854,8 +908,8 @@
     <section class="hero" aria-labelledby="hero-h1">
       <div class="container">
         <div class="hero-inner">
-          <span class="eyebrow">For CISOs</span>
-          <h1 id="hero-h1">Cytidel for CISOs</h1>
+          <span class="eyebrow">Solution Guide</span>
+          <h1 id="hero-h1">Cytidel for <span class="role">CISOs</span></h1>
           <p class="hero-sub">Your team gets the speed and the coverage to act on what matters. You get the evidence and the language to defend every decision — to your board, your auditors, and your regulators.</p>
           <div class="hero-cta">
             <a href="book-a-demo.html" class="btn btn-primary">
@@ -876,17 +930,17 @@
         </div>
         <div class="pain-grid">
           <article class="pain">
-            <span class="pain-num">Pain 1</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
             <h3>Your team is producing the right answers to the wrong questions.</h3>
             <p>The vulnerability management programme is patching what it can. The threat intelligence team is producing strong analysis. The supplier risk function is checking the boxes. And yet — when the board asks "are we exposed to the threat actor in the news this week?", the answer is a four-day research project, not a structured response.</p>
           </article>
           <article class="pain">
-            <span class="pain-num">Pain 2</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg></span>
             <h3>The board is at the table now, and they're asking sharper questions.</h3>
             <p>Every breach in the news, every supplier failure, every regulatory shift puts the question back on them: are we at risk? You're being asked to translate technical exposure into business risk — every quarter, sometimes every month, occasionally in real time during an incident. CVSS doesn't translate. CVE IDs don't translate. You need a different language.</p>
           </article>
           <article class="pain">
-            <span class="pain-num">Pain 3</span>
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></span>
             <h3>Your regulators don't accept "we patched the criticals" anymore.</h3>
             <p>NIS2 and DORA both made supplier and software monitoring a continuous obligation. ISO 27001 auditors want evidence behind every prioritisation decision. The bar has moved from "do you have a policy" to "show us how the policy is enforced in real time." Your team can't manually generate that evidence trail every quarter.</p>
           </article>
@@ -902,11 +956,26 @@
           <p class="lead">A platform that turns raw threat and vulnerability data into the language the board, the auditor, and the regulator actually need.</p>
         </div>
         <div class="capabilities-list">
-          <div class="cap-item"><p><b>Real-time Vulnerability Intelligence</b> gives your team a threat-led prioritisation engine — and gives you a real-time picture of what your organisation is exposed to, refreshed continuously. The board's question stops being a research project.</p></div>
-          <div class="cap-item"><p><b>Threat Actor Intelligence</b> translates threat exposure into the language that matters. Not "we have 14,000 high-severity CVEs" — instead, "these are the threat actors targeting our industry, here's what they're using, and here's where we stand." Cytidel does the translation. You bring it to the board.</p></div>
-          <div class="cap-item"><p><b>Smart Alerts</b> ensures the right intelligence reaches the right people, every time. Your team isn't checking dashboards out of anxiety — the signal comes to them when it matters. Your governance posture becomes evidenceable, not aspirational.</p></div>
-          <div class="cap-item"><p><b>Bulk Analyser</b> turns the audit conversation. When an ISO 27001 or NIS2 auditor asks how you prioritise, you show them the methodology, the evidence, and the data trail behind every decision. Not a score and a gut feeling.</p></div>
-          <div class="cap-item"><p><b>Supplier &amp; Software Monitoring</b> makes third-party risk a continuous discipline, not an annual exercise. NIS2 and DORA both require it. Cytidel delivers it.</p></div>
+          <div class="cap-item">
+            <span class="cap-no">01</span>
+            <div><h3>Real-time Vulnerability Intelligence</h3><p>gives your team a threat-led prioritisation engine — and gives you a real-time picture of what your organisation is exposed to, refreshed continuously. The board's question stops being a research project.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">02</span>
+            <div><h3>Threat Actor Intelligence</h3><p>translates threat exposure into the language that matters. Not "we have 14,000 high-severity CVEs" — instead, "these are the threat actors targeting our industry, here's what they're using, and here's where we stand." Cytidel does the translation. You bring it to the board.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">03</span>
+            <div><h3>Smart Alerts</h3><p>ensures the right intelligence reaches the right people, every time. Your team isn't checking dashboards out of anxiety — the signal comes to them when it matters. Your governance posture becomes evidenceable, not aspirational.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">04</span>
+            <div><h3>Bulk Analyser</h3><p>turns the audit conversation. When an ISO 27001 or NIS2 auditor asks how you prioritise, you show them the methodology, the evidence, and the data trail behind every decision. Not a score and a gut feeling.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">05</span>
+            <div><h3>Supplier &amp; Software Monitoring</h3><p>makes third-party risk a continuous discipline, not an annual exercise. NIS2 and DORA both require it. Cytidel delivers it.</p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -914,6 +983,7 @@
     <!-- ============ SECTION 4 — HOW CISOS USE CYTIDEL ============ -->
     <section class="scenarios" aria-labelledby="scen-h2">
       <div class="container">
+        <div class="scenario-card">
         <div class="section-head">
           <h2 id="scen-h2">How CISOs use Cytidel</h2>
           <p class="lead">Three moments where the conversation changes.</p>
@@ -941,6 +1011,7 @@
             </div>
           </article>
         </div>
+        </div>
       </div>
     </section>
 
@@ -955,11 +1026,12 @@
           <div class="conv">
             <span class="conv-label">The old conversation</span>
             <p>"We're patching to policy. CVSS criticals are being addressed. We have an annual vendor review process."</p>
-            <p>Accurate. Doesn't answer the question the board is actually asking.</p>
+            <div class="conv-verdict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Doesn't answer the question the board is asking.</div>
           </div>
           <div class="conv is-new">
             <span class="conv-label">The new conversation</span>
             <p>"Three threat actors are active in our industry. We have exposure to two — both remediated, with the evidence trail. The third doesn't affect our stack. Our supplier monitoring flagged a vendor advisory yesterday; we've reached out for confirmation. Here's what we're watching for next quarter."</p>
+            <div class="conv-verdict"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>The answer the board is actually asking for.</div>
           </div>
         </div>
         <p class="conversation-close">Same team. Same posture. Same regulatory obligations. Completely different conversation with the people who matter most.</p>
