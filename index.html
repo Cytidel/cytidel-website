@@ -592,14 +592,9 @@
     }
 
     /* ------- SECTION 2 — MONDAY MORNING ------- */
-    .monday-morning h2,
-    .monday-morning .lead,
-    .monday-morning .pull,
-    .monday-morning .close { max-width: 880px; }
     .monday-morning .lead {
       font-size: clamp(1.05rem, 1.6vw, 1.2rem);
       color: var(--text-secondary);
-      max-width: 720px;
     }
     .monday-morning .pull {
       font-family: var(--font-display);
@@ -615,7 +610,6 @@
     .monday-morning .close {
       font-size: clamp(1rem, 1.5vw, 1.15rem);
       color: var(--text-secondary);
-      max-width: 760px;
     }
 
     /* ------- SECTION 3 — WHY NOW ------- */
@@ -679,11 +673,10 @@
     }
 
     /* ------- SECTION 5 — WHAT CYTIDEL DOES ------- */
-    .what h2 { max-width: 720px; margin-bottom: clamp(32px, 4vw, 48px); }
+    .what h2 { margin-bottom: clamp(32px, 4vw, 48px); }
     .what p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.7;
-      max-width: 780px;
     }
     .what p + p { margin-top: 1.4em; }
     .what .emph { color: var(--text); }
@@ -1274,6 +1267,12 @@
       background: rgba(255,255,255,0.03);
       border-color: var(--dark-border);
     }
+    .spotlight-card .spotlight-footer {
+      margin-top: clamp(28px, 3.5vw, 40px);
+      padding-top: clamp(24px, 3vw, 32px);
+      border-top: 1px solid var(--dark-border);
+    }
+    .spotlight-card .spotlight-footer a { color: var(--accent); }
 
     /* What-close (post-spotlight) — slightly tighter than full section-y */
     .what-close { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(72px, 9vw, 120px); }
@@ -1581,17 +1580,12 @@
             <text x="180" y="280" fill="#52525b" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" letter-spacing="0.04em">Horizontal axis compressed for readability. All deltas measured against CISA KEV publication.</text>
           </svg>
         </figure>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ WHAT CYTIDEL DOES (close) ============ -->
-    <section class="what what-close">
-      <div class="container">
-        <p>Every alert comes with the evidence, the threat actor context, and the exploitation signals behind it. No tuning required. No new tabs to check. The intelligence flows into where your team already works.</p>
+        <p class="spotlight-supporting">Every alert comes with the evidence, the threat actor context, and the exploitation signals behind it. No tuning required. No new tabs to check. The intelligence flows into where your team already works.</p>
 
-        <div class="cap-footer">
+        <div class="cap-footer spotlight-footer">
           <a href="cytidel-platform.html">→ See the full platform</a>
+        </div>
         </div>
       </div>
     </section>
