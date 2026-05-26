@@ -925,24 +925,44 @@
     /* ------- SECTION 6 — PROOF ------- */
     .proof .container { max-width: 1100px; }
     .proof-quote {
+      position: relative;
       max-width: 880px;
       margin: 0 auto clamp(48px, 6vw, 72px);
-      text-align: center;
+      text-align: left;
+      padding-top: clamp(48px, 7vw, 88px);
+      padding-left: clamp(0px, 2vw, 16px);
+    }
+    .proof-quote::before {
+      content: "\201C";
+      position: absolute;
+      top: -10px;
+      left: -8px;
+      font-family: var(--font-display);
+      font-size: clamp(5.5rem, 12vw, 10rem);
+      font-weight: 700;
+      line-height: 0.7;
+      letter-spacing: -0.05em;
+      color: var(--accent-deep);
+      opacity: 0.32;
+      pointer-events: none;
+      z-index: 0;
     }
     .proof-quote q {
       display: block;
+      position: relative;
+      z-index: 1;
       font-family: var(--font-display);
       font-size: clamp(1.4rem, 2.8vw, 2rem);
       line-height: 1.32;
       letter-spacing: -0.015em;
       color: var(--text);
-      quotes: "\201C" "\201D";
+      quotes: none;
     }
-    .proof-quote q::before { content: open-quote; }
-    .proof-quote q::after { content: close-quote; }
+    .proof-quote q::before,
+    .proof-quote q::after { content: none; }
     .proof-quote cite {
       display: block;
-      margin-top: 20px;
+      margin-top: 24px;
       font-style: normal;
       font-size: 0.92rem;
       color: var(--text-secondary);
