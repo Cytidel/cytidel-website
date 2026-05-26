@@ -811,14 +811,20 @@
       background: linear-gradient(135deg, var(--dark-bg) 0%, var(--cta-bg) 100%);
       color: rgba(247,249,243,0.55);
     }
-    /* Real image variant — image sits as a white card inside the frame */
-    .cap-visual-img picture { display: block; max-width: 100%; max-height: 100%; }
+    /* Real image variant — picture + img both fill the frame's inner area,
+       image content scales with object-fit: contain to preserve aspect.
+       Result: every section gets the same-sized white card; image content
+       inside has whatever natural padding its aspect ratio implies. */
+    .cap-visual-img picture {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
     .cap-visual-img img {
       display: block;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       border-radius: 8px;
       border: 1px solid rgba(20,30,20,0.06);
       box-shadow:
@@ -1281,20 +1287,20 @@
           <div class="cap-visual cap-visual-featured cap-visual-img">
             <picture>
               <source type="image/avif"
-                      srcset="img/threat-actor-600.avif 600w,
-                              img/threat-actor-1000.avif 1000w,
-                              img/threat-actor-1400.avif 1400w,
-                              img/threat-actor-1800.avif 1800w"
+                      srcset="img/villain-vault-600.avif 600w,
+                              img/villain-vault-1000.avif 1000w,
+                              img/villain-vault-1400.avif 1400w,
+                              img/villain-vault-1800.avif 1800w"
                       sizes="(max-width: 880px) 100vw, 660px">
               <source type="image/webp"
-                      srcset="img/threat-actor-600.webp 600w,
-                              img/threat-actor-1000.webp 1000w,
-                              img/threat-actor-1400.webp 1400w,
-                              img/threat-actor-1800.webp 1800w"
+                      srcset="img/villain-vault-600.webp 600w,
+                              img/villain-vault-1000.webp 1000w,
+                              img/villain-vault-1400.webp 1400w,
+                              img/villain-vault-1800.webp 1800w"
                       sizes="(max-width: 880px) 100vw, 660px">
-              <img src="img/threat-actor-1000.jpg"
-                   alt="Cytidel Threat Actor Intelligence view — adversaries mapped to vulnerabilities with TTP context and campaign history."
-                   width="1798" height="1274"
+              <img src="img/villain-vault-1000.jpg"
+                   alt="Cytidel Villain Vault — Threat Actor Intelligence module showing adversaries mapped to vulnerabilities with TTP context and campaign history."
+                   width="2850" height="1422"
                    loading="lazy">
             </picture>
           </div>
