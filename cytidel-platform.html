@@ -590,11 +590,10 @@
     .cap-grid.cap-reverse > div:first-child { order: 2; }
     .cap-grid.cap-reverse > .cap-visual { order: 1; }
     @media (max-width: 880px) {
+      .cap-grid,
+      .cap-grid.cap-reverse { grid-template-columns: 1fr; gap: 32px; }
       .cap-grid.cap-reverse > div:first-child,
       .cap-grid.cap-reverse > .cap-visual { order: initial; }
-    }
-    @media (max-width: 880px) {
-      .cap-grid { grid-template-columns: 1fr; gap: 32px; }
     }
     .cap-heading h2 { margin-bottom: 14px; }
     .cap-tagline {
@@ -1072,7 +1071,6 @@
       padding-top: clamp(64px, 8vw, 110px);
       padding-bottom: clamp(64px, 8vw, 110px);
     }
-    .spotlight-section .container { max-width: 980px; }
     .spotlight-section .eyebrow { color: var(--accent); margin-bottom: 18px; }
     .spotlight-section .spotlight-headline { margin-top: 0; }
 
