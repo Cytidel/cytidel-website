@@ -591,6 +591,14 @@
       gap: clamp(40px, 6vw, 80px);
       align-items: start;
     }
+    /* Reverse layout: image on left, text on right — creates section-to-section rhythm */
+    .cap-grid.cap-reverse { grid-template-columns: 1.3fr 1fr; }
+    .cap-grid.cap-reverse > div:first-child { order: 2; }
+    .cap-grid.cap-reverse > .cap-visual { order: 1; }
+    @media (max-width: 880px) {
+      .cap-grid.cap-reverse > div:first-child,
+      .cap-grid.cap-reverse > .cap-visual { order: initial; }
+    }
     @media (max-width: 880px) {
       .cap-grid { grid-template-columns: 1fr; gap: 32px; }
     }
@@ -643,46 +651,55 @@
       font-weight: 600;
     }
 
-    /* Villain Vault module callout — branded named module inside Threat Actor Intelligence */
-    .module-callout {
-      margin: clamp(28px, 3.5vw, 40px) 0 0;
-      padding: clamp(24px, 3vw, 32px) clamp(26px, 3.5vw, 36px);
-      background: var(--dark-bg);
-      border-radius: 12px;
+    /* Dark variant button — used for "Access Villain Vault" CTA */
+    .btn-dark {
+      background: var(--cta-bg);
+      color: #f7f9f3;
+      margin-top: clamp(20px, 2.5vw, 28px);
+    }
+    .btn-dark:hover {
+      background: #1d4f37;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(22,61,42,0.22);
+    }
+
+    /* Bulk Analyser enrichment list — visual proof of supported scanners */
+    .enrichment-list {
       display: grid;
       gap: 8px;
-      color: var(--dark-text);
-      position: relative;
-      overflow: hidden;
+      margin: clamp(20px, 2.5vw, 32px) 0 0;
     }
-    .module-callout::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 100% 0%, rgba(123,224,190,0.10) 0%, transparent 50%);
-      pointer-events: none;
+    .enrichment-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: var(--bg-elev);
+      border-radius: 10px;
+      gap: 12px;
     }
-    .module-callout > * { position: relative; }
-    .module-callout-label {
-      font-size: 0.72rem;
+    .enrichment-name {
       font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
+      color: var(--text);
+      font-size: clamp(0.95rem, 1.3vw, 1.02rem);
     }
-    .module-callout-name {
-      font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.6vw, 1.85rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--dark-text);
-      margin-bottom: 4px;
+    .enrichment-status {
+      font-weight: 600;
+      color: var(--accent-deep);
+      font-size: 0.85rem;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
-    .module-callout p {
-      margin: 0;
-      font-size: clamp(0.95rem, 1.35vw, 1.02rem);
-      color: var(--dark-text-secondary);
-      line-height: 1.55;
+
+    /* Smart Alerts channel line — replaces the prose channel listing */
+    .channel-line {
+      margin-top: clamp(20px, 2.5vw, 28px);
+      font-size: clamp(0.92rem, 1.3vw, 1rem);
+      color: var(--text-secondary);
+    }
+    .channel-line strong {
+      color: var(--text);
+      font-weight: 600;
     }
 
     /* Smart Alerts funnel viz: 300 → 3 → 1 */
@@ -1220,21 +1237,13 @@
             </div>
 
             <div class="cap-body">
-              <p>Every vulnerability comes with intelligence tags drawn from thousands of sources, refreshed continuously:</p>
+              <p>Every vulnerability, tagged and rated by what's actually happening. Cytidel enables a threat-led approach where prioritisation is driven by evidence, not theory.</p>
 
               <ul>
-                <li><b>Exploitation evidence</b> — is this being used right now, in the wild?</li>
-                <li><b>Potential Public Exploit</b> — has exploit code been published, even if KEV hasn't caught up? In 2025, KEV covered only 55% of vulnerabilities we tagged this way.</li>
-                <li><b>Threat actor association</b> — is this vulnerability in a known adversary's arsenal?</li>
-                <li><b>CISA KEV membership</b> — and how long it took KEV to confirm what we already knew.</li>
-                <li><b>Trending activity</b> — is interest spiking across news, social, and exploit repositories?</li>
+                <li><b>Exploitation evidence</b> — is this being used right now, in the wild? Real-time confirmation from thousands of sources.</li>
+                <li><b>Potential Public Exploit</b> — exploit code publications identified before official sources like CISA KEV catch up.</li>
+                <li><b>Dynamic Risk Rating</b> — ratings shift from Low to High Risk within hours as new exploit signals emerge.</li>
               </ul>
-
-              <p>Cytidel enables a threat-led approach to vulnerability management. Your team prioritises by what's actually being exploited, who's exploiting it, and what's moving in the threat landscape — not by a theoretical score.</p>
-
-              <p><span class="emph">Dynamic Risk Rating.</span> Every vulnerability rated continuously by the combination of these signals. A vulnerability rated Low by CVSS can move to High Risk on Cytidel within hours of new exploit signals appearing. Every rating comes with a full evidence trail. When an auditor or a board member asks why you prioritised one vulnerability over another, you show them the data.</p>
-
-              <p>We're extending the same analytical approach with machine learning, so the methodology scales as the volume grows.</p>
             </div>
           </div>
 
@@ -1265,7 +1274,7 @@
     <!-- ============ SECTION 4 — THREAT ACTOR INTELLIGENCE ============ -->
     <section class="capability" aria-labelledby="threat-actor-intelligence">
       <div class="container">
-        <div class="cap-grid">
+        <div class="cap-grid cap-reverse">
           <div>
             <div class="cap-heading">
               <h2 id="threat-actor-intelligence">Threat Actor Intelligence</h2>
@@ -1273,21 +1282,18 @@
             </div>
 
             <div class="cap-body">
-              <p>Cytidel's Threat Actor Intelligence maps every known adversary to the vulnerabilities in their arsenal — with full TTP context, alias tracking, and campaign history. When a threat actor starts targeting your industry, a supplier in your stack, or software your team depends on, you know.</p>
-
-              <p>Go deeper when you need to. See the malware used, the intent behind the campaign (ransomware deployment, initial access brokering, espionage), and the targets and patterns over time. The kind of context that turns "we patched the criticals" into "here are the threat actors active in our industry, here's what they're using, and here's where we stand."</p>
-
-              <p>That's the conversation your CISO has with the board every quarter. The team that has the context ready wins it.</p>
+              <p>Know who's targeting your world, before they get to you. Map known adversaries to the vulnerabilities in their arsenal with full TTP context.</p>
 
               <aside class="callout" role="note">
-                <p>30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium by CVSS. Threat actors don't pick by score. Your prioritisation shouldn't either.</p>
+                <p>30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium by CVSS. Threat actors don't pick by score.</p>
               </aside>
 
-              <aside class="module-callout" role="note" aria-label="Villain Vault module">
-                <div class="module-callout-label">Module</div>
-                <div class="module-callout-name">Villain Vault</div>
-                <p>The full Threat Actor Intelligence module inside the Cytidel platform — mapping every known adversary to the vulnerabilities they're using, with aliases, TTPs, and campaign history.</p>
-              </aside>
+              <p>Go deeper into malware used, intent (ransomware vs espionage), and tactical patterns over time. The full module is called <strong>Villain Vault</strong>.</p>
+
+              <a href="book-a-demo.html" class="btn btn-dark">
+                Access Villain Vault
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
 
@@ -1307,11 +1313,7 @@
             </div>
 
             <div class="cap-body">
-              <p>Your scanner covers your environment. Nobody is watching when a vendor in your stack gets breached at 2am on a Saturday, when a threat actor starts targeting software you depend on, or when a vendor advisory drops over a holiday weekend.</p>
-
-              <p>Supplier &amp; Software Monitoring runs continuously across the vendors and products you care about. The moment something matters — a breach, a targeted threat actor campaign, a critical advisory — the right people are alerted. Not days later from a news article.</p>
-
-              <p>NIS2 and DORA both made supplier and software monitoring a board-level obligation. Annual vendor reviews used to be enough. They aren't anymore.</p>
+              <p>Early warning across the parts of your stack your scanner can't see. The moment a vendor advisory drops or a breach is detected, the right people are alerted instantly.</p>
 
               <div class="chip-row" aria-label="Regulatory compliance">
                 <span class="chip"><span class="chip-dot" aria-hidden="true"></span>NIS2 Ready</span>
@@ -1336,11 +1338,22 @@
             </div>
 
             <div class="cap-body">
-              <p>Your scanner gives you a backlog. CVSS scores tell you what's theoretically critical. Neither tells you what's actually being exploited right now.</p>
+              <p>Upload scanner output from Tenable, Qualys, or Rapid7. Enrich every vulnerability with real-world risk ratings and evidence trails in minutes.</p>
 
-              <p>Upload your scanner output and Bulk Analyser enriches every vulnerability with Cytidel intelligence — exploitation status, threat actor activity, risk ratings, and the full evidence trail. In minutes, you see which vulnerabilities in your backlog are genuinely dangerous, which are noise, and where the early warning signals are pointing now.</p>
-
-              <p>Bulk Analyser accepts output from Tenable, Qualys, Rapid7, and other scanners. Save reports, track how risk profiles change over time, and bring evidence to your next remediation conversation.</p>
+              <div class="enrichment-list" role="list">
+                <div class="enrichment-row" role="listitem">
+                  <span class="enrichment-name">Tenable.io Output</span>
+                  <span class="enrichment-status">Enriched 100%</span>
+                </div>
+                <div class="enrichment-row" role="listitem">
+                  <span class="enrichment-name">Qualys VMDR</span>
+                  <span class="enrichment-status">Enriched 100%</span>
+                </div>
+                <div class="enrichment-row" role="listitem">
+                  <span class="enrichment-name">Rapid7 Nexpose</span>
+                  <span class="enrichment-status">Enriched 100%</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1360,9 +1373,7 @@
             </div>
 
             <div class="cap-body">
-              <p>Every security team has a policy that says what critical means, how quickly different severity levels should be remediated, and who's responsible for what. In practice, generic CVSS thresholds fire the same alerts to everyone — and the policy can't keep up with the volume.</p>
-
-              <p>Smart Alerts changes that. Configure by vendor, product, and risk threshold. Build rules with AND/OR logic so alerts match your exact definition of critical — not a generic one. Route alerts to the people who own the affected technology, not everyone.</p>
+              <p>Configure by vendor, product, and risk threshold. Route alerts to the people who own the technology, not everyone.</p>
 
               <div class="funnel" role="figure" aria-label="From 300 trending vulnerabilities, 3 relevant to your stack, 1 person notified">
                 <div class="funnel-stage">
@@ -1381,7 +1392,7 @@
                 </div>
               </div>
 
-              <p>Channels: email, webhook, Slack, Teams. The intelligence flows into where your team already works.</p>
+              <p class="channel-line">Channels: <strong>email</strong> · <strong>webhook</strong> · <strong>Slack</strong> · <strong>Teams</strong></p>
             </div>
           </div>
 
@@ -1403,20 +1414,18 @@
               <dd>Tenable, Qualys, Rapid7, and other scanner output flows through Bulk Analyser for enrichment.</dd>
             </div>
             <div class="stack-item">
-              <dt>Alerting channels</dt>
-              <dd>Email, webhook, Slack, and Teams.</dd>
+              <dt>Alerting</dt>
+              <dd>Email, webhook, Slack, and Teams. Direct integration into your operational environment.</dd>
             </div>
             <div class="stack-item">
-              <dt>Workflow tools</dt>
-              <dd>API access into your SIEM, SOAR, or ticketing system for customers on enterprise plans. Deeper workflow integrations are on the roadmap.</dd>
+              <dt>Workflow</dt>
+              <dd>API access for SIEM, SOAR, or ticketing systems for enterprise customers.</dd>
             </div>
             <div class="stack-item">
               <dt>Deployment</dt>
-              <dd>SaaS platform, ISO 27001:2022 certified, hosted in the EU. Most customers fully configured within a day.</dd>
+              <dd>SaaS platform, ISO 27001:2022 certified, hosted in the EU. Ready within a day.</dd>
             </div>
           </dl>
-
-          <p class="stack-close">We don't ask you to rip out anything. We sit alongside what you already have, and we make the output of those tools more useful.</p>
         </div>
       </div>
     </section>
@@ -1426,7 +1435,7 @@
       <div class="container">
         <div class="final-cta-card">
           <h2 id="final-cta-h2">See Cytidel for your stack</h2>
-          <p>Bring your environment, the suppliers you care about, and the questions you've been trying to answer. We'll show you what Cytidel sees that the rest of the industry hasn't caught up to yet.</p>
+          <p>Bring your environment, the suppliers you care about, and the questions you've been trying to answer.</p>
           <a href="book-a-demo.html" class="btn btn-primary">
             Book a Demo
             <span class="arrow" aria-hidden="true">→</span>
