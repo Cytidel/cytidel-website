@@ -426,56 +426,96 @@
     }
     .hero-cta { margin-top: 40px; }
 
-    /* ------- SECTION 2 — A TYPICAL MORNING ------- */
+    /* ------- SECTION 2 — A TYPICAL MORNING (stat cards + dark help) ------- */
     .morning { border-top: 1px solid var(--border); }
-    .morning .lead {
-      font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-      color: var(--text-secondary);
+    .morning h2 { margin-bottom: clamp(32px, 4vw, 48px); }
+    .morning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px, 2.5vw, 28px);
+      align-items: stretch;
     }
-    .morning .pull {
+    .morning-stats { display: grid; gap: clamp(16px, 2vw, 20px); align-content: start; }
+    .stat-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border-left: 3px solid var(--accent);
+      padding: clamp(24px, 3vw, 32px);
+    }
+    .stat-card .big {
+      display: block;
       font-family: var(--font-display);
-      font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-      line-height: 1.18;
-      letter-spacing: -0.018em;
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: var(--accent-deep);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-card p { font-size: clamp(1rem, 1.4vw, 1.1rem); color: var(--text-secondary); line-height: 1.5; }
+    .morning-pull {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+      line-height: 1.35;
+      letter-spacing: -0.012em;
       color: var(--text);
-      margin: clamp(32px, 5vw, 56px) 0;
-      padding-left: clamp(20px, 3vw, 32px);
+      padding-left: clamp(20px, 3vw, 28px);
       border-left: 2px solid var(--accent);
+      font-style: italic;
     }
-    .morning .pull span { display: block; }
-    .morning .close {
-      font-size: clamp(1rem, 1.5vw, 1.15rem);
-      color: var(--text-secondary);
+    .morning-help {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      border-radius: 16px;
+      padding: clamp(32px, 4vw, 52px);
+      color: var(--dark-text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+    .morning-help h3 {
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+      margin-bottom: 18px;
+    }
+    .morning-help p { color: var(--dark-text-secondary); font-size: clamp(1.05rem, 1.5vw, 1.18rem); line-height: 1.6; }
+    @media (max-width: 820px) { .morning-grid { grid-template-columns: 1fr; } }
 
-    /* ------- SECTION 3 — WHAT'S CHANGED (hybrid beats) ------- */
+    /* ------- SECTION 3 — WHAT'S CHANGED (bento cards) ------- */
     .changed { border-top: 1px solid var(--border); }
-    .changed h2 { margin-bottom: clamp(40px, 5vw, 64px); }
-    .beats { display: grid; gap: clamp(32px, 4vw, 48px); }
-    .beat {
-      padding-top: clamp(24px, 3vw, 32px);
-      border-top: 1px solid var(--border);
+    .changed h2 { margin-bottom: 12px; }
+    .changed .section-lead { font-size: clamp(1.05rem, 1.55vw, 1.2rem); color: var(--text-secondary); margin-bottom: clamp(40px, 5vw, 56px); }
+    .changed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2vw, 24px);
     }
-    .beat:first-child { border-top: none; padding-top: 0; }
-    .beat p {
-      font-size: clamp(1rem, 1.45vw, 1.1rem);
-      line-height: 1.7;
+    .changed-card {
+      padding: clamp(28px, 3vw, 36px);
+      background: var(--surface);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-    .beat .lead-phrase {
-      color: var(--text);
-      font-family: var(--font-display);
-      font-weight: 600;
-      letter-spacing: -0.005em;
+    .changed-card h3 { font-size: clamp(1.2rem, 1.7vw, 1.4rem); color: var(--text); }
+    .changed-card p { font-size: clamp(0.96rem, 1.35vw, 1.04rem); line-height: 1.6; color: var(--text-secondary); }
+    .changed-card.span-2 { grid-column: span 2; }
+    .changed-card.span-3 { grid-column: span 3; }
+    .changed-card.dark {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      color: var(--dark-text);
     }
-    .changed-closing {
-      margin-top: clamp(48px, 6vw, 72px);
-      padding-top: clamp(28px, 3.5vw, 40px);
-      border-top: 1px solid var(--border);
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-      line-height: 1.4;
-      letter-spacing: -0.015em;
-      color: var(--text);
+    .changed-card.dark h3 { color: var(--accent); }
+    .changed-card.dark p { color: var(--dark-text-secondary); }
+    .changed-card.regulator { flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(24px, 4vw, 48px); flex-wrap: wrap; }
+    .changed-card.regulator > div { flex: 1; min-width: 280px; display: grid; gap: 14px; }
+    .reg-pills { display: flex; gap: 12px; }
+    .reg-pill { padding: 10px 22px; border: 1px solid var(--dark-border); border-radius: 999px; font-family: var(--font-display); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; color: var(--accent); }
+    @media (max-width: 880px) {
+      .changed-grid { grid-template-columns: 1fr; }
+      .changed-card.span-2, .changed-card.span-3 { grid-column: span 1; }
+      .changed-card.regulator { flex-direction: column; align-items: flex-start; }
     }
 
     /* ------- SECTION 4 — WHERE THE GAPS LIVE (3 cards) ------- */
@@ -518,14 +558,20 @@
       color: var(--text);
     }
 
-    /* ------- SECTION 5 — WHAT CYTIDEL IS BUILT FOR ------- */
+    /* ------- SECTION 5 — WHAT CYTIDEL IS BUILT FOR (contained dark card) ------- */
     .built-for { border-top: 1px solid var(--border); }
-    .built-for h2 { margin-bottom: clamp(32px, 4vw, 48px); }
-    .built-for .opener,
-    .built-for .closer {
+    .built-for-card {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      border-radius: 16px;
+      padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+      color: var(--dark-text);
+    }
+    .built-for-card h2 { color: var(--dark-text); margin-bottom: clamp(24px, 3vw, 32px); }
+    .built-for-card .opener,
+    .built-for-card .closer {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.7;
-      color: var(--text-secondary);
+      color: var(--dark-text-secondary);
     }
     .principles {
       display: grid;
@@ -534,10 +580,10 @@
       margin: clamp(40px, 5vw, 64px) 0;
     }
     .principle {
-      padding: clamp(18px, 2.2vw, 24px);
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      padding: clamp(20px, 2.4vw, 26px);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
       display: grid;
       gap: 10px;
       align-content: start;
@@ -552,7 +598,7 @@
     }
     .principle .no {
       font-size: clamp(0.85rem, 1.2vw, 0.92rem);
-      color: var(--text-tertiary);
+      color: var(--dark-text-secondary);
       line-height: 1.45;
       font-style: italic;
     }
@@ -862,14 +908,24 @@
     <!-- ============ SECTION 2 — A TYPICAL MORNING ============ -->
     <section class="morning" aria-labelledby="morning-h2">
       <div class="container">
-        <h2 id="morning-h2" style="margin-bottom: clamp(32px, 4vw, 48px);">A typical morning</h2>
-        <p class="lead">300 to 400 vulnerabilities cross your team's desk every day.</p>
-        <blockquote class="pull">
-          <span>The workload doubles every two years.</span>
-          <span>The threat landscape is accelerating.</span>
-          <span>Your team hasn't.</span>
-        </blockquote>
-        <p class="close">Cytidel processes all of them — and shows you the two or three that actually matter, with the evidence, the threat actor context, and the exploitation signals behind every call.</p>
+        <h2 id="morning-h2">A typical morning</h2>
+        <div class="morning-grid">
+          <div class="morning-stats">
+            <div class="stat-card">
+              <span class="big">300–400</span>
+              <p>vulnerabilities cross your team's desk every day.</p>
+            </div>
+            <div class="stat-card">
+              <span class="big">Hundreds</span>
+              <p>of suppliers and software components to monitor — continuously, not annually.</p>
+            </div>
+            <blockquote class="morning-pull">"The workload doubles every two years. The threat landscape is accelerating. Your team hasn't."</blockquote>
+          </div>
+          <div class="morning-help">
+            <h3>How Cytidel helps</h3>
+            <p>Cytidel processes all of them — and shows you the two or three that actually matter, with the evidence, the threat actor context, and the exploitation signals behind every call.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -877,26 +933,33 @@
     <section class="changed" aria-labelledby="changed-h2">
       <div class="container">
         <h2 id="changed-h2">What's changed</h2>
+        <p class="section-lead">The world your programme was built for doesn't exist anymore.</p>
 
-        <div class="beats">
-          <div class="beat">
-            <p><span class="lead-phrase">The catalogues can't keep up.</span> Vulnerabilities are being discovered faster than the official catalogues can keep up. If the system designed to track them is falling behind, your team is too. The work was built for a publication rhythm that doesn't exist anymore.</p>
-          </div>
-          <div class="beat">
-            <p><span class="lead-phrase">Time-to-exploit has collapsed.</span> Vulnerabilities are weaponised in hours — sometimes minutes — of disclosure. Your scanner runs on a cycle. Your team works in days. Something has to close that gap.</p>
-          </div>
-          <div class="beat">
-            <p><span class="lead-phrase">The board is at the table now.</span> Boards used to leave vulnerability management to the security team. They can't anymore. Every breach in the news, every supplier failure, every regulatory shift puts the question back on them: are we at risk?</p>
-          </div>
-          <div class="beat">
-            <p><span class="lead-phrase">The CISO has to translate.</span> Your CISO has to answer in language the board understands. "These are the threat actors active in our industry. These are the vulnerabilities they're using. We've checked. Here's where we stand." That's the conversation the board is now having every quarter. The team that has the evidence ready wins it.</p>
-          </div>
-          <div class="beat">
-            <p><span class="lead-phrase">The regulator wants evidence.</span> NIS2 and DORA both made supplier and software monitoring a board-level obligation. Annual vendor reviews used to be enough. They aren't anymore. When a vendor in your stack gets breached, the regulator's question isn't whether you knew — it's whether you could have known.</p>
-          </div>
+        <div class="changed-grid">
+          <article class="changed-card span-2">
+            <h3>Catalogues can't keep up</h3>
+            <p>Vulnerabilities are discovered faster than the official catalogues can track. The work was built for a publication rhythm that doesn't exist anymore.</p>
+          </article>
+          <article class="changed-card dark">
+            <h3>Time-to-exploit has collapsed</h3>
+            <p>Weaponised in hours — sometimes minutes — of disclosure. Your scanner runs on a cycle; your team works in days.</p>
+          </article>
+          <article class="changed-card">
+            <h3>The board is at the table</h3>
+            <p>Every breach in the news and every supplier failure puts the question back on them: are we at risk?</p>
+          </article>
+          <article class="changed-card span-2">
+            <h3>The CISO has to translate</h3>
+            <p>Threat actor activity, turned into board-ready intelligence: who's active in our industry, what they're using, where we stand. The team with the evidence ready wins that conversation.</p>
+          </article>
+          <article class="changed-card dark regulator span-3">
+            <div>
+              <h3>The regulator wants evidence</h3>
+              <p>NIS2 and DORA made supplier and software monitoring a board-level obligation. The question isn't whether you knew — it's whether you could have known.</p>
+            </div>
+            <div class="reg-pills"><span class="reg-pill">NIS2</span><span class="reg-pill">DORA</span></div>
+          </article>
         </div>
-
-        <blockquote class="changed-closing">The world your vulnerability management programme was built for isn't the world it operates in anymore.</blockquote>
       </div>
     </section>
 
@@ -925,8 +988,9 @@
     </section>
 
     <!-- ============ SECTION 5 — WHAT CYTIDEL IS BUILT FOR ============ -->
-    <section class="built-for section-dark" aria-labelledby="built-h2">
+    <section class="built-for" aria-labelledby="built-h2">
       <div class="container">
+        <div class="built-for-card">
         <h2 id="built-h2">What Cytidel is built for</h2>
 
         <p class="opener">Cytidel is the early warning layer for vulnerabilities, threat actors and supplier risk. Not a replacement for your scanner. Not a replacement for your CTI feeds. The layer that ties them together and makes their output actionable in real time.</p>
@@ -951,6 +1015,7 @@
         </div>
 
         <p class="closer">Threats don't wait for your scan cycle. Threat actors don't pick by score. Boards don't ask about CVSS averages. Cytidel exists for the security teams who've already realised this — and need to operate accordingly.</p>
+        </div>
       </div>
     </section>
 
