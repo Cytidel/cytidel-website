@@ -905,124 +905,67 @@
       .cap-footer { justify-content: flex-start; }
     }
 
-    /* ------- SECTION 6 — PROOF ------- */
+    /* ------- SECTION 6 — PROOF (2-col: featured + aside) ------- */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: stretch;
+    }
+    .proof-main { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 24px); }
+    .proof-main .proof-quote { flex: 1; }
     .proof-quote {
       position: relative;
-      margin: 0 auto clamp(48px, 6vw, 72px);
-      text-align: left;
-      padding-top: clamp(48px, 7vw, 88px);
-      padding-left: clamp(0px, 2vw, 16px);
+      margin: 0;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: clamp(34px, 4vw, 50px) clamp(28px, 3.5vw, 44px) clamp(28px, 3.5vw, 40px);
     }
     .proof-quote::before {
       content: "\201C";
       position: absolute;
-      top: -10px;
-      left: -8px;
+      top: 10px; left: 22px;
       font-family: var(--font-display);
-      font-size: clamp(5.5rem, 12vw, 10rem);
-      font-weight: 700;
-      line-height: 0.7;
-      letter-spacing: -0.05em;
-      color: var(--accent-deep);
-      opacity: 0.32;
-      pointer-events: none;
-      z-index: 0;
+      font-size: clamp(3.6rem, 6vw, 5.5rem);
+      font-weight: 700; line-height: 0.7; letter-spacing: -0.05em;
+      color: var(--accent-deep); opacity: 0.26; pointer-events: none;
     }
     .proof-quote q {
-      display: block;
-      position: relative;
-      z-index: 1;
+      display: block; position: relative; z-index: 1;
+      margin-top: clamp(26px, 3.5vw, 40px);
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.8vw, 2rem);
-      line-height: 1.32;
-      letter-spacing: -0.015em;
-      color: var(--text);
-      quotes: none;
+      font-size: clamp(1.25rem, 2.1vw, 1.65rem);
+      line-height: 1.35; letter-spacing: -0.012em; color: var(--text); quotes: none;
     }
-    .proof-quote q::before,
-    .proof-quote q::after { content: none; }
+    .proof-quote q::before, .proof-quote q::after { content: none; }
     .proof-quote cite {
-      display: block;
-      margin-top: 24px;
-      font-style: normal;
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      font-weight: 500;
+      display: block; margin-top: 24px; font-style: normal;
+      font-size: 0.92rem; color: var(--text-secondary); font-weight: 500;
     }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .stat {
-      background: var(--bg);
-      padding: clamp(28px, 3.5vw, 40px);
-    }
+    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 20px); }
+    .stat { background: var(--bg-elev); border-radius: var(--radius); padding: clamp(24px, 3vw, 32px); }
     .stat .num {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
-      letter-spacing: -0.02em;
-      color: var(--accent);
-      font-weight: 600;
-      line-height: 1.1;
-      margin-bottom: 12px;
+      font-size: clamp(2rem, 3.4vw, 2.6rem);
+      letter-spacing: -0.025em; color: var(--accent-deep);
+      font-weight: 700; line-height: 1; margin-bottom: 12px;
     }
-    .stat .label {
-      color: var(--text);
-      font-weight: 500;
-      font-size: 1.02rem;
-      margin-bottom: 8px;
-    }
-    .stat .desc {
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-    @media (max-width: 800px) {
-      .stats { grid-template-columns: 1fr; }
-    }
-
-    .small-quotes {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(20px, 3vw, 28px);
-      margin-top: clamp(40px, 5vw, 56px);
-    }
-    .small-quote {
-      padding: 24px 28px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-    .small-quote q {
-      display: block;
-      font-style: italic;
-      color: var(--text);
-      font-size: 1rem;
-      line-height: 1.55;
-      quotes: "\201C" "\201D";
-    }
+    .stat .label { color: var(--text); font-weight: 500; font-size: 0.95rem; line-height: 1.4; }
+    .proof-aside { display: flex; flex-direction: column; gap: clamp(14px, 1.8vw, 18px); }
+    .proof-aside .small-quote { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .small-quote { margin: 0; padding: clamp(22px, 2.6vw, 30px) 0; border-bottom: 1px solid var(--border); }
+    .small-quote:first-child { padding-top: 0; }
+    .small-quote:last-child { border-bottom: none; padding-bottom: 0; }
+    .small-quote q { display: block; font-style: italic; color: var(--text); font-size: 1.05rem; line-height: 1.55; quotes: "\201C" "\201D"; }
     .small-quote q::before { content: open-quote; }
     .small-quote q::after { content: close-quote; }
-    .small-quote cite {
-      display: block;
-      margin-top: 14px;
-      font-style: normal;
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-    }
-    @media (max-width: 900px) {
-      .small-quotes { grid-template-columns: 1fr; }
-    }
+    .small-quote cite { display: block; margin-top: 14px; font-style: normal; font-size: 0.85rem; color: var(--text-tertiary); }
+    @media (max-width: 880px) { .proof-grid { grid-template-columns: 1fr; } .proof-main .proof-quote, .proof-aside .small-quote { flex: initial; } }
+    @media (max-width: 480px) { .proof-stats { grid-template-columns: 1fr; } }    }
 
     /* ------- SECTION 7 — FAQ ------- */
-    .faq h2 { margin-bottom: clamp(40px, 5vw, 56px); }
-    .faq-list { border-top: 1px solid var(--border); }
+    .faq h2 { margin-bottom: clamp(48px, 6vw, 80px); }
+    .faq-list { }
     .faq-item { border-bottom: 1px solid var(--border); }
     .faq-q {
       width: 100%;
@@ -1273,12 +1216,10 @@
     .domain-card .icon { color: var(--accent-deep); }
 
     /* Proof small-quote / stat cards on light */
-    .small-quote { background: var(--bg-elev); border-color: transparent; }
-    .stat { background: var(--bg); }
-    .stats { background: var(--border); }
+    .stat { background: var(--bg-elev); }
 
     /* FAQ items: soften the rule lines on light bg */
-    .faq-list, .faq-item { border-color: var(--border); }
+    .faq-item { border-color: var(--border); }
 
     /* Hero background glow stays subtle on light */
     .hero::before {
@@ -1579,45 +1520,32 @@
     <!-- ============ SECTION 6 — PROOF ============ -->
     <section class="proof" aria-label="Proof">
       <div class="container">
-
-        <figure class="proof-quote">
-          <q>Cytidel has enhanced the efficiency of our security operations by 95%. It is like having an extra team member dedicated to vulnerability intelligence.</q>
-          <cite>— Threat Intelligence Manager, An Post</cite>
-        </figure>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="num">Over 98% reduction</div>
-            <div class="label">in alert volume</div>
-            <div class="desc">The vulnerabilities your team actually needs to act on, separated from the noise.</div>
+        <div class="proof-grid">
+          <div class="proof-main">
+            <figure class="proof-quote">
+              <q>Cytidel has enhanced the efficiency of our security operations by 95%. It is like having an extra team member dedicated to vulnerability intelligence.</q>
+              <cite>— Threat Intelligence Manager, An Post</cite>
+            </figure>
+            <div class="proof-stats">
+              <div class="stat"><div class="num">98%</div><div class="label">Reduction in alert volume</div></div>
+              <div class="stat"><div class="num">4–8</div><div class="label">FTEs of capacity freed</div></div>
+            </div>
           </div>
-          <div class="stat">
-            <div class="num">4–8 FTEs</div>
-            <div class="label">worth of capacity freed up</div>
-            <div class="desc">Time your team gets back for incident response, threat hunting, and the work that actually needs a human.</div>
-          </div>
-          <div class="stat">
-            <div class="num">ISO 27001:2022</div>
-            <div class="label">certified</div>
-            <div class="desc">Built by ISO 27001 auditors, designed for regulated environments.</div>
+          <div class="proof-aside">
+            <figure class="small-quote">
+              <q>This gives me the reassurance that I know I'm not missing something huge in the community.</q>
+              <cite>— Vulnerability Analyst</cite>
+            </figure>
+            <figure class="small-quote">
+              <q>Cytidel's data collection is better than anything else I've seen on the market.</q>
+              <cite>— Threat Intelligence Specialist</cite>
+            </figure>
+            <figure class="small-quote">
+              <q>The speed and accuracy of your work repeatedly keeps me ahead of the threats and the news-cycle.</q>
+              <cite>— Cytidel customer</cite>
+            </figure>
           </div>
         </div>
-
-        <div class="small-quotes">
-          <figure class="small-quote">
-            <q>This gives me the reassurance that I know I'm not missing something huge in the community.</q>
-            <cite>— Vulnerability Analyst</cite>
-          </figure>
-          <figure class="small-quote">
-            <q>Cytidel's data collection is better than anything else I've seen on the market.</q>
-            <cite>— Threat Intelligence Specialist</cite>
-          </figure>
-          <figure class="small-quote">
-            <q>The speed and accuracy of your work repeatedly keeps me ahead of the threats and the news-cycle.</q>
-            <cite>— Cytidel customer</cite>
-          </figure>
-        </div>
-
       </div>
     </section>
 
@@ -1735,7 +1663,7 @@
         </div>
         <div class="meta">
           <span class="iso-badge"><span class="dot" aria-hidden="true"></span>ISO 27001:2022 certified</span>
-          <a class="linkedin" href="#" aria-label="Cytidel on LinkedIn">
+          <a class="linkedin" href="https://www.linkedin.com/company/cytidel/" target="_blank" rel="noopener" aria-label="Cytidel on LinkedIn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M4.98 3.5A2.5 2.5 0 1 1 4.97 8.5a2.5 2.5 0 0 1 .01-5zM3 9.5h4V21H3V9.5zM9 9.5h3.8v1.57h.05c.53-1 1.83-2.07 3.77-2.07 4.04 0 4.78 2.66 4.78 6.12V21h-4v-4.78c0-1.14-.02-2.6-1.59-2.6-1.59 0-1.83 1.24-1.83 2.52V21H9V9.5z"/>
             </svg>
