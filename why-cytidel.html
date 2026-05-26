@@ -609,28 +609,44 @@
       .principles { grid-template-columns: 1fr; }
     }
 
-    /* ------- SECTION 6 — WHERE THIS IS HEADING ------- */
+    /* ------- SECTION 6 — WHERE THIS IS HEADING (intro + roadmap cards) ------- */
     .heading { border-top: 1px solid var(--border); }
-    .heading h2 { margin-bottom: clamp(32px, 4vw, 48px); }
-    .heading p {
+    .heading-grid {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: start;
+    }
+    .heading-intro h2 { margin-bottom: 18px; }
+    .heading-intro > p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.7;
       color: var(--text-secondary);
+      margin-bottom: clamp(28px, 3.5vw, 40px);
     }
-    .heading p + p { margin-top: 1.4em; }
-    .heading-pullquote {
-      margin: clamp(40px, 5vw, 56px) 0;
-      padding: clamp(28px, 3.5vw, 40px) clamp(28px, 3.5vw, 40px);
+    .methodology-card {
       background: var(--surface);
+      border-radius: var(--radius);
       border-left: 3px solid var(--accent);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      font-family: var(--font-display);
-      font-size: clamp(1.3rem, 2.4vw, 1.75rem);
-      line-height: 1.35;
-      letter-spacing: -0.015em;
-      color: var(--text);
-      font-weight: 500;
+      padding: clamp(26px, 3vw, 34px);
     }
+    .methodology-card h4 { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; }
+    .methodology-card p { font-size: 0.96rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 22px; }
+    .methodology-stat { display: flex; align-items: center; gap: 16px; }
+    .methodology-stat .num { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3rem); font-weight: 700; color: var(--accent-deep); line-height: 1; letter-spacing: -0.03em; }
+    .methodology-stat .label { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); font-weight: 500; }
+    .roadmap-list { display: grid; gap: clamp(14px, 1.8vw, 18px); }
+    .roadmap-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border-left: 3px solid transparent;
+      padding: clamp(24px, 3vw, 30px);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .roadmap-card:hover { border-left-color: var(--accent); transform: translateX(2px); }
+    .roadmap-card h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); color: var(--text); margin-bottom: 8px; }
+    .roadmap-card p { font-size: clamp(0.96rem, 1.35vw, 1.02rem); line-height: 1.6; color: var(--text-secondary); }
+    @media (max-width: 880px) { .heading-grid { grid-template-columns: 1fr; } }
 
     /* ------- SECTION 7 — FINAL CTA ------- */
     .final-cta { text-align: center; border-top: 1px solid var(--border); }
@@ -1022,15 +1038,34 @@
     <!-- ============ SECTION 6 — WHERE THIS IS HEADING ============ -->
     <section class="heading" aria-labelledby="heading-h2">
       <div class="container">
-        <h2 id="heading-h2">Where this is heading</h2>
-
-        <p>We believe the future of this work is about surfacing the signal earlier and earlier. Closing the window between disclosure and weaponisation. Catching the threats that matter before they have a chance to land. That's our commitment. We're investing heavily in predictive intelligence as part of how we get there, doubling down on what's already working.</p>
-
-        <p>Spotlight is the first version of that capability. Cytidel's predictive flagging delivers around 70% accuracy on vulnerabilities that later show real exploitation signals. Seven out of ten of the things we flag early go on to be exploited or weaponised in the wild. The methodology works.</p>
-
-        <p>We're scaling that approach with machine learning, built on Cytidel's data: continuous monitoring across thousands of sources, years of vulnerability events, threat actor activity, exploit signals, supplier intelligence. The goal is straightforward. More depth. More coverage. Faster response to the threats that matter. Fewer threats missed because the team didn't see them in time.</p>
-
-        <p>What you see today is shipped capability. What's coming is built on the same foundations, evidenced by the same data, defensible by the same standards.</p>
+        <div class="heading-grid">
+          <div class="heading-intro">
+            <h2 id="heading-h2">Where this is heading</h2>
+            <p>Closing the window between disclosure and weaponisation — surfacing the signal earlier and earlier, before the threats that matter have a chance to land. We're investing heavily in predictive intelligence to get there.</p>
+            <div class="methodology-card">
+              <h4>The methodology works</h4>
+              <p>Cytidel's predictive flagging on vulnerabilities that later show real exploitation signals — proof-of-concept, exploit availability, or threat actor association.</p>
+              <div class="methodology-stat">
+                <span class="num">~70%</span>
+                <span class="label">Flagged early,<br/>exploited later</span>
+              </div>
+            </div>
+          </div>
+          <div class="roadmap-list">
+            <article class="roadmap-card">
+              <h3>Spotlight Integration</h3>
+              <p>The first version of our predictive capability — already flagging early signals across 1,000+ sources. Seven in ten of the things we flag early go on to be exploited or weaponised in the wild.</p>
+            </article>
+            <article class="roadmap-card">
+              <h3>Machine Learning Scale</h3>
+              <p>Scaling the analytical approach with machine learning, built on years of vulnerability events, threat actor activity, exploit signals, and supplier intelligence.</p>
+            </article>
+            <article class="roadmap-card">
+              <h3>Continuous Intelligence</h3>
+              <p>More depth, more coverage, faster response to the threats that matter — and fewer missed because the team didn't see them in time. Shipped capability today; the same foundations underneath what's next.</p>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
