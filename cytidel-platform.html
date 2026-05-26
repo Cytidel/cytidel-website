@@ -783,10 +783,10 @@
     /* Capability section visual — framed container that holds either a
        placeholder label OR a real product image, with consistent outer
        dimensions across sections (Incident.io-style image bedding).
-       Pale-mint frame matches the Smart Alerts bento card above for
-       visual through-line, and stays out of the dark-green CTA's lane. */
+       Neutral warm-grey frame for most sections; featured variant uses
+       a dark gradient on the Threat Actor section to pull the eye. */
     .cap-visual {
-      background: var(--accent-dim);
+      background: var(--surface-2);
       border: none;
       border-radius: var(--radius);
       aspect-ratio: 4 / 3;
@@ -805,7 +805,13 @@
     @media (max-width: 880px) {
       .cap-visual { position: static; }
     }
-    /* Real image variant — image sits as a white card inside the mint frame */
+    /* Featured variant — dark-to-green gradient, used to highlight the
+       Threat Actor section (matches the bento featured card up top) */
+    .cap-visual-featured {
+      background: linear-gradient(135deg, var(--dark-bg) 0%, var(--cta-bg) 100%);
+      color: rgba(247,249,243,0.55);
+    }
+    /* Real image variant — image sits as a white card inside the frame */
     .cap-visual-img picture { display: block; max-width: 100%; max-height: 100%; }
     .cap-visual-img img {
       display: block;
@@ -819,6 +825,12 @@
         0 20px 40px -15px rgba(20,30,20,0.18),
         0 6px 16px -8px rgba(20,30,20,0.08);
       background: #fff;
+    }
+    .cap-visual-featured.cap-visual-img img {
+      border-color: rgba(255,255,255,0.08);
+      box-shadow:
+        0 24px 48px -12px rgba(0,0,0,0.35),
+        0 8px 20px -6px rgba(0,0,0,0.20);
     }
 
     /* ------- HOW IT FITS YOUR STACK (contained dark card) ------- */
@@ -1266,7 +1278,7 @@
             </div>
           </div>
 
-          <div class="cap-visual" aria-hidden="true">Product visual — Threat Actor Intelligence</div>
+          <div class="cap-visual cap-visual-featured" aria-hidden="true">Product visual — Threat Actor Intelligence</div>
         </div>
       </div>
     </section>
