@@ -49,9 +49,9 @@
       --text-tertiary: #7a807a;
 
       /* Accents */
-      --accent: #63CF24;
+      --accent: #80FC13;
       --accent-deep: #357A12;
-      --accent-dim: rgba(99, 207, 36, 0.18);
+      --accent-dim: rgba(128, 252, 19, 0.18);
 
       /* Dark sections (used via .section-dark wrapper) */
       --dark-bg: #0e1612;
@@ -210,7 +210,7 @@
       border-radius: 2px;
     }
     .nav-links a.nav-cta, .nav-cta {
-      background: #63CF24;
+      background: #80FC13;
       color: #0b2000 !important;
       padding: 14px 24px;
       border-radius: 8px;
@@ -222,7 +222,7 @@
     }
     .nav-links a.nav-cta:hover, .nav-cta:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 22px rgba(99, 207, 36, 0.35);
+      box-shadow: 0 8px 22px rgba(128, 252, 19, 0.35);
     }
     .nav-links a.nav-cta::after, .nav-cta::after { display: none !important; }
 
@@ -419,12 +419,12 @@
       border: 1px solid transparent;
     }
     .btn-primary {
-      background: #63CF24;
+      background: #80FC13;
       color: #0b2000;
     }
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 30px rgba(99, 207, 36, 0.35);
+      box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35);
     }
     .btn .arrow { transition: transform 0.2s ease; }
     .btn:hover .arrow { transform: translateX(3px); }
@@ -448,7 +448,7 @@
       transform: translateX(-50%);
       width: 1200px;
       height: 700px;
-      background: radial-gradient(ellipse at center, rgba(99, 207, 36,0.07) 0%, transparent 60%);
+      background: radial-gradient(ellipse at center, rgba(128, 252, 19,0.07) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -544,7 +544,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 100% 0%, rgba(99, 207, 36,0.10) 0%, transparent 50%);
+      background: radial-gradient(circle at 100% 0%, rgba(128, 252, 19,0.10) 0%, transparent 50%);
       pointer-events: none;
     }
     .cap-card-featured > * { position: relative; }
@@ -552,11 +552,11 @@
     /* Accent card — mint tinge for Smart Alerts */
     .cap-card-accent {
       background: var(--accent-dim);
-      border-color: rgba(99, 207, 36,0.25);
+      border-color: rgba(128, 252, 19,0.25);
     }
     .cap-card-accent:hover {
-      background: rgba(99, 207, 36,0.28);
-      border-color: rgba(99, 207, 36,0.4);
+      background: rgba(128, 252, 19,0.28);
+      border-color: rgba(128, 252, 19,0.4);
     }
     .cap-card-accent .cap-card-arrow { color: var(--accent-deep); }
 
@@ -652,9 +652,9 @@
       margin-top: clamp(20px, 2.5vw, 28px);
     }
     .btn-dark:hover {
-      background: #63CF24;
+      background: #80FC13;
       transform: translateY(-1px);
-      box-shadow: 0 8px 22px rgba(99, 207, 36,0.22);
+      box-shadow: 0 8px 22px rgba(128, 252, 19,0.22);
     }
 
     /* Smart Alerts funnel viz: 300 → 3 → 1 */
@@ -1024,7 +1024,7 @@
 
     /* Hero background glow stays subtle on light */
     .hero::before {
-      background: radial-gradient(ellipse at center, rgba(99, 207, 36,0.18) 0%, transparent 65%);
+      background: radial-gradient(ellipse at center, rgba(128, 252, 19,0.18) 0%, transparent 65%);
     }
 
     /* Accent links: use deeper green on light bg for contrast */
