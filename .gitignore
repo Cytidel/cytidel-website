@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Drafts / WIP files not ready to ship
+homepage-v2.html
