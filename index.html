@@ -592,7 +592,10 @@
     }
 
     /* ------- SECTION 2 — MONDAY MORNING ------- */
-    .monday-morning .container { max-width: 980px; }
+    .monday-morning h2,
+    .monday-morning .lead,
+    .monday-morning .pull,
+    .monday-morning .close { max-width: 880px; }
     .monday-morning .lead {
       font-size: clamp(1.05rem, 1.6vw, 1.2rem);
       color: var(--text-secondary);
@@ -676,7 +679,6 @@
     }
 
     /* ------- SECTION 5 — WHAT CYTIDEL DOES ------- */
-    .what .container { max-width: 980px; }
     .what h2 { max-width: 720px; margin-bottom: clamp(32px, 4vw, 48px); }
     .what p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
@@ -923,7 +925,6 @@
     }
 
     /* ------- SECTION 6 — PROOF ------- */
-    .proof .container { max-width: 1100px; }
     .proof-quote {
       position: relative;
       max-width: 880px;
@@ -1109,16 +1110,32 @@
       max-width: 720px;
     }
 
-    /* ------- SECTION 8 — FINAL CTA ------- */
-    .final-cta { text-align: center; }
-    .final-cta .container { max-width: 760px; }
-    .final-cta h2 { margin-bottom: 20px; }
-    .final-cta p {
+    /* ------- SECTION 8 — FINAL CTA (contained dark green card) ------- */
+    .final-cta-card {
+      background: var(--cta-bg);
+      border-radius: 16px;
+      padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
+      text-align: center;
+      color: #f7f9f3;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta-card h2 {
+      color: #f7f9f3;
+      margin-bottom: 20px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .final-cta-card p {
       font-size: clamp(1.02rem, 1.5vw, 1.15rem);
       line-height: 1.6;
-      color: var(--text-secondary);
-      margin-bottom: 36px;
+      color: rgba(247,249,243,0.82);
+      margin: 0 auto 36px;
+      max-width: 640px;
     }
+    .final-cta-card .btn-primary { background: var(--accent); color: #0b0e0a; }
+    .final-cta-card .btn-primary:hover { background: #93e6c9; }
 
     /* ------- FOOTER ------- */
     footer {
@@ -1232,25 +1249,34 @@
     /* Logo mark inner cutout matches the light bg */
     .logo-mark::after { background: var(--bg); }
 
-    /* Spotlight as full-bleed dark band */
-    .spotlight-section {
-      padding-top: clamp(64px, 8vw, 110px);
-      padding-bottom: clamp(64px, 8vw, 110px);
+    /* Spotlight: contained dark card on the cream section */
+    .spotlight-card {
+      position: relative;
+      background: var(--dark-bg);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+      color: var(--dark-text);
+      /* Override theme tokens within scope so descendants render dark */
+      --text: var(--dark-text);
+      --text-secondary: var(--dark-text-secondary);
+      --text-tertiary: var(--dark-text-tertiary);
+      --border: var(--dark-border);
+      --border-strong: var(--dark-border-strong);
+      --surface: var(--dark-surface);
+      --surface-2: var(--dark-bg-elev);
+      --bg: var(--dark-bg);
     }
-    .spotlight-section .container { max-width: 980px; }
-    .spotlight-section .eyebrow { color: var(--accent); margin-bottom: 18px; }
-    .spotlight-section .spotlight-headline { margin-top: 0; }
-    .spotlight-section .spotlight-chart {
+    .spotlight-card .eyebrow { color: var(--accent); margin-bottom: 18px; }
+    .spotlight-card .spotlight-headline { margin-top: 0; max-width: 880px; }
+    .spotlight-card .spotlight-supporting { max-width: 880px; }
+    .spotlight-card .spotlight-chart {
       background: rgba(255,255,255,0.03);
       border-color: var(--dark-border);
     }
 
     /* What-close (post-spotlight) — slightly tighter than full section-y */
     .what-close { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(72px, 9vw, 120px); }
-
-    /* Final CTA on the deep-green block */
-    .final-cta.cta-green h2 { color: #f7f9f3; }
-    .final-cta.cta-green p { color: rgba(247,249,243,0.82); }
 
     /* A divider immediately followed by a dark section is visual noise — hide it */
     .divider:has(+ .section-dark) { display: none; }
@@ -1494,9 +1520,10 @@
       </div>
     </section>
 
-    <!-- ============ SPOTLIGHT (dark band) ============ -->
-    <section class="spotlight-section section-dark" aria-labelledby="spotlight-h3">
+    <!-- ============ SPOTLIGHT (contained dark card) ============ -->
+    <section class="spotlight-section" aria-labelledby="spotlight-h3">
       <div class="container">
+        <div class="spotlight-card">
         <span class="eyebrow">Intelligence feature</span>
         <h3 id="spotlight-h3" class="spotlight-headline">Cytidel Spotlight: Emerging Threats</h3>
         <p class="spotlight-supporting">Spotlight surfaces the vulnerabilities most likely to be exploited, before they have a chance to land. Around 1% of vulnerabilities make the list, based on early exploitation signals: proof-of-concept code, exploit availability, threat actor association, or chatter in places most teams don't watch. Around 70% of those have gone on to be exploited or weaponised in the wild.</p>
@@ -1554,6 +1581,7 @@
             <text x="180" y="280" fill="#52525b" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" letter-spacing="0.04em">Horizontal axis compressed for readability. All deltas measured against CISA KEV publication.</text>
           </svg>
         </figure>
+        </div>
       </div>
     </section>
 
@@ -1663,15 +1691,17 @@
 
     <div class="divider"></div>
 
-    <!-- ============ SECTION 8 — FINAL CTA ============ -->
-    <section class="final-cta section-dark cta-green" aria-labelledby="final-cta-h2">
+    <!-- ============ SECTION 8 — FINAL CTA (contained dark green card) ============ -->
+    <section class="final-cta" aria-labelledby="final-cta-h2">
       <div class="container">
-        <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
-        <p>Most teams see the difference in the first conversation. Bring your environment, the suppliers you care about, and the questions you've been trying to answer — we'll show you what Cytidel surfaces that your current process is missing.</p>
-        <a href="book-a-demo.html" class="btn btn-primary">
-          Book a Demo
-          <span class="arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="final-cta-card">
+          <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
+          <p>Most teams see the difference in the first conversation. Bring your environment, the suppliers you care about, and the questions you've been trying to answer — we'll show you what Cytidel surfaces that your current process is missing.</p>
+          <a href="book-a-demo.html" class="btn btn-primary">
+            Book a Demo
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </section>
 
