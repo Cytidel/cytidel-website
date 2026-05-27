@@ -62,7 +62,7 @@
 
       --max: 1280px;
       --pad: clamp(20px, 4vw, 48px);
-      --section-y: clamp(72px, 10vw, 140px);
+      --section-y: clamp(48px, 6vw, 88px);
       --radius: 12px;
       --radius-sm: 8px;
       --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -425,7 +425,7 @@
     }
 
     /* ------- HERO ------- */
-    .hero { padding-top: clamp(80px, 12vw, 160px); padding-bottom: clamp(80px, 12vw, 160px); position: relative; overflow: hidden; }
+    .hero { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(80px, 12vw, 160px); position: relative; overflow: hidden; }
     .hero::before {
       content: "";
       position: absolute;
@@ -1057,7 +1057,7 @@
       transition: max-height 0.3s ease;
       color: var(--text-secondary);
     }
-    .faq-item[open] .faq-a { max-height: 1000px; }
+    .faq-item[open] .faq-a { max-height: 1600px; }
     .faq-a-inner {
       padding: 0 0 28px;
       font-size: 1rem;
@@ -1610,6 +1610,16 @@
 
           <details class="faq-item" role="listitem">
             <summary class="faq-q">
+              <span>How does Cytidel's risk rating compare to Tenable VPR or Qualys TruRisk?</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Tenable VPR and Qualys TruRisk prioritise within your scanned environment. Cytidel's risk rating tells you what attackers are doing with vulnerabilities right now — informed by exploitation evidence, proof-of-concept availability, threat actor activity, and live signals. Different purposes, and they work well together.
+            </div></div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
               <span>What data do we need to share?</span>
               <span class="icon" aria-hidden="true"></span>
             </summary>
@@ -1628,10 +1638,56 @@
             </div></div>
           </details>
 
-        </div>
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
+              <span>We do not have the resource for another tool.</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Cytidel doesn't add to the manual intelligence workload — it replaces it. Teams report saving 20+ hours per analyst per week on manual research and report production. The capacity comes back to your team for incident response, threat hunting, and the work that needs a human.
+            </div></div>
+          </details>
 
-        <div class="faq-footer-link">
-          <a href="faq.html">→ See all FAQs</a>
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
+              <span>How is pricing structured?</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Pricing is based on organisation size, not seat count. Every plan includes unlimited access for your security team. We will walk you through pricing on a call — bring your environment and the suppliers you need to monitor, and we'll show you what it looks like for you.
+            </div></div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
+              <span>How do you track threat actors?</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Cytidel's threat actor intelligence maps every known adversary to the CVEs in their arsenal, with full TTP context, alias tracking, and campaign history. When a threat actor starts targeting software you depend on, you know — with the evidence and the context to act. The full module is called Villain Vault, and the best way to see it work is in a demo.
+            </div></div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
+              <span>Are you ISO 27001 certified?</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Yes. Cytidel is ISO 27001:2022 certified. We've also designed the platform to support customers going through their own ISO 27001 assessments — automating intelligence gathering and mapping scans against current threat activity.
+            </div></div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary class="faq-q">
+              <span>We are an MSSP. Can we use Cytidel's intelligence?</span>
+              <span class="icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a"><div class="faq-a-inner">
+              Yes. Our OEM programme is live and already integrated with a partner product in market. We also have an MSSP programme available. Reach out to our partnerships team directly — these are strategic conversations that deserve a dedicated discussion.
+            </div></div>
+          </details>
+
         </div>
       </div>
     </section>
