@@ -541,13 +541,13 @@
 
     /* ------- AWARDS / RECOGNITION STRIP (dark contrast band) ------- */
     .awards-strip {
-      padding-top: clamp(24px, 3vw, 44px);
-      padding-bottom: clamp(24px, 3vw, 44px);
+      padding-top: clamp(16px, 2.2vw, 32px);
+      padding-bottom: clamp(16px, 2.2vw, 32px);
     }
     .awards-band {
       background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
       border-radius: var(--radius);
-      padding: clamp(22px, 2.6vw, 30px) clamp(22px, 3vw, 44px);
+      padding: clamp(13px, 1.6vw, 18px) clamp(20px, 2.8vw, 40px);
     }
     .awards-grid {
       display: grid;
@@ -555,37 +555,37 @@
       gap: 0;
     }
     .award-item {
-      padding: 0 clamp(18px, 3vw, 36px);
+      padding: 0 clamp(16px, 2.6vw, 32px);
       border-left: 1px solid var(--dark-border);
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 4px;
     }
     .award-item:first-child { border-left: none; padding-left: 0; }
     .award-item:last-child { padding-right: 0; }
     .award-status {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.72rem;
+      gap: 7px;
+      font-size: 0.66rem;
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--accent);
     }
-    .award-icon { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+    .award-icon { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
     .award-name {
       font-family: var(--font-display);
-      font-size: clamp(0.95rem, 1.3vw, 1.06rem);
+      font-size: clamp(0.84rem, 1.1vw, 0.95rem);
       font-weight: 500;
       color: var(--dark-text);
       letter-spacing: -0.005em;
-      line-height: 1.35;
+      line-height: 1.3;
     }
     @media (max-width: 760px) {
-      .awards-grid { grid-template-columns: 1fr; gap: 18px; }
+      .awards-grid { grid-template-columns: 1fr; gap: 14px; }
       .award-item { border-left: none; padding: 0; }
-      .award-item + .award-item { padding-top: 18px; border-top: 1px solid var(--dark-border); }
+      .award-item + .award-item { padding-top: 14px; border-top: 1px solid var(--dark-border); }
     }
 
     /* ------- V2: WHY-CYTIDEL DEEPER-READ LINK ------- */
