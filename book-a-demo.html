@@ -794,9 +794,9 @@
       position: relative;
       width: 100%;
       min-height: 720px;
-      background: var(--bg-elev);
-      border-radius: var(--radius);
-      overflow: hidden;
+      /* No background frame — the HubSpot scheduler brings its own styling;
+         a grey box larger than it just makes it look uncentered. */
+      background: transparent;
     }
     .meetings-iframe-container iframe {
       width: 100% !important;
