@@ -926,6 +926,48 @@
     .conv.is-new { border-left-color: var(--accent-deep); }
     /* Dropdown active item: deep green text on soft mint background */
     .nav-dropdown-menu a[aria-current="page"] { color: var(--accent-deep); }
+
+    /* ------- AWARDS / RECOGNITION STRIP ------- */
+    .awards-strip {
+      padding-top: clamp(40px, 5vw, 64px);
+      padding-bottom: clamp(40px, 5vw, 64px);
+      border-top: 1px solid var(--border);
+    }
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .award-item {
+      padding: 0 clamp(16px, 3vw, 32px);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .award-item:first-child { border-left: none; padding-left: 0; }
+    .award-item:last-child { padding-right: 0; }
+    .award-icon { width: 24px; height: 24px; color: var(--accent-deep); flex-shrink: 0; }
+    .award-status {
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+    .award-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    @media (max-width: 760px) {
+      .awards-grid { grid-template-columns: 1fr; gap: 22px; }
+      .award-item { border-left: none; padding: 0; }
+      .award-item + .award-item { padding-top: 22px; border-top: 1px solid var(--border); }
+    }
   </style>
 </head>
 <body>
@@ -974,6 +1016,29 @@
               See open roles
               <span class="arrow" aria-hidden="true">→</span>
             </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AWARDS / RECOGNITION STRIP ============ -->
+    <section class="awards-strip" aria-label="Awards and recognition">
+      <div class="container">
+        <div class="awards-grid">
+          <div class="award-item">
+            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
+            <span class="award-status">Grand Prix Winner</span>
+            <div class="award-name">Irish National Startup of the Year, 2024</div>
+          </div>
+          <div class="award-item">
+            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
+            <span class="award-status">Finalist</span>
+            <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
+          </div>
+          <div class="award-item">
+            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
+            <span class="award-status">Finalist</span>
+            <div class="award-name">ECSO CISO Choice Award, 2026</div>
           </div>
         </div>
       </div>
