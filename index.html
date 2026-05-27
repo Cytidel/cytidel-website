@@ -539,11 +539,15 @@
       .proof-item + .proof-item { padding-top: 22px; border-top: 1px solid var(--border); }
     }
 
-    /* ------- AWARDS / RECOGNITION STRIP ------- */
+    /* ------- AWARDS / RECOGNITION STRIP (dark contrast band) ------- */
     .awards-strip {
-      padding-top: clamp(40px, 5vw, 64px);
-      padding-bottom: clamp(40px, 5vw, 64px);
-      border-top: 1px solid var(--border);
+      padding-top: clamp(24px, 3vw, 44px);
+      padding-bottom: clamp(24px, 3vw, 44px);
+    }
+    .awards-band {
+      background: linear-gradient(135deg, #1f2823 0%, var(--dark-bg) 100%);
+      border-radius: var(--radius);
+      padding: clamp(22px, 2.6vw, 30px) clamp(22px, 3vw, 44px);
     }
     .awards-grid {
       display: grid;
@@ -551,34 +555,37 @@
       gap: 0;
     }
     .award-item {
-      padding: 0 clamp(16px, 3vw, 32px);
-      border-left: 1px solid var(--border);
+      padding: 0 clamp(18px, 3vw, 36px);
+      border-left: 1px solid var(--dark-border);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
     }
     .award-item:first-child { border-left: none; padding-left: 0; }
     .award-item:last-child { padding-right: 0; }
-    .award-icon { width: 24px; height: 24px; color: var(--accent-deep); flex-shrink: 0; }
     .award-status {
-      font-size: 0.74rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent-deep);
+      color: var(--accent);
     }
+    .award-icon { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
     .award-name {
       font-family: var(--font-display);
-      font-size: clamp(1.02rem, 1.5vw, 1.2rem);
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.01em;
-      line-height: 1.3;
+      font-size: clamp(0.95rem, 1.3vw, 1.06rem);
+      font-weight: 500;
+      color: var(--dark-text);
+      letter-spacing: -0.005em;
+      line-height: 1.35;
     }
     @media (max-width: 760px) {
-      .awards-grid { grid-template-columns: 1fr; gap: 22px; }
+      .awards-grid { grid-template-columns: 1fr; gap: 18px; }
       .award-item { border-left: none; padding: 0; }
-      .award-item + .award-item { padding-top: 22px; border-top: 1px solid var(--border); }
+      .award-item + .award-item { padding-top: 18px; border-top: 1px solid var(--dark-border); }
     }
 
     /* ------- V2: WHY-CYTIDEL DEEPER-READ LINK ------- */
@@ -1422,21 +1429,20 @@
     <!-- ============ SECTION 3 — AWARDS / RECOGNITION STRIP ============ -->
     <section class="awards-strip" aria-label="Awards and recognition">
       <div class="container">
-        <div class="awards-grid">
-          <div class="award-item">
-            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
-            <span class="award-status">Grand Prix Winner</span>
-            <div class="award-name">Irish National Startup of the Year, 2024</div>
-          </div>
-          <div class="award-item">
-            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
-            <span class="award-status">Finalist</span>
-            <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
-          </div>
-          <div class="award-item">
-            <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>
-            <span class="award-status">Finalist</span>
-            <div class="award-name">ECSO CISO Choice Award, 2026</div>
+        <div class="awards-band">
+          <div class="awards-grid">
+            <div class="award-item">
+              <span class="award-status"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>Grand Prix Winner</span>
+              <div class="award-name">Irish National Startup of the Year, 2024</div>
+            </div>
+            <div class="award-item">
+              <span class="award-status"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>Finalist</span>
+              <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
+            </div>
+            <div class="award-item">
+              <span class="award-status"><svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/><path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/></svg>Finalist</span>
+              <div class="award-name">ECSO CISO Choice Award, 2026</div>
+            </div>
           </div>
         </div>
       </div>
