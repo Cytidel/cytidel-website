@@ -961,11 +961,11 @@
     .small-quote q::after { content: close-quote; }
     .small-quote cite { display: block; margin-top: 14px; font-style: normal; font-size: 0.85rem; color: var(--text-tertiary); }
     @media (max-width: 880px) { .proof-grid { grid-template-columns: 1fr; } .proof-main .proof-quote, .proof-aside .small-quote { flex: initial; } }
-    @media (max-width: 480px) { .proof-stats { grid-template-columns: 1fr; } }    }
+    @media (max-width: 480px) { .proof-stats { grid-template-columns: 1fr; } }
 
     /* ------- SECTION 7 — FAQ ------- */
     .faq h2 { margin-bottom: clamp(48px, 6vw, 80px); }
-    .faq-list { }
+    .faq-list { border-top: 1px solid var(--border); padding-top: 12px; }
     .faq-item { border-bottom: 1px solid var(--border); }
     .faq-q {
       width: 100%;
