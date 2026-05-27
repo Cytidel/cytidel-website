@@ -1,0 +1,19 @@
+# Netlify configuration for the Cytidel marketing site.
+# Static HTML served from the repo root; one serverless function for the
+# weekly-briefing signup.
+
+[build]
+  # Static site — no build step. Publish the repo root as-is.
+  publish = "."
+  command = ""
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Clean public path for the signup endpoint. The form POSTs to /api/briefing.
+[[redirects]]
+  from = "/api/briefing"
+  to = "/.netlify/functions/briefing-signup"
+  status = 200
+  force = true
