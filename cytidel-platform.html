@@ -765,7 +765,7 @@
        Neutral warm-grey frame for most sections; featured variant uses
        a dark gradient on the Threat Actor section to pull the eye. */
     .cap-visual {
-      background: #ECEEEA;
+      background: #C3CCBE;
       border: none;
       border-radius: var(--radius);
       aspect-ratio: 4 / 3;
@@ -784,11 +784,9 @@
     @media (max-width: 880px) {
       .cap-visual { position: static; }
     }
-    /* Featured variant — dark-to-green gradient, used to highlight the
-       Threat Actor section (matches the bento featured card up top) */
     .cap-visual-featured {
-      background: linear-gradient(135deg, var(--dark-bg) 0%, var(--cta-bg) 100%);
-      color: rgba(247,249,243,0.55);
+      background: #C3CCBE;
+      color: var(--text-tertiary);
     }
     /* Real image variant — picture is a flex container that gives the img
        a proper height context (fixes the max-height bug). Image is sized
@@ -813,12 +811,6 @@
         0 20px 40px -15px rgba(20,30,20,0.18),
         0 6px 16px -8px rgba(20,30,20,0.08);
       background: #fff;
-    }
-    .cap-visual-featured.cap-visual-img img {
-      border-color: rgba(255,255,255,0.08);
-      box-shadow:
-        0 24px 48px -12px rgba(0,0,0,0.35),
-        0 8px 20px -6px rgba(0,0,0,0.20);
     }
 
     /* ------- HOW IT FITS YOUR STACK (contained dark card) ------- */
@@ -1308,20 +1300,20 @@
           <div class="cap-visual cap-visual-img">
             <picture>
               <source type="image/avif"
-                      srcset="img/monitoring-600.avif 600w,
-                              img/monitoring-1000.avif 1000w,
-                              img/monitoring-1400.avif 1400w,
-                              img/monitoring-1800.avif 1800w"
+                      srcset="img/monitoring-2-600.avif 600w,
+                              img/monitoring-2-1000.avif 1000w,
+                              img/monitoring-2-1400.avif 1400w,
+                              img/monitoring-2-1800.avif 1800w"
                       sizes="(max-width: 880px) 100vw, 660px">
               <source type="image/webp"
-                      srcset="img/monitoring-600.webp 600w,
-                              img/monitoring-1000.webp 1000w,
-                              img/monitoring-1400.webp 1400w,
-                              img/monitoring-1800.webp 1800w"
+                      srcset="img/monitoring-2-600.webp 600w,
+                              img/monitoring-2-1000.webp 1000w,
+                              img/monitoring-2-1400.webp 1400w,
+                              img/monitoring-2-1800.webp 1800w"
                       sizes="(max-width: 880px) 100vw, 660px">
-              <img src="img/monitoring-1000.jpg"
+              <img src="img/monitoring-2-1000.jpg"
                    alt="Cytidel Supplier and Software Monitoring view — continuous monitoring of vendors and software your team depends on."
-                   width="1632" height="1356"
+                   width="2492" height="1386"
                    loading="lazy">
             </picture>
           </div>
