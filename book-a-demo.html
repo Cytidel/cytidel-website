@@ -802,9 +802,13 @@
       width: 100% !important;
       border: 0;
       display: block;
+      margin: 0 auto;
       position: relative;
       z-index: 1;
     }
+    /* Once the scheduler is in, let the box hug it (the 720px min-height is
+       only there to reserve space for the loading state). */
+    .meetings-iframe-container:has(iframe) { min-height: 0; }
     /* Loading state — shown until HubSpot injects the iframe */
     .meetings-loading {
       position: absolute;
