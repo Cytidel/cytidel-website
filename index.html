@@ -6,7 +6,7 @@
     1. /book-a-demo target page not built yet.
 
   Build notes:
-    - Light theme, JetBrains Mono, inline SVG logo for crisp rendering.
+    - Light theme, Mona Sans, inline SVG logo for crisp rendering.
     - Structural shape: hero → proof strip → awards strip →
       Monday Morning → What Cytidel does (3 domain cards) → Spotlight
       (dark band) → close + platform link → Proof → FAQ (3 entries
@@ -24,7 +24,7 @@
   <meta name="theme-color" content="#f1f1ec" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       /* Surfaces (light theme) */
@@ -63,8 +63,8 @@
       --section-y: clamp(48px, 6vw, 88px);
       --radius: 12px;
       --radius-sm: 8px;
-      --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      --font-display: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-display: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     /* Dark section wrapper — overrides theme tokens within scope so existing
@@ -98,7 +98,7 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: "calt", "ss01";
+      font-feature-settings: "calt";
     }
 
     a { color: inherit; text-decoration: none; }
@@ -1547,11 +1547,11 @@
           <svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <!-- Day 0 vertical reference -->
             <line x1="180" y1="48" x2="180" y2="210" stroke="#25252b" stroke-width="1" stroke-dasharray="3 5"/>
-            <text x="180" y="32" fill="#a1a1aa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="0.08em">DAY 0</text>
+            <text x="180" y="32" fill="#a1a1aa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-weight="500" text-anchor="middle" letter-spacing="0.08em">DAY 0</text>
 
             <!-- Top row: Cytidel Spotlight -->
-            <text x="20" y="94" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600">Cytidel Spotlight</text>
-            <text x="20" y="112" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="12">Signal surfaces</text>
+            <text x="20" y="94" fill="#fafafa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600">Cytidel Spotlight</text>
+            <text x="20" y="112" fill="#71717a" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="12">Signal surfaces</text>
 
             <!-- Top line: accent, fading -->
             <line x1="180" y1="100" x2="720" y2="100" stroke="#80FC13" stroke-width="2" stroke-linecap="round" stroke-opacity="0.55"/>
@@ -1561,8 +1561,8 @@
             <circle cx="180" cy="100" r="5.5" fill="#80FC13"/>
 
             <!-- Bottom row: CISA KEV -->
-            <text x="20" y="174" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600">CISA KEV</text>
-            <text x="20" y="192" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="12">Signal catches up</text>
+            <text x="20" y="174" fill="#fafafa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600">CISA KEV</text>
+            <text x="20" y="192" fill="#71717a" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="12">Signal catches up</text>
 
             <!-- Bottom line: neutral -->
             <line x1="180" y1="162" x2="720" y2="162" stroke="#34343b" stroke-width="2" stroke-linecap="round"/>
@@ -1579,20 +1579,20 @@
             <line x1="680" y1="168" x2="680" y2="196" stroke="#80FC13" stroke-width="1" stroke-opacity="0.4"/>
 
             <!-- Label group: MEDIAN -->
-            <text x="245" y="212" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">MEDIAN</text>
-            <text x="245" y="232" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">6 days</text>
+            <text x="245" y="212" fill="#71717a" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">MEDIAN</text>
+            <text x="245" y="232" fill="#fafafa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">6 days</text>
 
             <!-- Label group: MEAN -->
-            <text x="390" y="212" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">MEAN</text>
-            <text x="390" y="232" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">51 days</text>
+            <text x="390" y="212" fill="#71717a" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">MEAN</text>
+            <text x="390" y="232" fill="#fafafa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">51 days</text>
 
             <!-- Label group: LONGEST (highlighted) -->
-            <text x="680" y="212" fill="#80FC13" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">LONGEST</text>
-            <text x="680" y="232" fill="#fafafa" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">19 months</text>
-            <text x="680" y="250" fill="#71717a" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-style="italic" text-anchor="middle">≈ 578 days</text>
+            <text x="680" y="212" fill="#80FC13" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.12em">LONGEST</text>
+            <text x="680" y="232" fill="#fafafa" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="14" font-weight="600" text-anchor="middle">19 months</text>
+            <text x="680" y="250" fill="#71717a" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-style="italic" text-anchor="middle">≈ 578 days</text>
 
             <!-- Footnote -->
-            <text x="180" y="280" fill="#52525b" font-family="'JetBrains Mono', ui-monospace, SF Mono, Menlo, monospace" font-size="10" letter-spacing="0.04em">Horizontal axis compressed for readability. All deltas measured against CISA KEV publication.</text>
+            <text x="180" y="280" fill="#52525b" font-family="'Mona Sans', ui-monospace, SF Mono, Menlo, monospace" font-size="10" letter-spacing="0.04em">Horizontal axis compressed for readability. All deltas measured against CISA KEV publication.</text>
           </svg>
         </figure>
 
