@@ -20,6 +20,11 @@
   <meta name="theme-color" content="#f1f1ec" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Speed up the HubSpot Meetings embed: open connections early -->
+  <link rel="preconnect" href="https://static.hsappstatic.net" />
+  <link rel="preconnect" href="https://meetings-eu1.hubspot.com" />
+  <link rel="dns-prefetch" href="https://static.hsappstatic.net" />
+  <link rel="dns-prefetch" href="https://meetings-eu1.hubspot.com" />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -786,6 +791,7 @@
       padding-bottom: clamp(72px, 9vw, 120px);
     }
     .meetings-iframe-container {
+      position: relative;
       width: 100%;
       min-height: 720px;
       background: var(--bg-elev);
@@ -796,6 +802,34 @@
       width: 100% !important;
       border: 0;
       display: block;
+      position: relative;
+      z-index: 1;
+    }
+    /* Loading state — shown until HubSpot injects the iframe */
+    .meetings-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+    .meetings-iframe-container:has(iframe) .meetings-loading { display: none; }
+    .meetings-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid var(--border-strong);
+      border-top-color: var(--accent-deep);
+      border-radius: 50%;
+      animation: meetings-spin 0.8s linear infinite;
+    }
+    @keyframes meetings-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .meetings-spinner { animation-duration: 2s; }
     }
 
     /* Additional accent-deep overrides — light-bg items missed earlier */
@@ -859,8 +893,13 @@
     <section class="demo-embed" aria-label="Demo booking calendar">
       <div class="container">
         <!-- Start of Meetings Embed Script -->
-        <div class="meetings-iframe-container" data-src="https://meetings-eu1.hubspot.com/gary-fagan/book-a-demo?embed=true"></div>
-        <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+        <div class="meetings-iframe-container" data-src="https://meetings-eu1.hubspot.com/gary-fagan/book-a-demo?embed=true">
+          <div class="meetings-loading" role="status" aria-live="polite">
+            <span class="meetings-spinner" aria-hidden="true"></span>
+            Loading the scheduler…
+          </div>
+        </div>
+        <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js" defer></script>
         <!-- End of Meetings Embed Script -->
       </div>
     </section>
