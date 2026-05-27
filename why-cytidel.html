@@ -520,7 +520,14 @@
 
     /* ------- SECTION 4 — WHERE THE GAPS LIVE (3 cards) ------- */
     .gaps { border-top: 1px solid var(--border); }
-    .gaps h2 { margin-bottom: clamp(40px, 5vw, 56px); }
+    .gaps h2 { margin-bottom: 12px; }
+    .gaps .section-lead {
+      font-size: clamp(1.05rem, 1.55vw, 1.2rem);
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: clamp(40px, 5vw, 56px);
+      max-width: 60ch;
+    }
     .gap-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -555,6 +562,17 @@
       letter-spacing: -0.015em;
       color: var(--text);
     }
+    .gaps-answer {
+      margin-top: clamp(16px, 2vw, 24px);
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      line-height: 1.25;
+      letter-spacing: -0.022em;
+      font-weight: 600;
+      color: var(--text);
+      max-width: 28ch;
+    }
+    .gaps-answer span { color: var(--accent-deep); }
 
     /* ------- SECTION 5 — WHAT CYTIDEL IS BUILT FOR (contained dark card) ------- */
     .built-for { border-top: 1px solid var(--border); }
@@ -1057,6 +1075,7 @@
     <section class="gaps" aria-labelledby="gaps-h2">
       <div class="container">
         <h2 id="gaps-h2">Where the gaps live</h2>
+        <p class="section-lead">Put those shifts together and they land in one place: the distance between what's already happening and what your team can see in time.</p>
 
         <div class="gap-cards">
           <article class="gap-card">
@@ -1074,6 +1093,7 @@
         </div>
 
         <blockquote class="gaps-closing">Three gaps. One outcome: the things that matter reach you late, if they reach you at all.</blockquote>
+        <p class="gaps-answer">The answer isn't more people responding faster. It's defenders moving at <span>computer speed.</span></p>
       </div>
     </section>
 
