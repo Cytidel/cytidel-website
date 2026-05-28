@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import foundersPhoto from '../assets/founders.jpeg';
 ---
 <Layout
   title="Careers · Cytidel"
@@ -79,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
           <h2 id="team-h2">A small team with outsized scope</h2>
           <p>Cytidel is fewer than 20 people. The work we ship is monitored by enterprise security teams in financial services, healthcare, aviation, and public sector. Every person here owns work that an enterprise team would have a function for. The trade-off is real. If you're built for it, the impact compounds.</p>
         </div>
-        <img src="/img/founders.jpeg" alt="The Cytidel founders in Dublin" class="team-photo" />
+        <Image src={foundersPhoto} alt="The Cytidel founders in Dublin" class="team-photo" loading="lazy" widths={[400, 800, 1200]} sizes="(max-width: 820px) 100vw, 50vw" />
       </div>
     </div>
   </section>

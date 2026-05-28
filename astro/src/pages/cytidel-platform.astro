@@ -1,5 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
+import cveIntel from '../assets/products/cve-intel-2.png';
+import villainVault from '../assets/products/villain-vault.png';
+import monitoring from '../assets/products/monitoring-2.png';
+import bulkAnalyser from '../assets/products/bulk-analyser.png';
+import smartAlerts from '../assets/products/smart-alerts.png';
 ---
 <Layout
   title="The Cytidel Platform · Cytidel"
@@ -116,11 +122,14 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="cap-visual cap-visual-img">
-          <picture>
-            <source type="image/avif" srcset="/img/cve-intel-2-600.avif 600w, /img/cve-intel-2-1000.avif 1000w, /img/cve-intel-2-1400.avif 1400w, /img/cve-intel-2-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <source type="image/webp" srcset="/img/cve-intel-2-600.webp 600w, /img/cve-intel-2-1000.webp 1000w, /img/cve-intel-2-1400.webp 1400w, /img/cve-intel-2-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <img src="/img/cve-intel-2-1000.jpg" alt="Cytidel Vulnerability Intelligence view — CVEs tagged with exploitation evidence, threat actor association, and risk rating in real time." width="2278" height="1410" loading="lazy">
-          </picture>
+          <Picture
+            src={cveIntel}
+            alt="Cytidel Vulnerability Intelligence view — CVEs tagged with exploitation evidence, threat actor association, and risk rating in real time."
+            widths={[600, 1000, 1400, 1800]}
+            sizes="(max-width: 880px) 100vw, 660px"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
@@ -147,11 +156,14 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="cap-visual cap-visual-featured cap-visual-img">
-          <picture>
-            <source type="image/avif" srcset="/img/villain-vault-600.avif 600w, /img/villain-vault-1000.avif 1000w, /img/villain-vault-1400.avif 1400w, /img/villain-vault-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <source type="image/webp" srcset="/img/villain-vault-600.webp 600w, /img/villain-vault-1000.webp 1000w, /img/villain-vault-1400.webp 1400w, /img/villain-vault-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <img src="/img/villain-vault-1000.jpg" alt="Cytidel Villain Vault — Threat Actor Intelligence module showing adversaries mapped to vulnerabilities with TTP context and campaign history." width="2850" height="1422" loading="lazy">
-          </picture>
+          <Picture
+            src={villainVault}
+            alt="Cytidel Villain Vault — Threat Actor Intelligence module showing adversaries mapped to vulnerabilities with TTP context and campaign history."
+            widths={[600, 1000, 1400, 1800]}
+            sizes="(max-width: 880px) 100vw, 660px"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
@@ -174,11 +186,14 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="cap-visual cap-visual-img">
-          <picture>
-            <source type="image/avif" srcset="/img/monitoring-2-600.avif 600w, /img/monitoring-2-1000.avif 1000w, /img/monitoring-2-1400.avif 1400w, /img/monitoring-2-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <source type="image/webp" srcset="/img/monitoring-2-600.webp 600w, /img/monitoring-2-1000.webp 1000w, /img/monitoring-2-1400.webp 1400w, /img/monitoring-2-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <img src="/img/monitoring-2-1000.jpg" alt="Cytidel Supplier and Software Monitoring view — continuous monitoring of vendors and software your team depends on." width="2492" height="1386" loading="lazy">
-          </picture>
+          <Picture
+            src={monitoring}
+            alt="Cytidel Supplier and Software Monitoring view — continuous monitoring of vendors and software your team depends on."
+            widths={[600, 1000, 1400, 1800]}
+            sizes="(max-width: 880px) 100vw, 660px"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
@@ -198,11 +213,14 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="cap-visual cap-visual-img">
-          <picture>
-            <source type="image/avif" srcset="/img/bulk-analyser-600.avif 600w, /img/bulk-analyser-1000.avif 1000w, /img/bulk-analyser-1400.avif 1400w, /img/bulk-analyser-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <source type="image/webp" srcset="/img/bulk-analyser-600.webp 600w, /img/bulk-analyser-1000.webp 1000w, /img/bulk-analyser-1400.webp 1400w, /img/bulk-analyser-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <img src="/img/bulk-analyser-1000.jpg" alt="Cytidel Bulk Analyser view — uploaded scanner output enriched with risk ratings and evidence trails." width="2334" height="1394" loading="lazy">
-          </picture>
+          <Picture
+            src={bulkAnalyser}
+            alt="Cytidel Bulk Analyser view — uploaded scanner output enriched with risk ratings and evidence trails."
+            widths={[600, 1000, 1400, 1800]}
+            sizes="(max-width: 880px) 100vw, 660px"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
@@ -237,11 +255,14 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="cap-visual cap-visual-img">
-          <picture>
-            <source type="image/avif" srcset="/img/smart-alerts-600.avif 600w, /img/smart-alerts-1000.avif 1000w, /img/smart-alerts-1400.avif 1400w, /img/smart-alerts-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <source type="image/webp" srcset="/img/smart-alerts-600.webp 600w, /img/smart-alerts-1000.webp 1000w, /img/smart-alerts-1400.webp 1400w, /img/smart-alerts-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
-            <img src="/img/smart-alerts-1000.jpg" alt="Cytidel Smart Alerts view — vendor and product-aware routing of vulnerability signals." width="2780" height="1328" loading="lazy">
-          </picture>
+          <Picture
+            src={smartAlerts}
+            alt="Cytidel Smart Alerts view — vendor and product-aware routing of vulnerability signals."
+            widths={[600, 1000, 1400, 1800]}
+            sizes="(max-width: 880px) 100vw, 660px"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>

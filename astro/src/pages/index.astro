@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
+import productHero from '../assets/products/product-hero.png';
 ---
 <Layout
   title="Cytidel — The early warning layer for overwhelmed security teams"
@@ -69,11 +71,15 @@ import Layout from '../layouts/Layout.astro';
   <section class="hero-product" aria-label="Product preview">
     <div class="container">
       <div class="product-frame">
-        <picture>
-          <source type="image/avif" srcset="/img/product-hero-600.avif 600w, /img/product-hero-1200.avif 1200w, /img/product-hero-1800.avif 1800w, /img/product-hero-2400.avif 2400w" sizes="(max-width: 1232px) 100vw, 1200px">
-          <source type="image/webp" srcset="/img/product-hero-600.webp 600w, /img/product-hero-1200.webp 1200w, /img/product-hero-1800.webp 1800w, /img/product-hero-2400.webp 2400w" sizes="(max-width: 1232px) 100vw, 1200px">
-          <img src="/img/product-hero-1200.jpg" alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume." width="2746" height="1410" loading="eager" fetchpriority="high">
-        </picture>
+        <Picture
+          src={productHero}
+          alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
+          widths={[600, 1200, 1800, 2400]}
+          sizes="(max-width: 1232px) 100vw, 1200px"
+          formats={['avif', 'webp']}
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
     </div>
   </section>
