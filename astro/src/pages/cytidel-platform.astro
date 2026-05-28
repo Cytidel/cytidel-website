@@ -1,0 +1,834 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="The Cytidel Platform · Cytidel"
+  description="Cytidel sees the threats that matter before your scanner or CISA KEV. Five capabilities work together as the early warning layer for vulnerabilities, threat actors and supplier risk."
+>
+  <section class="hero" aria-labelledby="hero-h1">
+    <div class="container">
+      <div class="hero-inner">
+        <h1 id="hero-h1">The <span class="hi-deep">early warning layer</span> for vulnerabilities, threat actors and supplier risk</h1>
+        <p class="hero-sub">Cytidel sees the threats that matter before your scanner or CISA KEV. Give your team the speed, coverage, and context to act.</p>
+        <div class="hero-cta">
+          <a href="/book-a-demo" class="btn btn-primary">
+            Book a Demo
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="awards-strip" aria-label="Awards and recognition">
+    <div class="container">
+      <div class="awards-band">
+        <div class="awards-grid">
+          <div class="award-item">
+            <span class="award-status">
+              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+              </svg>
+              Grand Prix Winner
+            </span>
+            <div class="award-name">Irish National Startup of the Year, 2024</div>
+          </div>
+          <div class="award-item">
+            <span class="award-status">
+              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+              </svg>
+              Finalist
+            </span>
+            <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
+          </div>
+          <div class="award-item">
+            <span class="award-status">
+              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+              </svg>
+              Finalist
+            </span>
+            <div class="award-name">ECSO CISO Choice Award, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overview" aria-label="Five capabilities at a glance">
+    <div class="container">
+      <p class="overview-lead">Five capabilities work together to make Cytidel the early warning layer:</p>
+
+      <div class="cap-overview-grid">
+        <a href="#vulnerability-intelligence" class="cap-card">
+          <span class="cap-card-name">Vulnerability Intelligence</span>
+          <span class="cap-card-desc">Every vulnerability tagged and rated by real-world signals, in real time.</span>
+          <span class="cap-card-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#threat-actor-intelligence" class="cap-card cap-card-featured">
+          <span class="cap-card-name">Threat Actor Intelligence</span>
+          <span class="cap-card-desc">Every known adversary mapped to the vulnerabilities they're using.</span>
+          <span class="cap-card-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#supplier-software-monitoring" class="cap-card span-2">
+          <span class="cap-card-name">Supplier &amp; Software Monitoring</span>
+          <span class="cap-card-desc">Watches the parts of your stack your scanner can't see.</span>
+          <span class="cap-card-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#bulk-analyser" class="cap-card span-2">
+          <span class="cap-card-name">Bulk Analyser</span>
+          <span class="cap-card-desc">Applies the intelligence to your scanner backlog.</span>
+          <span class="cap-card-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#smart-alerts" class="cap-card span-2 cap-card-accent">
+          <span class="cap-card-name">Smart Alerts</span>
+          <span class="cap-card-desc">Routes the right intelligence to the right person, in their existing workflow.</span>
+          <span class="cap-card-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <p class="overview-close">Each runs on real-time intelligence from thousands of sources. None of them works as a standalone feed. Together, they give your team the speed, the coverage, and the context to act before the rest of the industry catches up.</p>
+    </div>
+  </section>
+
+  <section class="capability" aria-labelledby="vulnerability-intelligence">
+    <div class="container">
+      <div class="cap-grid">
+        <div>
+          <div class="cap-heading">
+            <h2 id="vulnerability-intelligence">Real-time vulnerability intelligence</h2>
+            <p class="cap-tagline">Every vulnerability, tagged and rated by what's actually happening.</p>
+          </div>
+          <div class="cap-body">
+            <p>A threat-led approach where prioritisation is driven by evidence, not theory.</p>
+            <ul>
+              <li><b>Exploitation evidence</b> — is this being used right now, in the wild? Real-time confirmation from thousands of sources.</li>
+              <li><b>Potential Public Exploit</b> — exploit code publications identified before official sources like CISA KEV catch up.</li>
+              <li><b>Dynamic Risk Rating</b> — ratings shift from Low to High Risk within hours as new exploit signals emerge.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cap-visual cap-visual-img">
+          <picture>
+            <source type="image/avif" srcset="/img/cve-intel-2-600.avif 600w, /img/cve-intel-2-1000.avif 1000w, /img/cve-intel-2-1400.avif 1400w, /img/cve-intel-2-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <source type="image/webp" srcset="/img/cve-intel-2-600.webp 600w, /img/cve-intel-2-1000.webp 1000w, /img/cve-intel-2-1400.webp 1400w, /img/cve-intel-2-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <img src="/img/cve-intel-2-1000.jpg" alt="Cytidel Vulnerability Intelligence view — CVEs tagged with exploitation evidence, threat actor association, and risk rating in real time." width="2278" height="1410" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capability" aria-labelledby="threat-actor-intelligence">
+    <div class="container">
+      <div class="cap-grid cap-reverse">
+        <div>
+          <div class="cap-heading">
+            <h2 id="threat-actor-intelligence">Threat Actor Intelligence</h2>
+            <p class="cap-tagline">Know who's targeting your world, before they get to you.</p>
+          </div>
+          <div class="cap-body">
+            <p>Map known adversaries to the vulnerabilities in their arsenal with full TTP context, alias tracking, and campaign history.</p>
+            <aside class="callout" role="note">
+              <p>30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium by CVSS. Threat actors don't pick by score.</p>
+            </aside>
+            <p>Go deeper into malware used, intent (ransomware vs espionage), and tactical patterns over time. The full module is called <strong>Villain Vault</strong>.</p>
+            <a href="/book-a-demo" class="btn btn-dark">
+              Access Villain Vault
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        <div class="cap-visual cap-visual-featured cap-visual-img">
+          <picture>
+            <source type="image/avif" srcset="/img/villain-vault-600.avif 600w, /img/villain-vault-1000.avif 1000w, /img/villain-vault-1400.avif 1400w, /img/villain-vault-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <source type="image/webp" srcset="/img/villain-vault-600.webp 600w, /img/villain-vault-1000.webp 1000w, /img/villain-vault-1400.webp 1400w, /img/villain-vault-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <img src="/img/villain-vault-1000.jpg" alt="Cytidel Villain Vault — Threat Actor Intelligence module showing adversaries mapped to vulnerabilities with TTP context and campaign history." width="2850" height="1422" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capability" aria-labelledby="supplier-software-monitoring">
+    <div class="container">
+      <div class="cap-grid">
+        <div>
+          <div class="cap-heading">
+            <h2 id="supplier-software-monitoring">Supplier &amp; Software Monitoring</h2>
+            <p class="cap-tagline">Early warning across the parts of your stack your scanner can't see.</p>
+          </div>
+          <div class="cap-body">
+            <p>The moment a vendor advisory drops, a breach is detected, or a threat actor starts targeting software your team depends on — the right people are alerted instantly.</p>
+            <div class="chip-row" aria-label="Regulatory compliance">
+              <span class="chip"><span class="chip-dot" aria-hidden="true"></span>NIS2 Ready</span>
+              <span class="chip"><span class="chip-dot" aria-hidden="true"></span>DORA Ready</span>
+            </div>
+          </div>
+        </div>
+        <div class="cap-visual cap-visual-img">
+          <picture>
+            <source type="image/avif" srcset="/img/monitoring-2-600.avif 600w, /img/monitoring-2-1000.avif 1000w, /img/monitoring-2-1400.avif 1400w, /img/monitoring-2-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <source type="image/webp" srcset="/img/monitoring-2-600.webp 600w, /img/monitoring-2-1000.webp 1000w, /img/monitoring-2-1400.webp 1400w, /img/monitoring-2-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <img src="/img/monitoring-2-1000.jpg" alt="Cytidel Supplier and Software Monitoring view — continuous monitoring of vendors and software your team depends on." width="2492" height="1386" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capability" aria-labelledby="bulk-analyser">
+    <div class="container">
+      <div class="cap-grid cap-reverse">
+        <div>
+          <div class="cap-heading">
+            <h2 id="bulk-analyser">Bulk Analyser</h2>
+            <p class="cap-tagline">Apply the intelligence to your scanner backlog.</p>
+          </div>
+          <div class="cap-body">
+            <p>Upload your scanner backlog. Cytidel enriches every vulnerability with real-world risk ratings and evidence trails — in minutes, not weeks.</p>
+            <p>Works with output from <strong>Tenable</strong>, <strong>Qualys</strong>, <strong>Rapid7</strong>, and other scanners. Save reports, track risk profile changes over time, and bring evidence to your next remediation conversation.</p>
+          </div>
+        </div>
+        <div class="cap-visual cap-visual-img">
+          <picture>
+            <source type="image/avif" srcset="/img/bulk-analyser-600.avif 600w, /img/bulk-analyser-1000.avif 1000w, /img/bulk-analyser-1400.avif 1400w, /img/bulk-analyser-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <source type="image/webp" srcset="/img/bulk-analyser-600.webp 600w, /img/bulk-analyser-1000.webp 1000w, /img/bulk-analyser-1400.webp 1400w, /img/bulk-analyser-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <img src="/img/bulk-analyser-1000.jpg" alt="Cytidel Bulk Analyser view — uploaded scanner output enriched with risk ratings and evidence trails." width="2334" height="1394" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capability" aria-labelledby="smart-alerts">
+    <div class="container">
+      <div class="cap-grid">
+        <div>
+          <div class="cap-heading">
+            <h2 id="smart-alerts">Smart Alerts</h2>
+            <p class="cap-tagline">Early warning, routed to the people who can act on it.</p>
+          </div>
+          <div class="cap-body">
+            <p>24/7 monitoring and alerting configured to your software and the risk criteria your business cares about. Route alerts to the right people, at the right time, or embed directly into your workflow across Teams, Slack, or ITSM.</p>
+            <div class="funnel" role="figure" aria-label="From 300 trending vulnerabilities, 3 relevant to your stack, 1 person notified">
+              <div class="funnel-stage">
+                <div class="num">300</div>
+                <div class="label">Trending today</div>
+              </div>
+              <span class="funnel-arrow" aria-hidden="true">→</span>
+              <div class="funnel-stage">
+                <div class="num">3</div>
+                <div class="label">Relevant to your stack</div>
+              </div>
+              <span class="funnel-arrow" aria-hidden="true">→</span>
+              <div class="funnel-stage final">
+                <div class="num">1</div>
+                <div class="label">Person notified</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cap-visual cap-visual-img">
+          <picture>
+            <source type="image/avif" srcset="/img/smart-alerts-600.avif 600w, /img/smart-alerts-1000.avif 1000w, /img/smart-alerts-1400.avif 1400w, /img/smart-alerts-1800.avif 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <source type="image/webp" srcset="/img/smart-alerts-600.webp 600w, /img/smart-alerts-1000.webp 1000w, /img/smart-alerts-1400.webp 1400w, /img/smart-alerts-1800.webp 1800w" sizes="(max-width: 880px) 100vw, 660px">
+            <img src="/img/smart-alerts-1000.jpg" alt="Cytidel Smart Alerts view — vendor and product-aware routing of vulnerability signals." width="2780" height="1328" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack-section" aria-labelledby="stack-h2">
+    <div class="container">
+      <div class="stack-card">
+        <h2 id="stack-h2">How it fits your stack</h2>
+        <p class="stack-lead">Cytidel works alongside the tools your team already uses. No agents to deploy. No infrastructure changes. No data ingestion.</p>
+        <dl class="stack-list">
+          <div class="stack-item">
+            <dt>Scanners</dt>
+            <dd>Tenable, Qualys, Rapid7, and other scanner output flows through Bulk Analyser for enrichment.</dd>
+          </div>
+          <div class="stack-item">
+            <dt>Alerting</dt>
+            <dd>Email, webhook, Slack, and Teams. Direct integration into your operational environment.</dd>
+          </div>
+          <div class="stack-item">
+            <dt>Workflow</dt>
+            <dd>API access for SIEM, SOAR, or ticketing systems for enterprise customers.</dd>
+          </div>
+          <div class="stack-item">
+            <dt>Deployment</dt>
+            <dd>SaaS platform, ISO 27001:2022 certified, hosted in the EU. Ready within a day.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta" aria-labelledby="final-cta-h2">
+    <div class="container">
+      <div class="final-cta-card">
+        <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
+        <p>Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand the latest threat actor activity relevant to your business, and monitor critical software and suppliers 24/7.</p>
+        <a href="/book-a-demo" class="btn btn-primary">
+          Book a Demo
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Container + section defaults */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 4vw, 48px);
+    padding-right: clamp(20px, 4vw, 48px);
+  }
+  section {
+    padding-top: clamp(48px, 6vw, 88px);
+    padding-bottom: clamp(48px, 6vw, 88px);
+  }
+
+  /* Hero */
+  .hero {
+    padding-top: clamp(80px, 11vw, 140px);
+    padding-bottom: clamp(56px, 8vw, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 700px;
+    background: radial-gradient(ellipse at center, rgba(128, 252, 19, 0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    font-size: clamp(2.4rem, 5.6vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  .hi-deep { color: var(--color-accent-deep); }
+  .hero-sub {
+    margin: 28px 0 0;
+    font-size: clamp(1.05rem, 1.55vw, 1.22rem);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+  .hero-cta { margin-top: 40px; }
+
+  /* Shared section h2 baseline */
+  .overview h2,
+  .capability h2,
+  .stack-section h2,
+  .final-cta h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* Awards strip — same as careers */
+  .awards-strip {
+    padding-top: clamp(4px, 1vw, 10px);
+    padding-bottom: clamp(16px, 2.2vw, 32px);
+  }
+  .awards-band {
+    background: linear-gradient(135deg, #1f2823 0%, #0e1612 100%);
+    border-radius: 12px;
+    padding: clamp(13px, 1.6vw, 18px) clamp(20px, 2.8vw, 40px);
+  }
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .award-item {
+    padding: 0 clamp(12px, 1.8vw, 22px);
+    border-left: 1px solid var(--color-dark-border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .award-item:first-child { border-left: none; padding-left: 0; }
+  .award-item:last-child { padding-right: 0; }
+  .award-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .award-icon { width: 14px; height: 14px; color: var(--color-accent); flex-shrink: 0; }
+  .award-name {
+    font-family: var(--font-display);
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
+    font-weight: 500;
+    color: var(--color-dark-text);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+  @media (max-width: 760px) {
+    .awards-grid { grid-template-columns: 1fr; gap: 14px; }
+    .award-item { border-left: none; padding: 0; }
+    .award-item + .award-item {
+      padding-top: 14px;
+      border-top: 1px solid var(--color-dark-border);
+    }
+  }
+
+  /* Overview */
+  .overview {
+    padding-top: clamp(56px, 8vw, 100px);
+    padding-bottom: clamp(56px, 8vw, 100px);
+  }
+  .overview-lead {
+    font-size: clamp(1.05rem, 1.55vw, 1.2rem);
+    color: var(--color-text-secondary);
+    margin: 0 0 clamp(32px, 4vw, 48px);
+  }
+  .cap-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(14px, 1.6vw, 20px);
+  }
+  .cap-card {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(24px, 3vw, 32px);
+    background: var(--color-bg-elev);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cap-card.span-2 { grid-column: span 2; }
+  .cap-card:hover {
+    border-color: var(--color-border-strong);
+    background: var(--color-surface-2);
+    transform: translateY(-2px);
+  }
+  .cap-card-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+    transition: color 0.15s ease;
+  }
+  .cap-card-desc {
+    color: var(--color-text-secondary);
+    font-size: clamp(0.9rem, 1.25vw, 0.98rem);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+  .cap-card-arrow {
+    color: var(--color-text-tertiary);
+    font-size: 1rem;
+    align-self: flex-start;
+    transition: color 0.15s ease, transform 0.2s ease;
+  }
+  .cap-card:hover .cap-card-arrow {
+    color: var(--color-accent-deep);
+    transform: translateX(4px);
+  }
+
+  .cap-card-featured {
+    background: var(--color-dark-bg);
+    color: var(--color-dark-text);
+  }
+  .cap-card-featured .cap-card-name { color: var(--color-dark-text); }
+  .cap-card-featured .cap-card-desc { color: var(--color-dark-text-secondary); }
+  .cap-card-featured .cap-card-arrow { color: var(--color-accent); }
+  .cap-card-featured:hover {
+    background: var(--color-dark-bg-elev);
+    border-color: var(--color-dark-border);
+  }
+  .cap-card-featured::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(128, 252, 19, 0.10) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .cap-card-featured > * { position: relative; }
+
+  .cap-card-accent {
+    background: var(--color-accent-dim);
+    border-color: rgba(128, 252, 19, 0.25);
+  }
+  .cap-card-accent:hover {
+    background: rgba(128, 252, 19, 0.28);
+    border-color: rgba(128, 252, 19, 0.4);
+  }
+  .cap-card-accent .cap-card-arrow { color: var(--color-accent-deep); }
+
+  @media (max-width: 880px) {
+    .cap-overview-grid { grid-template-columns: 1fr 1fr; }
+    .cap-card, .cap-card.span-2 { grid-column: span 1; }
+  }
+  @media (max-width: 560px) {
+    .cap-overview-grid { grid-template-columns: 1fr; }
+  }
+  .overview-close {
+    margin: clamp(40px, 5vw, 56px) 0 0;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+
+  /* Capability sections */
+  .capability { border-top: 1px solid var(--color-border); }
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+  .cap-grid.cap-reverse { grid-template-columns: 1.3fr 1fr; }
+  .cap-grid.cap-reverse > div:first-child { order: 2; }
+  .cap-grid.cap-reverse > .cap-visual { order: 1; }
+  @media (max-width: 880px) {
+    .cap-grid,
+    .cap-grid.cap-reverse { grid-template-columns: 1fr; gap: 32px; }
+    .cap-grid.cap-reverse > div:first-child,
+    .cap-grid.cap-reverse > .cap-visual { order: initial; }
+  }
+  .cap-heading h2 {
+    margin-bottom: 14px;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+  }
+  .cap-tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 500;
+    color: var(--color-accent-deep);
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    margin: 0 0 clamp(28px, 3vw, 40px);
+  }
+  .cap-body { display: grid; gap: 1.6em; }
+  .cap-body p {
+    font-size: clamp(1rem, 1.4vw, 1.08rem);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .cap-body p strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .cap-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .cap-body ul li {
+    position: relative;
+    padding-left: 22px;
+    font-size: clamp(1rem, 1.4vw, 1.05rem);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+  .cap-body ul li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 8px;
+    height: 1px;
+    background: var(--color-accent);
+  }
+  .cap-body ul li b {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  /* Capability visuals (product images) */
+  .cap-visual {
+    background: #C3CCBE;
+    border: none;
+    border-radius: 12px;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    padding: clamp(12px, 2vw, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-tertiary);
+    font-size: 0.92rem;
+    text-align: center;
+    letter-spacing: 0.01em;
+    position: sticky;
+    top: 92px;
+  }
+  @media (max-width: 880px) {
+    .cap-visual { position: static; }
+  }
+  .cap-visual-img picture {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .cap-visual-img img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(20, 30, 20, 0.06);
+    box-shadow:
+      0 20px 40px -15px rgba(20, 30, 20, 0.18),
+      0 6px 16px -8px rgba(20, 30, 20, 0.08);
+    background: #fff;
+  }
+
+  /* Callout (Villain Vault pull) */
+  .callout {
+    margin: 8px 0 0;
+    padding: clamp(20px, 2.5vw, 26px) clamp(22px, 3vw, 30px);
+    background: var(--color-surface);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 8px 8px 0;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.55vw, 1.18rem);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    font-weight: 500;
+  }
+  .callout p {
+    color: var(--color-text);
+    margin: 0;
+    font-family: var(--font-display);
+  }
+
+  /* Compliance chips */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 4px 0 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-deep);
+  }
+
+  /* Smart Alerts funnel */
+  .funnel {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(12px, 2vw, 24px);
+    margin: clamp(20px, 2.5vw, 32px) 0 8px;
+    padding: clamp(28px, 4vw, 40px) clamp(20px, 3vw, 32px);
+    background: var(--color-bg-elev);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+  }
+  .funnel-stage {
+    text-align: center;
+    padding: 8px 4px;
+  }
+  .funnel-stage .num {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    line-height: 1;
+  }
+  .funnel-stage .label {
+    margin-top: 10px;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    font-weight: 500;
+  }
+  .funnel-stage.final {
+    background: var(--color-accent-dim);
+    border-radius: 10px;
+  }
+  .funnel-stage.final .num { color: var(--color-accent-deep); }
+  .funnel-arrow {
+    color: var(--color-text-tertiary);
+    font-size: 1.4rem;
+    opacity: 0.6;
+    line-height: 1;
+  }
+  @media (max-width: 600px) {
+    .funnel { grid-template-columns: 1fr; gap: 12px; }
+    .funnel-arrow { transform: rotate(90deg); justify-self: center; }
+  }
+
+  /* Stack section (dark card) */
+  .stack-section { border-top: 1px solid var(--color-border); }
+  .stack-card {
+    position: relative;
+    background: var(--color-dark-bg);
+    border: 1px solid var(--color-dark-border);
+    border-radius: 16px;
+    padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+    color: var(--color-dark-text);
+  }
+  .stack-card h2 {
+    color: var(--color-dark-text);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    margin-bottom: 18px;
+  }
+  .stack-lead {
+    font-size: clamp(1.05rem, 1.55vw, 1.18rem);
+    line-height: 1.6;
+    color: var(--color-dark-text-secondary);
+    margin: 0 0 clamp(40px, 5vw, 56px);
+  }
+  .stack-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 3vw, 32px) clamp(40px, 5vw, 64px);
+    margin: 0;
+  }
+  .stack-item {
+    padding-top: 22px;
+    border-top: 1px solid var(--color-dark-border);
+  }
+  .stack-item dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1rem, 1.4vw, 1.08rem);
+    color: var(--color-dark-text);
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .stack-item dd {
+    margin: 0;
+    font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+    line-height: 1.6;
+    color: var(--color-dark-text-secondary);
+  }
+  @media (max-width: 720px) {
+    .stack-list { grid-template-columns: 1fr; }
+  }
+
+  /* Final CTA */
+  .final-cta {
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+  }
+  .final-cta-card {
+    background: linear-gradient(135deg, #1f2823 0%, var(--color-cta-bg) 100%);
+    border-radius: 16px;
+    padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
+    text-align: center;
+    color: #f7f9f3;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta-card h2 {
+    color: #f7f9f3;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    margin: 0 auto 20px;
+    max-width: 720px;
+  }
+  .final-cta-card p {
+    font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+    line-height: 1.6;
+    color: rgba(247, 249, 243, 0.82);
+    margin: 0 auto 36px;
+    max-width: 640px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: #80FC13;
+    color: #0b2000;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35);
+  }
+  .btn-dark {
+    background: var(--color-cta-bg);
+    color: #f7f9f3;
+    margin-top: clamp(20px, 2.5vw, 28px);
+  }
+  .btn-dark:hover {
+    background: #80FC13;
+    color: #0b2000;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(128, 252, 19, 0.22);
+  }
+  .btn .arrow { transition: transform 0.2s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+</style>
