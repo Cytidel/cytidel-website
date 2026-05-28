@@ -22,6 +22,21 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Cookiebot consent management. Must be the first script in <head>
+         so its auto-blocking can intercept tracker scripts (Matomo below)
+         before they fire. CBID is the same one used on the existing
+         Webflow site at cytidel.com — the new Astro domain needs to be
+         added to the Cookiebot dashboard allowlist before this works in
+         production. -->
+    <script
+      is:inline
+      id="Cookiebot"
+      src="https://consent.cookiebot.com/uc.js"
+      data-cbid="aa407693-b2ed-4e09-886f-cac747660436"
+      type="text/javascript"
+    ></script>
+
     <SEO title={title} description={description} ogImage={ogImage} ogType={ogType} />
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
     <meta name="theme-color" content="#f1f1ec" />
@@ -31,6 +46,23 @@ const {
       href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Matomo Cloud — analytics for cytidel.com. The Cookiebot script
+         above auto-blocks this until the user consents to statistics. -->
+    <script is:inline>
+      var _paq = window._paq = window._paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u = "https://cytidel.matomo.cloud/";
+        _paq.push(['setTrackerUrl', u + 'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.async = true;
+        g.src = 'https://cdn.matomo.cloud/cytidel.matomo.cloud/matomo.js';
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+
     <!-- Per-page head extras (preconnect hints, JSON-LD schema, etc.) -->
     <slot name="head" />
   </head>
