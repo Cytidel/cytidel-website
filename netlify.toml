@@ -1,0 +1,22 @@
+[build]
+  base = "astro"
+  command = "yarn build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# /index.html → / (Astro serves the homepage at root, not /index)
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+# /privacy.html → /privacy, /faq.html → /faq, etc.
+# Preserves external backlinks and search-result equity after the cutover.
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true
