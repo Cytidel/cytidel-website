@@ -31,6 +31,8 @@ const {
       href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Per-page head extras (preconnect hints, JSON-LD schema, etc.) -->
+    <slot name="head" />
   </head>
   <body class="bg-bg text-text font-sans antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-text focus:text-bg focus:px-4 focus:py-2.5 focus:font-semibold">Skip to content</a>
