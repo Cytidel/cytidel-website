@@ -1,0 +1,48 @@
+---
+// Shared SEO component — renders <title>, meta description, canonical URL,
+// and full Open Graph + Twitter Card meta tags. Used inside Layout.astro
+// so every page gets the same SEO chrome with just title/description props.
+//
+// Pages can pass `ogImage` (an absolute path like "/img/foo.jpg") to override
+// the default social card image per-page. Otherwise the product hero is used.
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  ogImage = '/img/product-hero-1200.jpg',
+  ogType = 'website',
+} = Astro.props;
+
+// Astro.site is set in astro.config.mjs; new URL() resolves the path
+// against it to produce absolute URLs for canonical + OG tags.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageURL = new URL(ogImage, Astro.site).toString();
+---
+
+<!-- Primary -->
+<title>{title}</title>
+{description && <meta name="description" content={description} />}
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph (Facebook, LinkedIn, Slack, iMessage, most platforms) -->
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="Cytidel" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+{description && <meta property="og:description" content={description} />}
+<meta property="og:image" content={ogImageURL} />
+
+<!-- Twitter / X — uses its own meta vocabulary, summary_large_image
+     renders the OG image as a wide card rather than a thumbnail. -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+{description && <meta name="twitter:description" content={description} />}
+<meta name="twitter:image" content={ogImageURL} />
