@@ -73,5 +73,10 @@ const {
       <slot />
     </main>
     <Footer />
+    <script>
+      // Sitewide click + FAQ-open tracking. No-ops until Matomo loads
+      // (which only happens after Cookiebot consent).
+      import '../scripts/analytics.ts';
+    </script>
   </body>
 </html>

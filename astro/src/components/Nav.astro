@@ -53,7 +53,7 @@ const inRoles = roleLinks.some((l) => isCurrent(l.href));
 
       <a href="https://blog.cytidel.com" target="_blank" rel="noopener" class="nav-link">Blog</a>
       <a href="/careers" class:list={['nav-link', isCurrent('/careers') && 'is-current']} aria-current={isCurrent('/careers') ? 'page' : undefined}>Careers</a>
-      <a href="/book-a-demo" class="nav-cta bg-accent text-[#0b2000] rounded-lg px-6 py-[14px] font-semibold text-[0.9rem] whitespace-nowrap shrink-0 transition-all duration-200 hover:-translate-y-px hover:shadow-[0_8px_22px_rgba(128,252,19,0.35)]">Book a Demo</a>
+      <a href="/book-a-demo" class="nav-cta bg-accent text-[#0b2000] rounded-lg px-6 py-[14px] font-semibold text-[0.9rem] whitespace-nowrap shrink-0 transition-all duration-200 hover:-translate-y-px hover:shadow-[0_8px_22px_rgba(128,252,19,0.35)]" data-analytics="CTA|Book a Demo|Nav">Book a Demo</a>
     </nav>
 
     <button class="nav-burger hidden" type="button" aria-expanded="false" aria-controls="nav-links-menu" aria-label="Open menu">
