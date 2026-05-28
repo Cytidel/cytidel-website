@@ -115,11 +115,23 @@ import Layout from '../layouts/Layout.astro';
   }
   .meetings-iframe-container :global(iframe) {
     width: 100% !important;
+    /* Give the calendar UI enough vertical room to render in full so it
+       doesn't introduce its own inner scrollbar (the "double scrolls"
+       artefact on phones, where HubSpot's default ~750px iframe height
+       isn't tall enough for the calendar + time-slot column + booking
+       form to fit). The page scroll handles the rest. */
+    min-height: 950px;
     border: 0;
     display: block;
     margin: 0 auto;
     position: relative;
     z-index: 1;
+  }
+  @media (max-width: 640px) {
+    .meetings-iframe-container :global(iframe) {
+      /* Phones need more vertical space because the calendar stacks. */
+      min-height: 1100px;
+    }
   }
   /* Once the scheduler is injected, let the box hug it */
   .meetings-iframe-container:has(:global(iframe)) { min-height: 0; }

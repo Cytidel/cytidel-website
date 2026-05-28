@@ -53,12 +53,17 @@ const inRoles = roleLinks.some((l) => isCurrent(l.href));
 
       <a href="https://blog.cytidel.com" target="_blank" rel="noopener" class="nav-link">Blog</a>
       <a href="/careers" class:list={['nav-link', isCurrent('/careers') && 'is-current']} aria-current={isCurrent('/careers') ? 'page' : undefined}>Careers</a>
-      <a href="/book-a-demo" class="nav-cta bg-accent text-[#0b2000] rounded-lg px-6 py-[14px] font-semibold text-[0.9rem] whitespace-nowrap shrink-0 transition-all duration-200 hover:-translate-y-px hover:shadow-[0_8px_22px_rgba(128,252,19,0.35)]" data-analytics="CTA|Book a Demo|Nav">Book a Demo</a>
     </nav>
 
-    <button class="nav-burger hidden" type="button" aria-expanded="false" aria-controls="nav-links-menu" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
+    <!-- Always-visible right-side actions. CTA stays in the top bar on
+         mobile (sibling of the burger, not inside the drawer) so visitors
+         can convert without opening the menu first. -->
+    <div class="nav-actions flex items-center gap-3">
+      <a href="/book-a-demo" class="nav-cta bg-accent text-[#0b2000] rounded-lg px-5 py-[12px] sm:px-6 sm:py-[14px] font-semibold text-[0.85rem] sm:text-[0.9rem] whitespace-nowrap shrink-0 transition-all duration-200 hover:-translate-y-px hover:shadow-[0_8px_22px_rgba(128,252,19,0.35)]" data-analytics="CTA|Book a Demo|Nav">Book a Demo</a>
+      <button class="nav-burger hidden" type="button" aria-expanded="false" aria-controls="nav-links-menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -186,7 +191,7 @@ const inRoles = roleLinks.some((l) => isCurrent(l.href));
       transform: translateY(0);
       visibility: visible;
     }
-    .nav-links > a:not(.nav-cta) {
+    .nav-links > a {
       display: block;
       width: 100%;
       padding: 18px 0;
@@ -202,25 +207,43 @@ const inRoles = roleLinks.some((l) => isCurrent(l.href));
       font-size: 1.05rem;
       border-bottom: 1px solid var(--color-border);
     }
+    /* Mobile dropdown: tap-to-expand. Override desktop's hover/focus-within
+       reveal so the menu strictly tracks aria-expanded on the trigger. */
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: none;
+    }
+    .nav-dropdown:hover > .nav-dropdown-trigger .caret,
+    .nav-dropdown:focus-within > .nav-dropdown-trigger .caret {
+      transform: none;
+    }
+    .nav-dropdown-trigger[aria-expanded='true'] .caret { transform: rotate(180deg); }
     .nav-dropdown-menu {
       position: static;
-      opacity: 1;
-      visibility: visible;
-      transform: none;
       box-shadow: none;
       background: transparent;
       border: 0;
-      padding: 8px 16px 16px;
       min-width: 0;
+      /* Collapsed default — overrides the desktop forced-visibility above. */
+      opacity: 0;
+      visibility: hidden;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 16px;
+      transform: none;
+      transition: opacity 0.2s ease, max-height 0.2s ease, padding 0.2s ease, visibility 0.2s;
+    }
+    .nav-dropdown-trigger[aria-expanded='true'] + .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      max-height: 400px;
+      padding: 8px 16px 16px;
     }
     .nav-dropdown-menu a {
       padding: 12px 0;
       font-size: 0.98rem;
-    }
-    .nav-cta {
-      margin-top: 24px;
-      align-self: flex-start;
-      padding: 14px 26px;
     }
     :global(body.nav-locked) { overflow: hidden; }
   }
@@ -287,7 +310,9 @@ const inRoles = roleLinks.some((l) => isCurrent(l.href));
         setOpen(false); burger.focus();
       }
     });
-    navEl.querySelectorAll<HTMLAnchorElement>('.nav-links a').forEach((a) => {
+    // Close the mobile drawer when any nav link is clicked — including the
+    // standalone CTA that now lives outside .nav-links.
+    navEl.querySelectorAll<HTMLAnchorElement>('.nav-links a, .nav-cta').forEach((a) => {
       a.addEventListener('click', () => {
         if (burger.getAttribute('aria-expanded') === 'true') setOpen(false);
       });
