@@ -1,0 +1,367 @@
+/* ---------------------------------------------------------------------------
+   Role page shared styles
+   Used by /cytidel-for-vulnerability-management, /cytidel-for-threat-intelligence,
+   /cytidel-for-cisos, /cytidel-for-analysts — six sections in identical shells,
+   only the content differs across pages. Imported globally from each role page.
+   --------------------------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 4vw, 48px);
+  padding-right: clamp(20px, 4vw, 48px);
+}
+
+section {
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: clamp(48px, 6vw, 88px);
+}
+
+/* ------- HERO ------- */
+.role-page .hero {
+  padding-top: clamp(80px, 11vw, 140px);
+  padding-bottom: clamp(56px, 8vw, 100px);
+  position: relative;
+  overflow: hidden;
+}
+.role-page .hero::before {
+  content: "";
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 700px;
+  background: radial-gradient(ellipse at center, rgba(128, 252, 19, 0.18) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+.role-page .hero-inner { position: relative; z-index: 1; }
+
+.role-page .hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px;
+  background: var(--color-accent-dim);
+  border-radius: 999px;
+  color: var(--color-accent-deep);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.role-page .hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(2.4rem, 5.6vw, 4rem);
+}
+.role-page .hero h1 .role { color: var(--color-accent-deep); }
+.role-page .hero-sub {
+  margin: 28px 0 0;
+  font-size: clamp(1.05rem, 1.55vw, 1.22rem);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+.role-page .hero-cta { margin-top: 40px; }
+
+/* ------- SHARED SECTION HEAD ------- */
+.role-page .section-head { margin-bottom: clamp(40px, 5vw, 64px); }
+.role-page .section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.08;
+  color: var(--color-text);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0 0 18px;
+}
+.role-page .section-head .lead {
+  font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ------- SECTION 2 — PAIN CARDS (bento) ------- */
+.role-page .pains { border-top: 1px solid var(--color-border); }
+.role-page .pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+.role-page .pain {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  padding: clamp(28px, 3vw, 38px);
+  background: var(--color-surface);
+  border-radius: 12px;
+  border-bottom: 3px solid var(--color-accent);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.role-page .pain:hover {
+  box-shadow: 0 18px 44px -18px rgba(20, 30, 20, 0.16);
+  transform: translateY(-2px);
+}
+.role-page .pain-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background: var(--color-bg-elev);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-deep);
+}
+.role-page .pain-icon svg { width: 24px; height: 24px; }
+.role-page .pain h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin: 0;
+  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+  line-height: 1.3;
+}
+.role-page .pain p {
+  font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+@media (max-width: 880px) {
+  .role-page .pain-grid { grid-template-columns: 1fr; }
+}
+
+/* ------- SECTION 3 — CAPABILITIES (numbered list, 2 columns) ------- */
+.role-page .capabilities { border-top: 1px solid var(--color-border); }
+.role-page .capabilities-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 3.5vw, 48px) clamp(40px, 5vw, 72px);
+}
+.role-page .cap-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(16px, 2vw, 24px);
+  align-items: start;
+}
+.role-page .cap-item .cap-no {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  font-weight: 700;
+  color: var(--color-accent-deep);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.role-page .cap-item h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  font-size: clamp(1.1rem, 1.5vw, 1.22rem);
+  line-height: 1.3;
+  margin: 0 0 8px;
+}
+.role-page .cap-item p {
+  font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+@media (max-width: 760px) {
+  .role-page .capabilities-list { grid-template-columns: 1fr; }
+}
+
+/* ------- SECTION 4 — SCENARIOS (dark contained card) ------- */
+.role-page .scenarios { border-top: 1px solid var(--color-border); }
+.role-page .scenario-card {
+  background: linear-gradient(135deg, #1f2823 0%, var(--color-dark-bg) 100%);
+  border-radius: 16px;
+  padding: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 56px);
+  color: var(--color-dark-text);
+}
+.role-page .scenario-card .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
+.role-page .scenario-card .section-head h2 { color: var(--color-dark-text); }
+.role-page .scenario-card .section-head .lead { color: var(--color-dark-text-secondary); }
+.role-page .scenario-list { display: grid; gap: 0; }
+.role-page .scenario {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: clamp(20px, 4vw, 48px);
+  padding: clamp(28px, 3.5vw, 40px) 0;
+  border-top: 1px solid var(--color-dark-border);
+  align-items: start;
+}
+.role-page .scenario:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.role-page .scenario-num {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.role-page .scenario h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.12rem, 1.7vw, 1.35rem);
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  margin: 0 0 12px;
+  color: var(--color-dark-text);
+}
+.role-page .scenario p {
+  font-size: clamp(1rem, 1.4vw, 1.08rem);
+  line-height: 1.7;
+  color: var(--color-dark-text-secondary);
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .role-page .scenario { grid-template-columns: 1fr; gap: 10px; }
+  .role-page .scenario-num { font-size: 1.8rem; }
+}
+
+/* ------- SECTION 5 — CONVERSATION CONTRAST ------- */
+.role-page .conversation { border-top: 1px solid var(--color-border); }
+.role-page .conversation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3vw, 28px);
+  margin-bottom: clamp(40px, 5vw, 56px);
+}
+.role-page .conv {
+  padding: clamp(24px, 3vw, 34px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+.role-page .conv.is-new {
+  border-color: rgba(128, 252, 19, 0.4);
+  border-left-color: var(--color-accent-deep);
+  box-shadow: -3px 0 0 0 var(--color-accent), 0 6px 24px rgba(0, 0, 0, 0.25);
+  margin-left: 3px;
+}
+.role-page .conv-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin-bottom: 14px;
+  display: block;
+  font-weight: 500;
+}
+.role-page .conv.is-new .conv-label { color: var(--color-accent-deep); }
+.role-page .conv p {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  margin: 0;
+}
+.role-page .conv p + p {
+  margin-top: 10px;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+.role-page .conv-verdict {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+.role-page .conv-verdict svg { width: 19px; height: 19px; flex-shrink: 0; }
+.role-page .conv .conv-verdict { color: #cf4b3c; }
+.role-page .conv.is-new .conv-verdict { color: var(--color-accent-deep); }
+.role-page .conversation-close {
+  font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+@media (max-width: 760px) {
+  .role-page .conversation-grid { grid-template-columns: 1fr; }
+  .role-page .conv.is-new {
+    margin-left: 0;
+    box-shadow: none;
+    border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: var(--color-accent);
+  }
+}
+
+/* ------- SECTION 6 — FINAL CTA (deep-green card) ------- */
+.role-page .final-cta {
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+.role-page .final-cta-card {
+  background: linear-gradient(135deg, #1f2823 0%, var(--color-cta-bg) 100%);
+  border-radius: 16px;
+  padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
+  text-align: center;
+  color: #f7f9f3;
+  position: relative;
+  overflow: hidden;
+}
+.role-page .final-cta-card h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.08;
+  color: #f7f9f3;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0 auto 20px;
+  max-width: 720px;
+}
+.role-page .final-cta-card p {
+  font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(247, 249, 243, 0.82);
+  margin: 0 auto 36px;
+  max-width: 640px;
+}
+
+/* ------- BUTTONS ------- */
+.role-page .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.role-page .btn-primary {
+  background: #80FC13;
+  color: #0b2000;
+}
+.role-page .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35);
+}
+.role-page .btn .arrow { transition: transform 0.2s ease; }
+.role-page .btn:hover .arrow { transform: translateX(3px); }

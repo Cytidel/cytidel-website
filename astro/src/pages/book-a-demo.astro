@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Book a Demo · Cytidel"
+  description="Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7."
+>
+  <section class="hero demo-hero" aria-labelledby="hero-h1">
+    <div class="container">
+      <div class="hero-inner">
+        <span class="eyebrow">Book a demo</span>
+        <h1 id="hero-h1">Find out what Cytidel can do for your business</h1>
+        <p class="hero-sub">Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-embed" aria-label="Demo booking calendar">
+    <div class="container">
+      <div class="meetings-iframe-container" data-src="https://meetings-eu1.hubspot.com/gary-fagan/book-a-demo?embed=true">
+        <div class="meetings-loading" role="status" aria-live="polite">
+          <span class="meetings-spinner" aria-hidden="true"></span>
+          Loading the scheduler…
+        </div>
+      </div>
+      <script is:inline type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js" defer></script>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Container + section defaults */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 4vw, 48px);
+    padding-right: clamp(20px, 4vw, 48px);
+  }
+  section {
+    padding-top: clamp(48px, 6vw, 88px);
+    padding-bottom: clamp(48px, 6vw, 88px);
+  }
+
+  /* Hero — base + demo override */
+  .hero {
+    padding-top: clamp(80px, 11vw, 140px);
+    padding-bottom: clamp(56px, 8vw, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 700px;
+    background: radial-gradient(ellipse at center, rgba(128, 252, 19, 0.18) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .demo-hero {
+    padding-top: clamp(80px, 10vw, 120px);
+    padding-bottom: clamp(32px, 4vw, 48px);
+  }
+  .demo-hero .hero-sub { margin-top: 20px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.06;
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(2.4rem, 5.6vw, 4rem);
+  }
+  .hero-sub {
+    margin: 28px 0 0;
+    font-size: clamp(1.05rem, 1.55vw, 1.22rem);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  /* HubSpot scheduler embed */
+  .demo-embed {
+    padding-top: 0;
+    padding-bottom: clamp(72px, 9vw, 120px);
+  }
+  .meetings-iframe-container {
+    position: relative;
+    width: 100%;
+    min-height: 720px;
+    background: transparent;
+  }
+  .meetings-iframe-container :global(iframe) {
+    width: 100% !important;
+    border: 0;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  /* Once the scheduler is injected, let the box hug it */
+  .meetings-iframe-container:has(:global(iframe)) { min-height: 0; }
+
+  /* Loading state — shown until HubSpot swaps in the iframe */
+  .meetings-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--color-text-tertiary);
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+  .meetings-iframe-container:has(:global(iframe)) .meetings-loading { display: none; }
+  .meetings-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--color-border-strong);
+    border-top-color: var(--color-accent-deep);
+    border-radius: 50%;
+    animation: meetings-spin 0.8s linear infinite;
+  }
+  @keyframes meetings-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .meetings-spinner { animation-duration: 2s; }
+  }
+</style>
