@@ -1,17 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// HubSpot Forms API submission endpoint params — public values, safe to
+// inline in the client bundle.
+const HUBSPOT_PORTAL_ID = '25744711';
+const HUBSPOT_FORM_GUID = '9179311d-fdc5-4b22-b83e-f24ad76b3ddc';
+const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-demo';
 ---
 <Layout
   title="Book a Demo · Cytidel"
   description="Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7."
 >
   <Fragment slot="head">
-    <!-- Warm the HubSpot connections in parallel with the rest of the page
-         load so the scheduler starts downloading sooner. Without these, the
-         browser doesn't open a connection until it parses past the embed
-         <script> tag in the body. -->
+    <!-- Warm the connections we'll need: HubSpot Forms API for lead
+         capture on submit, and HubSpot Meetings for the redirect right
+         after. Both fire shortly after the user clicks submit, so the
+         preconnects in <head> save a chunk of time at that moment. -->
+    <link rel="preconnect" href="https://api.hsforms.com" crossorigin />
     <link rel="preconnect" href="https://meetings-eu1.hubspot.com" crossorigin />
-    <link rel="preconnect" href="https://static.hsappstatic.net" crossorigin />
   </Fragment>
 
   <section class="hero demo-hero" aria-labelledby="hero-h1">
@@ -24,18 +30,141 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <section class="demo-embed" aria-label="Demo booking calendar">
+  <section class="demo-form-section" aria-label="Book a demo">
     <div class="container">
-      <div class="meetings-iframe-container" data-src="https://meetings-eu1.hubspot.com/gary-fagan/book-a-demo?embed=true">
-        <div class="meetings-loading" role="status" aria-live="polite">
-          <span class="meetings-spinner" aria-hidden="true"></span>
-          Loading the scheduler…
+      <form
+        id="book-demo-form"
+        class="demo-form"
+        data-portal-id={HUBSPOT_PORTAL_ID}
+        data-form-guid={HUBSPOT_FORM_GUID}
+        data-meeting-url={HUBSPOT_MEETING_URL}
+      >
+        <div class="field-row">
+          <div class="field">
+            <label for="firstname">First name <span class="req" aria-hidden="true">*</span></label>
+            <input id="firstname" name="firstname" type="text" required autocomplete="given-name" placeholder=" " />
+          </div>
+          <div class="field">
+            <label for="lastname">Last name <span class="req" aria-hidden="true">*</span></label>
+            <input id="lastname" name="lastname" type="text" required autocomplete="family-name" placeholder=" " />
+          </div>
         </div>
-      </div>
-      <script is:inline type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js" defer></script>
+
+        <div class="field">
+          <label for="email">Work email <span class="req" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder=" " />
+        </div>
+
+        <div class="field">
+          <label for="company">Company <span class="req" aria-hidden="true">*</span></label>
+          <input id="company" name="company" type="text" required autocomplete="organization" placeholder=" " />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" data-analytics="CTA|Book a Demo|Form Submit">
+            <span class="btn-label">Continue to scheduling</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="form-note">After submitting, you'll pick a time that works for you on the next page. By submitting you agree to our <a href="/privacy">Privacy Policy</a>.</p>
+
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
+
+      <noscript>
+        <div class="noscript-fallback">
+          JavaScript is required to submit this form. Please email <a href="mailto:info@cytidel.com">info@cytidel.com</a> to book a demo directly.
+        </div>
+      </noscript>
     </div>
   </section>
 </Layout>
+
+<script>
+  // Native form → HubSpot Forms API → redirect to HubSpot Meetings with
+  // the visitor's details prefilled as query-string params. The Forms API
+  // submission captures the lead in HubSpot CRM even if the visitor bails
+  // before picking a calendar slot.
+
+  type HSFormsField = { objectTypeId: string; name: string; value: string };
+
+  const form = document.getElementById('book-demo-form') as HTMLFormElement | null;
+  if (form) {
+    const portalId = form.dataset.portalId!;
+    const formGuid = form.dataset.formGuid!;
+    const meetingUrl = form.dataset.meetingUrl!;
+    const status = form.querySelector('.form-status') as HTMLElement;
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
+    const originalLabel = submitLabel.textContent ?? '';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.classList.remove('is-error');
+
+      const data = new FormData(form);
+      const firstname = (data.get('firstname') ?? '').toString().trim();
+      const lastname = (data.get('lastname') ?? '').toString().trim();
+      const email = (data.get('email') ?? '').toString().trim();
+      const company = (data.get('company') ?? '').toString().trim();
+
+      const fields: HSFormsField[] = [
+        { objectTypeId: '0-1', name: 'firstname', value: firstname },
+        { objectTypeId: '0-1', name: 'lastname', value: lastname },
+        { objectTypeId: '0-1', name: 'email', value: email },
+        { objectTypeId: '0-1', name: 'company', value: company },
+      ];
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Submitting…';
+
+      try {
+        const res = await fetch(
+          `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fields,
+              context: {
+                pageUri: window.location.href,
+                pageName: document.title,
+              },
+            }),
+          },
+        );
+
+        if (!res.ok) {
+          throw new Error(`HubSpot Forms API returned ${res.status}`);
+        }
+
+        // Matomo conversion event — fires only on actual successful submit,
+        // gated by Cookiebot consent like everything else.
+        (window as unknown as { _paq?: unknown[][] })._paq?.push(['trackEvent', 'Form', 'Book a Demo', 'Submit']);
+
+        // Redirect to the HubSpot Meetings scheduler with the visitor's
+        // details prefilled. HubSpot Meetings reads these query-string
+        // params natively and skips the "who are you" step.
+        const params = new URLSearchParams({
+          firstName: firstname,
+          lastName: lastname,
+          email,
+          company,
+        });
+        window.location.href = `${meetingUrl}?${params.toString()}`;
+      } catch (err) {
+        console.error('Book a demo form submit failed:', err);
+        status.textContent = 'Something went wrong submitting the form. Please try again, or email info@cytidel.com.';
+        status.classList.add('is-error');
+        submitBtn.disabled = false;
+        submitLabel.textContent = originalLabel;
+        (window as unknown as { _paq?: unknown[][] })._paq?.push(['trackEvent', 'Form', 'Book a Demo', 'Error']);
+      }
+    });
+  }
+</script>
 
 <style>
   /* Container + section defaults */
@@ -51,7 +180,7 @@ import Layout from '../layouts/Layout.astro';
     padding-bottom: clamp(48px, 6vw, 88px);
   }
 
-  /* Hero — base + demo override */
+  /* Hero (unchanged) */
   .hero {
     padding-top: clamp(80px, 11vw, 140px);
     padding-bottom: clamp(56px, 8vw, 100px);
@@ -76,7 +205,6 @@ import Layout from '../layouts/Layout.astro';
     padding-bottom: clamp(32px, 4vw, 48px);
   }
   .demo-hero .hero-sub { margin-top: 20px; }
-
   .eyebrow {
     display: inline-block;
     font-size: 0.78rem;
@@ -102,66 +230,139 @@ import Layout from '../layouts/Layout.astro';
     color: var(--color-text-secondary);
   }
 
-  /* HubSpot scheduler embed */
-  .demo-embed {
+  /* Form */
+  .demo-form-section {
     padding-top: 0;
     padding-bottom: clamp(72px, 9vw, 120px);
   }
-  .meetings-iframe-container {
-    position: relative;
-    width: 100%;
-    min-height: 720px;
-    background: transparent;
-  }
-  .meetings-iframe-container :global(iframe) {
-    width: 100% !important;
-    /* Give the calendar UI enough vertical room to render in full so it
-       doesn't introduce its own inner scrollbar (the "double scrolls"
-       artefact on phones, where HubSpot's default ~750px iframe height
-       isn't tall enough for the calendar + time-slot column + booking
-       form to fit). The page scroll handles the rest. */
-    min-height: 950px;
-    border: 0;
-    display: block;
+  .demo-form {
+    max-width: 540px;
     margin: 0 auto;
-    position: relative;
-    z-index: 1;
+    display: grid;
+    gap: clamp(18px, 2.5vw, 22px);
+    padding: clamp(28px, 4vw, 40px);
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
   }
-  @media (max-width: 640px) {
-    .meetings-iframe-container :global(iframe) {
-      /* Phones need more vertical space because the calendar stacks. */
-      min-height: 1100px;
-    }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(14px, 2vw, 18px);
   }
-  /* Once the scheduler is injected, let the box hug it */
-  .meetings-iframe-container:has(:global(iframe)) { min-height: 0; }
+  @media (max-width: 520px) {
+    .field-row { grid-template-columns: 1fr; gap: clamp(18px, 2.5vw, 22px); }
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+  .field label {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: -0.005em;
+  }
+  .field label .req {
+    color: var(--color-accent-deep);
+    margin-left: 2px;
+  }
+  .field input {
+    font: inherit;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--color-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .field input::placeholder { color: var(--color-text-tertiary); opacity: 0.6; }
+  .field input:focus {
+    outline: none;
+    border-color: var(--color-accent-deep);
+    box-shadow: 0 0 0 3px rgba(53, 122, 18, 0.15);
+  }
+  .field input:invalid:not(:placeholder-shown) {
+    border-color: #b94a48;
+  }
 
-  /* Loading state — shown until HubSpot swaps in the iframe */
-  .meetings-loading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .form-actions { margin-top: 4px; }
+  .form-actions .btn {
+    width: 100%;
     justify-content: center;
-    gap: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    font-family: inherit;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.15s ease;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: #80FC13;
+    color: #0b2000;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .btn .arrow { transition: transform 0.2s ease; }
+  .btn:hover:not(:disabled) .arrow { transform: translateX(3px); }
+
+  .form-note {
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: var(--color-text-tertiary);
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
+    margin: 0;
+    text-align: center;
   }
-  .meetings-iframe-container:has(:global(iframe)) .meetings-loading { display: none; }
-  .meetings-spinner {
-    width: 30px;
-    height: 30px;
-    border: 3px solid var(--color-border-strong);
-    border-top-color: var(--color-accent-deep);
-    border-radius: 50%;
-    animation: meetings-spin 0.8s linear infinite;
+  .form-note a {
+    color: var(--color-accent-deep);
+    font-weight: 600;
+    text-decoration: none;
   }
-  @keyframes meetings-spin {
-    to { transform: rotate(360deg); }
+  .form-note a:hover { text-decoration: underline; }
+
+  .form-status {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    min-height: 0;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .meetings-spinner { animation-duration: 2s; }
+  .form-status:not(:empty) {
+    min-height: 1.5em;
+    padding-top: 4px;
   }
+  .form-status.is-error {
+    color: #b94a48;
+  }
+
+  .noscript-fallback {
+    max-width: 540px;
+    margin: 16px auto 0;
+    padding: 16px 20px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text);
+    text-align: center;
+  }
+  .noscript-fallback a { color: var(--color-accent-deep); font-weight: 600; }
 </style>
