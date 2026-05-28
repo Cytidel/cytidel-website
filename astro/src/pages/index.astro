@@ -5,26 +5,34 @@ import Layout from '../layouts/Layout.astro';
   title="Cytidel — Astro stub"
   description="Migration scaffold — the live site still serves from the repo root."
 >
-  <main class="mx-auto max-w-page px-6 py-24">
-    <p class="text-text-tertiary text-xs uppercase tracking-[0.14em] mb-4">
-      Astro + Tailwind v4 — scaffold
-    </p>
-    <h1 class="font-display text-5xl md:text-6xl font-semibold tracking-tight leading-tight">
-      Your scanner tells you what's <span class="text-accent-deep">vulnerable</span>.
-    </h1>
-    <p class="mt-6 text-text-secondary text-lg max-w-[60ch]">
-      The migration scaffold is rendering. Design tokens (bg, accent, accent-deep, font-display)
-      are wired into Tailwind&rsquo;s theme.
-    </p>
-    <div class="mt-10 flex gap-3">
-      <span class="inline-flex items-center gap-2 rounded-base bg-surface px-4 py-2 text-sm">
-        <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
-        Tokens loaded
-      </span>
-      <span class="inline-flex items-center gap-2 rounded-base bg-surface px-4 py-2 text-sm">
-        <span class="size-2 rounded-full bg-accent-deep" aria-hidden="true"></span>
-        Mona Sans active
-      </span>
+  <section class="relative overflow-hidden pt-10 pb-12">
+    <div class="mx-auto max-w-page px-5 sm:px-6 md:px-8 lg:px-12">
+      <p class="text-accent-deep text-xs uppercase tracking-[0.14em] mb-5 font-medium">The early warning layer for overwhelmed security teams</p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-[clamp(2.6rem,5vw,4.2rem)] font-semibold tracking-tight leading-[1.07] text-balance">
+        Your scanner tells you what's <span class="text-accent-deep">vulnerable.</span><br />
+        Cytidel tells you what's <span class="text-accent-deep">dangerous.</span>
+      </h1>
+      <p class="mt-7 text-text-secondary text-lg max-w-[60ch]">
+        Stay ahead of emerging vulnerabilities, threat actors and supply chain risk.
+      </p>
+      <div class="mt-10 flex items-center gap-3">
+        <a href="/book-a-demo" class="inline-flex items-center gap-2 bg-accent text-[#0b2000] rounded-lg px-6 py-3.5 font-semibold transition-all duration-150 hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(128,252,19,0.35)]">
+          Book a Demo
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      </div>
     </div>
-  </main>
+  </section>
+
+  <section class="py-12 border-t border-border">
+    <div class="mx-auto max-w-page px-5 sm:px-6 md:px-8 lg:px-12">
+      <p class="text-text-tertiary text-sm">
+        <span class="inline-flex items-center gap-2 rounded-base bg-surface px-3 py-1.5 mr-2">
+          <span class="size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+          Phase 2: shared Layout + Nav + Footer wired
+        </span>
+        — page-by-page migration starts next (privacy → faq → careers → …).
+      </p>
+    </div>
+  </section>
 </Layout>

@@ -1,0 +1,67 @@
+---
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-border pt-[clamp(56px,7vw,80px)] pb-8">
+  <div class="mx-auto max-w-page px-5 sm:px-6 md:px-8 lg:px-12">
+    <div class="footer-grid grid gap-[clamp(28px,4vw,56px)] grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div class="footer-brand sm:col-span-2 lg:col-span-1">
+        <a href="/" class="inline-flex items-center mb-4" aria-label="Cytidel home"><Logo height={30} /></a>
+        <p class="text-text-tertiary text-[0.9rem] max-w-[280px] leading-relaxed">
+          The early warning layer for vulnerabilities, threat actors and supply chain risk.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-text-tertiary text-[0.78rem] uppercase tracking-[0.14em] font-medium mb-[18px]">Product</h4>
+        <ul class="list-none p-0 m-0 grid gap-3">
+          <li><a href="/cytidel-platform" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Platform</a></li>
+          <li><a href="/cytidel-platform#smart-alerts" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Smart Alerts</a></li>
+          <li><a href="/cytidel-platform#vulnerability-intelligence" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Risk Rating</a></li>
+          <li><a href="/cytidel-platform#bulk-analyser" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Bulk Analyser</a></li>
+          <li><a href="/cytidel-platform#supplier-software-monitoring" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Supplier Monitoring</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-text-tertiary text-[0.78rem] uppercase tracking-[0.14em] font-medium mb-[18px]">For your role</h4>
+        <ul class="list-none p-0 m-0 grid gap-3">
+          <li><a href="/cytidel-for-vulnerability-management" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Vulnerability Management</a></li>
+          <li><a href="/cytidel-for-threat-intelligence" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Threat Intelligence</a></li>
+          <li><a href="/cytidel-for-cisos" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">CISOs</a></li>
+          <li><a href="/cytidel-for-analysts" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Analysts</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-text-tertiary text-[0.78rem] uppercase tracking-[0.14em] font-medium mb-[18px]">Resources</h4>
+        <ul class="list-none p-0 m-0 grid gap-3">
+          <li><a href="/why-cytidel" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Why Cytidel</a></li>
+          <li><a href="https://blog.cytidel.com" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Blog</a></li>
+          <li><a href="/faq" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">FAQs</a></li>
+          <li><a href="/careers" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Careers</a></li>
+          <li><a href="/privacy" class="text-text-secondary text-[0.92rem] hover:text-text transition-colors">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom mt-[clamp(48px,6vw,64px)] pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-[18px] text-[0.85rem] text-text-tertiary">
+        <span>© {year} Cytidel. All rights reserved.</span>
+      </div>
+      <div class="flex items-center gap-[18px]">
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-bg-elev rounded-full text-[0.78rem] text-text-secondary tracking-[0.02em]">
+          <span class="size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+          ISO 27001:2022 certified
+        </span>
+        <a class="inline-flex items-center justify-center size-8 border border-border bg-bg-elev rounded-lg text-text-secondary hover:text-text hover:border-border-strong transition-colors"
+           href="https://www.linkedin.com/company/cytidel/" target="_blank" rel="noopener" aria-label="Cytidel on LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5A2.5 2.5 0 1 1 4.97 8.5a2.5 2.5 0 0 1 .01-5zM3 9.5h4V21H3V9.5zM9 9.5h3.8v1.57h.05c.53-1 1.83-2.07 3.77-2.07 4.04 0 4.78 2.66 4.78 6.12V21h-4v-4.78c0-1.14-.02-2.6-1.59-2.6-1.59 0-1.83 1.24-1.83 2.52V21H9V9.5z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

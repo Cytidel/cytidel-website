@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
@@ -24,6 +26,11 @@ const { title = 'Cytidel', description } = Astro.props;
     />
   </head>
   <body class="bg-bg text-text font-sans antialiased">
-    <slot />
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-text focus:text-bg focus:px-4 focus:py-2.5 focus:font-semibold">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
