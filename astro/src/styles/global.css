@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — ported from the current static site's per-page CSS.
+   Tailwind v4 reads --color-*, --font-*, --container-*, --radius-* from this
+   @theme block and generates matching utilities (bg-*, text-*, font-*,
+   max-w-*, rounded-*).
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces (light theme) */
+  --color-bg: #f5f5f5;
+  --color-bg-elev: #e8e9e3;
+  --color-surface: #e8eae4;
+  --color-surface-2: #dde0d7;
+  --color-border: rgba(20, 30, 20, 0.10);
+  --color-border-strong: rgba(20, 30, 20, 0.18);
+
+  /* Text */
+  --color-text: #0b0e0a;
+  --color-text-secondary: #4d524d;
+  --color-text-tertiary: #7a807a;
+
+  /* Accents — the two-greens rule (vivid for decoration/CTA, deep for text) */
+  --color-accent: #80FC13;
+  --color-accent-deep: #357A12;
+  --color-accent-dim: rgba(128, 252, 19, 0.18);
+
+  /* Dark sections (used inside .section-dark or dark cards) */
+  --color-dark-bg: #0e1612;
+  --color-dark-bg-elev: #1a221d;
+  --color-dark-surface: #1f2823;
+  --color-dark-border: rgba(255, 255, 255, 0.10);
+  --color-dark-border-strong: rgba(255, 255, 255, 0.18);
+  --color-dark-text: #f5f6f0;
+  --color-dark-text-secondary: #a8b0a6;
+  --color-dark-text-tertiary: #707870;
+
+  /* Final-CTA deep green block */
+  --color-cta-bg: #357A12;
+
+  /* Type — Mona Sans loaded via Google Fonts in the Layout head */
+  --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Container width (replaces the old --max: 1280px). Use as max-w-page. */
+  --container-page: 1280px;
+
+  /* Radii */
+  --radius-base: 12px;
+  --radius-sm: 8px;
+}
+
+/* Global base — minimal; the rest lives in component classes / utilities. */
+html { scroll-behavior: smooth; }
+body { background: var(--color-bg); color: var(--color-text); }

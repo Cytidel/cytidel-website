@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Cytidel — Astro stub"
+  description="Migration scaffold — the live site still serves from the repo root."
+>
+  <main class="mx-auto max-w-page px-6 py-24">
+    <p class="text-text-tertiary text-xs uppercase tracking-[0.14em] mb-4">
+      Astro + Tailwind v4 — scaffold
+    </p>
+    <h1 class="font-display text-5xl md:text-6xl font-semibold tracking-tight leading-tight">
+      Your scanner tells you what's <span class="text-accent-deep">vulnerable</span>.
+    </h1>
+    <p class="mt-6 text-text-secondary text-lg max-w-[60ch]">
+      The migration scaffold is rendering. Design tokens (bg, accent, accent-deep, font-display)
+      are wired into Tailwind&rsquo;s theme.
+    </p>
+    <div class="mt-10 flex gap-3">
+      <span class="inline-flex items-center gap-2 rounded-base bg-surface px-4 py-2 text-sm">
+        <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>
+        Tokens loaded
+      </span>
+      <span class="inline-flex items-center gap-2 rounded-base bg-surface px-4 py-2 text-sm">
+        <span class="size-2 rounded-full bg-accent-deep" aria-hidden="true"></span>
+        Mona Sans active
+      </span>
+    </div>
+  </main>
+</Layout>
