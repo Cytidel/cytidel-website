@@ -89,6 +89,36 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
 
   type HSFormsField = { objectTypeId: string; name: string; value: string };
 
+  // Free / disposable email domains we reject. HubSpot's hosted-form
+  // "Block free email providers" setting only fires via their JS embed —
+  // it doesn't apply to Forms API submissions, so we enforce it
+  // client-side here. List covers the long tail of common providers + a
+  // few common throwaway services; not exhaustive but catches the
+  // ~95% case.
+  const FREE_EMAIL_DOMAINS = new Set([
+    'gmail.com', 'googlemail.com',
+    'yahoo.com', 'yahoo.co.uk', 'yahoo.fr', 'yahoo.es', 'yahoo.de', 'yahoo.it', 'yahoo.ca', 'ymail.com', 'rocketmail.com',
+    'hotmail.com', 'hotmail.co.uk', 'hotmail.fr', 'hotmail.es', 'hotmail.de', 'hotmail.it',
+    'outlook.com', 'outlook.fr', 'outlook.de', 'outlook.es', 'outlook.it', 'live.com', 'live.co.uk', 'live.fr', 'live.de', 'msn.com',
+    'aol.com', 'aim.com',
+    'icloud.com', 'me.com', 'mac.com',
+    'protonmail.com', 'proton.me', 'pm.me',
+    'gmx.com', 'gmx.net', 'gmx.de',
+    'yandex.com', 'yandex.ru', 'ya.ru',
+    'mail.com', 'mail.ru',
+    'zoho.com', 'fastmail.com', 'inbox.com',
+    // Common disposable / throwaway services
+    'mailinator.com', 'tempmail.com', 'temp-mail.org', 'guerrillamail.com', 'guerrillamail.info',
+    '10minutemail.com', 'throwawaymail.com', 'yopmail.com', 'maildrop.cc', 'trashmail.com',
+    'sharklasers.com', 'getnada.com',
+  ]);
+
+  function isFreeEmail(email: string): boolean {
+    const at = email.lastIndexOf('@');
+    if (at < 0) return false;
+    return FREE_EMAIL_DOMAINS.has(email.slice(at + 1).toLowerCase());
+  }
+
   const form = document.getElementById('book-demo-form') as HTMLFormElement | null;
   if (form) {
     const portalId = form.dataset.portalId!;
@@ -97,6 +127,7 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
     const status = form.querySelector('.form-status') as HTMLElement;
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     const submitLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
+    const emailInput = form.querySelector('#email') as HTMLInputElement;
     const originalLabel = submitLabel.textContent ?? '';
 
     form.addEventListener('submit', async (e) => {
@@ -109,6 +140,15 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
       const lastname = (data.get('lastname') ?? '').toString().trim();
       const email = (data.get('email') ?? '').toString().trim();
       const company = (data.get('company') ?? '').toString().trim();
+
+      // Reject personal/disposable email addresses before touching the API.
+      if (isFreeEmail(email)) {
+        status.textContent = 'Please use your work email — we can’t process personal email addresses.';
+        status.classList.add('is-error');
+        emailInput.focus();
+        (window as unknown as { _paq?: unknown[][] })._paq?.push(['trackEvent', 'Form', 'Book a Demo', 'Rejected Free Email']);
+        return;
+      }
 
       const fields: HSFormsField[] = [
         { objectTypeId: '0-1', name: 'firstname', value: firstname },
