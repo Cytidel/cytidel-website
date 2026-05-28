@@ -1,0 +1,83 @@
+# Legacy URL redirects — preserve external backlinks from pre-Astro versions
+# of the site (Webflow, and the pre-Webflow site before that).
+#
+# All redirects are single-hop direct mappings to current Astro routes. Where
+# the original Webflow rule was a chain (e.g. /rbvm-case-study → /risk-based-
+# vulnerability-management → /cytidel-for-vulnerability-management), the chain
+# is collapsed so external links land on the final destination in one redirect
+# — better for page-load speed AND SEO equity.
+#
+# Format: source-path  destination  status-code
+#
+# See https://docs.netlify.com/manage/routing/redirects/ for syntax.
+
+# ---------------------------------------------------------------------------
+# Vulnerability Management funnel (legacy → cytidel-for-vulnerability-management)
+# ---------------------------------------------------------------------------
+/risk-based-vulnerability-management      /cytidel-for-vulnerability-management  301
+/rbvm-case-study                          /cytidel-for-vulnerability-management  301
+/tvm-risk-assessment                      /cytidel-for-vulnerability-management  301
+/advanced-vulnerability-management        /cytidel-for-vulnerability-management  301
+
+# ---------------------------------------------------------------------------
+# Threat Intelligence funnel (legacy → cytidel-for-threat-intelligence)
+# ---------------------------------------------------------------------------
+/vulnerability-threat-intelligence        /cytidel-for-threat-intelligence       301
+/threat-intelligence                      /cytidel-for-threat-intelligence       301
+/threat-intelligence-case-study           /cytidel-for-threat-intelligence       301
+/threat-intelligence-compliance           /cytidel-for-threat-intelligence       301
+/tailored-threat-intelligence-solutions   /cytidel-for-threat-intelligence       301
+/trending-vulnerabilities                 /cytidel-for-threat-intelligence       301
+
+# ---------------------------------------------------------------------------
+# Old contact/trial paths → book-a-demo
+# ---------------------------------------------------------------------------
+/contact-us                               /book-a-demo                           301
+/request-a-trial                          /book-a-demo                           301
+
+# ---------------------------------------------------------------------------
+# Old features page → platform overview
+# ---------------------------------------------------------------------------
+/features                                 /cytidel-platform                      301
+
+# ---------------------------------------------------------------------------
+# Legacy Wix CMS asset → careers
+# ---------------------------------------------------------------------------
+/_files/ugd/ca04a0_673d450df2fb4c0da22138cabb8b93cd.pdf  /careers  301
+
+# ---------------------------------------------------------------------------
+# Blog index + category pages → blog subdomain root
+# (the blog now lives at blog.cytidel.com)
+# ---------------------------------------------------------------------------
+/blog                                     https://blog.cytidel.com/              301
+/blog/categories                          https://blog.cytidel.com/              301
+/blog/categories/cve-intel-insights       https://blog.cytidel.com/              301
+/blog/categories/industry-insights        https://blog.cytidel.com/              301
+
+# ---------------------------------------------------------------------------
+# Blog posts — specific slug migrated to blog.cytidel.com
+# ---------------------------------------------------------------------------
+/post/the-top-10-trending-vulnerabilities-in-2023-and-how-to-fix-them                                            https://blog.cytidel.com/the-top-10-trending-vulnerabilities-in-2023-and-how-to-fix-them                                            301
+/post/announcing-our-iso27001-certification-a-milestone-in-our-commitment-to-security-and-compliance             https://blog.cytidel.com/announcing-our-iso27001-certification-a-milestone-in-our-commitment-to-security-and-compliance             301
+/post/dora-compliance-and-your-threat-vulnerability-management-programme-part-one                                https://blog.cytidel.com/dora-compliance-and-your-threat-vulnerability-management-programme-part-one                                301
+/post/dora-compliance-and-your-threat-vulnerability-management-programme-part-two                                https://blog.cytidel.com/dora-compliance-and-your-threat-vulnerability-management-programme-part-two                                301
+/post/cve-2024-38200-microsoft-office-zero-day-vulnerability                                                     https://blog.cytidel.com/cve-2024-38200-microsoft-office-zero-day-vulnerability                                                     301
+/post/the-top-trending-vulnerabilities-of-q2-2024                                                                https://blog.cytidel.com/the-top-trending-vulnerabilities-of-q2-2024                                                                301
+/post/top-trending-vulnerabilities-of-2024                                                                       https://blog.cytidel.com/top-trending-vulnerabilities-of-2024                                                                       301
+/post/vulnerability-trends-report-q1-2024                                                                        https://blog.cytidel.com/vulnerability-trends-report-q1-2024                                                                        301
+/post/9-tips-cytidel-used-to-get-iso27001-ready-in-just-6-weeks                                                  https://blog.cytidel.com/9-tips-cytidel-used-to-get-iso27001-ready-in-just-6-weeks                                                  301
+/post/threat-intelligence-one-of-the-11-new-controls-introduced-in-the-iso-27001-2022-update                     https://blog.cytidel.com/threat-intelligence-one-of-the-11-new-controls-introduced-in-the-iso-27001-2022-update                     301
+/post/cytidel-raises-1-35-million-to-transform-how-organisations-protect-themselves-from-cyber-attacks           https://blog.cytidel.com/cytidel-raises-eu1-35-million-to-transform-how-organisations-protect-themselves-from-cyber-attacks/         301
+
+# ---------------------------------------------------------------------------
+# Blog posts — slug didn't migrate, send to blog root
+# ---------------------------------------------------------------------------
+/post/don-t-let-esxiargs-take-a-byte-out-of-your-business-protecting-your-vmware-esxi-servers-cve-2021           https://blog.cytidel.com/  301
+/post/keepass-the-password-manager-that-can-t-keep-a-secret-cve-2023-32784                                       https://blog.cytidel.com/  301
+/post/slp-s-achilles-heel-protect-your-network-from-ddos-vulnerabilities-cve-2023-29552                          https://blog.cytidel.com/  301
+/post/knock-knock-who-s-there-zero-day-cve-2023-3519-a-guide-to-securing-your-citrix-gateway                     https://blog.cytidel.com/  301
+/post/fortinac-vulnerability-hackers-get-the-key-to-your-castle-cve-2022-39952                                   https://blog.cytidel.com/  301
+/post/beware-of-the-barracuda-the-latest-email-security-threat-you-can-t-ignore-cve-2023-2868                    https://blog.cytidel.com/  301
+/post/urgent-alert-critical-vulnerability-in-moveit-transfer-puts-your-data-at-risk-cve-2023-34362               https://blog.cytidel.com/  301
+/post/veeam-backup-plan-gone-wrong-the-uninvited-guest-at-your-data-breach-party-cve-2023-27532                  https://blog.cytidel.com/  301
+/post/beware-of-malicious-word-documents-new-vulnerability-discovered-in-microsoft-office-cve-2023-2171          https://blog.cytidel.com/  301
