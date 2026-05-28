@@ -2,20 +2,27 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
-const { title = 'Cytidel', description } = Astro.props;
+const {
+  title = 'Cytidel',
+  description,
+  ogImage,
+  ogType,
+} = Astro.props;
 ---
 <!doctype html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <SEO title={title} description={description} ogImage={ogImage} ogType={ogType} />
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
     <meta name="theme-color" content="#f1f1ec" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
