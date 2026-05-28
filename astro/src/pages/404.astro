@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Astro emits this as dist/404.html, which Netlify auto-serves for any
+// route that doesn't match a published page or _redirects rule. Acts as
+// the safety net for any legacy URL we haven't redirected yet.
+---
+<Layout
+  title="Page not found · Cytidel"
+  description="We couldn't find that page. Try one of these instead."
+>
+  <section class="not-found">
+    <div class="container">
+      <div class="not-found-inner">
+        <span class="eyebrow">404</span>
+        <h1>That page didn't survive the migration.</h1>
+        <p class="lead">We rebuilt the Cytidel site recently and a handful of URLs moved. The page you were looking for either changed address or never existed in the first place.</p>
+
+        <div class="suggestions">
+          <h2>Where to next?</h2>
+          <ul>
+            <li><a href="/">Home</a> — the early warning layer for security teams</li>
+            <li><a href="/cytidel-platform">Platform</a> — the five capabilities</li>
+            <li><a href="/why-cytidel">Why Cytidel</a> — the case for an early warning layer</li>
+            <li><a href="/faq">FAQ</a> — the questions security teams ask before choosing us</li>
+            <li><a href="/book-a-demo">Book a Demo</a> — walk through Cytidel with us in 30 minutes</li>
+          </ul>
+        </div>
+
+        <p class="aside">Looking for something else? <a href="https://blog.cytidel.com">Check the blog</a> or get in touch via the <a href="/book-a-demo">demo form</a>.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 4vw, 48px);
+    padding-right: clamp(20px, 4vw, 48px);
+  }
+
+  .not-found {
+    padding-top: clamp(80px, 11vw, 140px);
+    padding-bottom: clamp(80px, 11vw, 140px);
+    position: relative;
+    overflow: hidden;
+  }
+  .not-found::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 700px;
+    background: radial-gradient(ellipse at center, rgba(128, 252, 19, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .not-found-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--color-accent-deep);
+    margin-bottom: 1.25rem;
+  }
+
+  .not-found h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.06;
+    color: var(--color-text);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin: 0 0 24px;
+    text-wrap: balance;
+  }
+
+  .lead {
+    font-size: clamp(1.05rem, 1.55vw, 1.22rem);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    margin: 0 0 clamp(40px, 5vw, 56px);
+  }
+
+  .suggestions h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    color: var(--color-text);
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    margin: 0 0 16px;
+  }
+  .suggestions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 clamp(40px, 5vw, 56px);
+    display: grid;
+    gap: 14px;
+  }
+  .suggestions li {
+    font-size: clamp(1rem, 1.45vw, 1.08rem);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+  .suggestions li a {
+    color: var(--color-accent-deep);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .suggestions li a:hover { text-decoration: underline; }
+
+  .aside {
+    font-size: clamp(0.96rem, 1.35vw, 1.05rem);
+    color: var(--color-text-tertiary);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .aside a {
+    color: var(--color-accent-deep);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .aside a:hover { text-decoration: underline; }
+</style>
