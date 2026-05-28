@@ -6,7 +6,7 @@
    @theme block and generates matching utilities (bg-*, text-*, font-*,
    max-w-*, rounded-*).
    --------------------------------------------------------------------------- */
-@theme {
+@theme static {
   /* Surfaces (light theme) */
   --color-bg: #f5f5f5;
   --color-bg-elev: #e8e9e3;
