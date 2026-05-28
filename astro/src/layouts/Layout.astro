@@ -16,6 +16,19 @@ const {
   ogImage,
   ogType,
 } = Astro.props;
+
+// Organization JSON-LD — emitted sitewide so Google's knowledge panel
+// (logo, social links, description in the right-side card on search
+// results) has the data it needs.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Cytidel',
+  url: 'https://cytidel.com',
+  logo: 'https://cytidel.com/img/logo_light_backgrounds.svg',
+  description: 'The early warning layer for vulnerabilities, threat actors and supplier risk.',
+  sameAs: ['https://www.linkedin.com/company/cytidel/'],
+};
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -38,6 +51,7 @@ const {
     ></script>
 
     <SEO title={title} description={description} ogImage={ogImage} ogType={ogType} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
     <meta name="theme-color" content="#f1f1ec" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
