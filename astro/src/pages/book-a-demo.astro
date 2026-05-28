@@ -5,6 +5,15 @@ import Layout from '../layouts/Layout.astro';
   title="Book a Demo · Cytidel"
   description="Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7."
 >
+  <Fragment slot="head">
+    <!-- Warm the HubSpot connections in parallel with the rest of the page
+         load so the scheduler starts downloading sooner. Without these, the
+         browser doesn't open a connection until it parses past the embed
+         <script> tag in the body. -->
+    <link rel="preconnect" href="https://meetings-eu1.hubspot.com" crossorigin />
+    <link rel="preconnect" href="https://static.hsappstatic.net" crossorigin />
+  </Fragment>
+
   <section class="hero demo-hero" aria-labelledby="hero-h1">
     <div class="container">
       <div class="hero-inner">
