@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Picture } from 'astro:assets';
-import cveIntel from '../assets/products/cve-intel-2.png';
+import mobileCve from '../assets/products/mobile-cve.png';
 import villainVault from '../assets/products/villain-vault.png';
-import monitoring from '../assets/products/monitoring-2.png';
+import inventoryIpad from '../assets/products/inventory-ipad.png';
 import { faqs } from '../data/faqs.ts';
 
 // FAQPage JSON-LD — same Q&A as the visible accordion, structured for
@@ -91,52 +91,53 @@ const faqSchema = {
     <div class="showcase-track">
       <div class="container">
         <div class="showcase-stage">
-          <figure class="showcase-card showcase-card-left">
-            <div class="showcase-frame">
-              <div class="showcase-chrome" aria-hidden="true">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <figure class="showcase-card showcase-card-left device-phone">
+            <div class="device-frame">
+              <span class="device-notch" aria-hidden="true"></span>
+              <div class="device-screen">
+                <Picture
+                  src={mobileCve}
+                  alt="Cytidel on mobile — a CVE detail view with risk rating, signals, and key metrics."
+                  widths={[300, 450, 600]}
+                  sizes="(max-width: 879px) 70vw, 220px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
               </div>
-              <Picture
-                src={cveIntel}
-                alt="Cytidel CVE intelligence — vulnerabilities tagged with risk rating, vendor, exploit evidence, and social volume."
-                widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 879px) 85vw, 460px"
-                formats={['avif', 'webp']}
-                loading="eager"
-                fetchpriority="high"
-              />
             </div>
           </figure>
-          <figure class="showcase-card showcase-card-center">
-            <div class="showcase-frame">
-              <div class="showcase-chrome" aria-hidden="true">
+          <figure class="showcase-card showcase-card-center device-desktop">
+            <div class="device-frame">
+              <div class="device-chrome" aria-hidden="true">
                 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
               </div>
-              <Picture
-                src={villainVault}
-                alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
-                widths={[600, 900, 1200, 1600]}
-                sizes="(max-width: 879px) 85vw, 640px"
-                formats={['avif', 'webp']}
-                loading="eager"
-                fetchpriority="high"
-              />
+              <div class="device-screen">
+                <Picture
+                  src={villainVault}
+                  alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
+                  widths={[600, 900, 1200, 1600]}
+                  sizes="(max-width: 879px) 85vw, 640px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
             </div>
           </figure>
-          <figure class="showcase-card showcase-card-right">
-            <div class="showcase-frame">
-              <div class="showcase-chrome" aria-hidden="true">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <figure class="showcase-card showcase-card-right device-tablet">
+            <div class="device-frame">
+              <div class="device-screen">
+                <Picture
+                  src={inventoryIpad}
+                  alt="Cytidel on tablet — inventory of vendors and products under continuous monitoring."
+                  widths={[480, 720, 960]}
+                  sizes="(max-width: 879px) 80vw, 380px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
               </div>
-              <Picture
-                src={monitoring}
-                alt="Cytidel continuous monitoring — 24/7 watch over the vendors and software your team depends on."
-                widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 879px) 85vw, 460px"
-                formats={['avif', 'webp']}
-                loading="eager"
-                fetchpriority="high"
-              />
             </div>
           </figure>
         </div>
@@ -542,13 +543,18 @@ const faqSchema = {
   .showcase-track .container { position: relative; }
 
   /* Stage sized by aspect-ratio so the absolutely-positioned cards
-     have somewhere to live without us hard-coding a height. */
+     have somewhere to live without us hard-coding a height. The
+     custom properties control how far the flanks spread on scroll
+     and how tightly they stack — both scale down on narrower screens
+     via min(). */
   .showcase-stage {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
     max-width: 1280px;
     margin: 0 auto;
+    --spread: min(440px, 36vw);
+    --stack: 60px;
   }
 
   .showcase-card {
@@ -559,30 +565,38 @@ const faqSchema = {
     transform-origin: center center;
     will-change: transform;
   }
-  /* Sizes: centre is the anchor / hero, flanks read as supporting. */
-  .showcase-card-center { width: min(56%, 640px); }
-  .showcase-card-left,
-  .showcase-card-right  { width: min(40%, 460px); }
 
-  .showcase-frame {
+  /* ----- Device frames --------------------------------------------
+     Each card type renders its bare screenshot inside a chrome shell
+     so it reads as a real device: phone, desktop window, tablet.
+     ----------------------------------------------------------------- */
+  .device-frame {
     position: relative;
-    border-radius: 12px;
+    background: #111;
+    box-shadow:
+      0 30px 80px -20px rgba(20, 30, 20, 0.30),
+      0 12px 30px -10px rgba(20, 30, 20, 0.16);
+  }
+  .device-screen {
     overflow: hidden;
     background: #fff;
-    border: 1px solid var(--color-border);
-    box-shadow:
-      0 30px 80px -20px rgba(20, 30, 20, 0.22),
-      0 12px 30px -10px rgba(20, 30, 20, 0.10);
   }
-  .showcase-frame picture,
-  .showcase-frame img {
+  .device-screen picture,
+  .device-screen img {
     display: block;
     width: 100%;
     height: auto;
   }
 
-  /* Window chrome bar — small traffic-light dots, sells the "device". */
-  .showcase-chrome {
+  /* Desktop: macOS-style window with traffic-light chrome bar. */
+  .device-desktop  { width: min(54%, 620px); }
+  .device-desktop .device-frame {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f4f4ef;
+    border: 1px solid var(--color-border);
+  }
+  .device-chrome {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -590,15 +604,45 @@ const faqSchema = {
     background: #f4f4ef;
     border-bottom: 1px solid var(--color-border);
   }
-  .showcase-chrome .dot {
-    width: 9px;
-    height: 9px;
+  .device-chrome .dot {
+    width: 9px; height: 9px;
     border-radius: 50%;
     background: #d4d4cf;
   }
-  .showcase-chrome .dot:nth-child(1) { background: #ff5f57; }
-  .showcase-chrome .dot:nth-child(2) { background: #febc2e; }
-  .showcase-chrome .dot:nth-child(3) { background: #28c840; }
+  .device-chrome .dot:nth-child(1) { background: #ff5f57; }
+  .device-chrome .dot:nth-child(2) { background: #febc2e; }
+  .device-chrome .dot:nth-child(3) { background: #28c840; }
+
+  /* Tablet: medium dark bezel, rounded corners, no chrome bar. */
+  .device-tablet  { width: min(32%, 360px); }
+  .device-tablet .device-frame {
+    padding: 14px;
+    border-radius: 22px;
+  }
+  .device-tablet .device-screen {
+    border-radius: 8px;
+  }
+
+  /* Phone: portrait, thicker proportional bezel, pill notch up top. */
+  .device-phone  { width: min(17%, 200px); }
+  .device-phone .device-frame {
+    padding: 9px;
+    border-radius: 28px;
+  }
+  .device-phone .device-screen {
+    border-radius: 20px;
+  }
+  .device-notch {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 6px;
+    border-radius: 999px;
+    background: #000;
+    z-index: 2;
+  }
 
   /* Stacking order — centre on top while stacked. */
   .showcase-card-left   { z-index: 1; }
@@ -606,10 +650,17 @@ const faqSchema = {
   .showcase-card-center { z-index: 3; }
 
   /* Default (fallback) state = final spread layout. Firefox and any
-     other browser without scroll-driven animations lands here. */
+     other browser without scroll-driven animations lands here.
+     -50% on each axis is the card-self-centre offset; --spread is
+     the stage-relative horizontal distance (same for both flanks
+     regardless of their own widths). */
   .showcase-card-center { transform: translate(-50%, -50%); }
-  .showcase-card-left   { transform: translate(-118%, -50%) rotate(-2deg); }
-  .showcase-card-right  { transform: translate(18%, -50%) rotate(2deg); }
+  .showcase-card-left {
+    transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg);
+  }
+  .showcase-card-right {
+    transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg);
+  }
 
   /* When scroll-driven animations are supported, start cards stacked
      and animate them out as the section moves through the viewport. */
@@ -625,12 +676,12 @@ const faqSchema = {
   }
 
   @keyframes showcase-spread-left {
-    from { transform: translate(-62%, -50%) rotate(-4deg); }
-    to   { transform: translate(-118%, -50%) rotate(-2deg); }
+    from { transform: translate(calc(-50% - var(--stack)), -50%) rotate(-7deg); }
+    to   { transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg); }
   }
   @keyframes showcase-spread-right {
-    from { transform: translate(-38%, -50%) rotate(4deg); }
-    to   { transform: translate(18%, -50%) rotate(2deg); }
+    from { transform: translate(calc(-50% + var(--stack)), -50%) rotate(7deg); }
+    to   { transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg); }
   }
 
   /* Reduced motion: skip the animation, land on the spread layout. */
@@ -639,16 +690,22 @@ const faqSchema = {
     .showcase-card-right {
       animation: none;
     }
-    .showcase-card-left  { transform: translate(-118%, -50%) rotate(-2deg); }
-    .showcase-card-right { transform: translate(18%, -50%) rotate(2deg); }
+    .showcase-card-left {
+      transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg);
+    }
+    .showcase-card-right {
+      transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg);
+    }
   }
 
   /* Mobile: horizontal scroll-snap carousel. Stage becomes a flex row
-     and cards lose absolute positioning + transforms. */
+     and cards lose absolute positioning + transforms. Per-device
+     widths so the phone stays phone-shaped instead of stretching. */
   @media (max-width: 879px) {
     .product-showcase { padding-bottom: clamp(32px, 5vw, 56px); }
     .showcase-stage {
       aspect-ratio: auto;
+      align-items: center;
       display: flex;
       gap: 16px;
       overflow-x: auto;
@@ -661,12 +718,14 @@ const faqSchema = {
     .showcase-stage { scrollbar-width: none; }
     .showcase-card {
       position: static;
-      flex: 0 0 86%;
       width: auto;
       transform: none !important;
       animation: none !important;
       scroll-snap-align: center;
     }
+    .device-phone   { flex: 0 0 52%; }
+    .device-tablet  { flex: 0 0 78%; }
+    .device-desktop { flex: 0 0 86%; }
     .showcase-card:first-child { scroll-snap-align: start; }
     .showcase-card:last-child  { scroll-snap-align: end; }
   }
