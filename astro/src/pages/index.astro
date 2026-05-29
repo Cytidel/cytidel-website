@@ -92,13 +92,15 @@ const faqSchema = {
       <div class="container">
         <div class="showcase-stage">
           <figure class="showcase-card showcase-card-left">
-            <figcaption class="showcase-label">Vulnerability Intelligence</figcaption>
             <div class="showcase-frame">
+              <div class="showcase-chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
               <Picture
                 src={cveIntel}
                 alt="Cytidel CVE intelligence — vulnerabilities tagged with risk rating, vendor, exploit evidence, and social volume."
                 widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 879px) 85vw, 540px"
+                sizes="(max-width: 879px) 85vw, 460px"
                 formats={['avif', 'webp']}
                 loading="eager"
                 fetchpriority="high"
@@ -106,13 +108,15 @@ const faqSchema = {
             </div>
           </figure>
           <figure class="showcase-card showcase-card-center">
-            <figcaption class="showcase-label">Threat Actor Intelligence</figcaption>
             <div class="showcase-frame">
+              <div class="showcase-chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
               <Picture
                 src={villainVault}
                 alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
-                widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 879px) 85vw, 540px"
+                widths={[600, 900, 1200, 1600]}
+                sizes="(max-width: 879px) 85vw, 640px"
                 formats={['avif', 'webp']}
                 loading="eager"
                 fetchpriority="high"
@@ -120,13 +124,15 @@ const faqSchema = {
             </div>
           </figure>
           <figure class="showcase-card showcase-card-right">
-            <figcaption class="showcase-label">Continuous Monitoring</figcaption>
             <div class="showcase-frame">
+              <div class="showcase-chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
               <Picture
                 src={monitoring}
                 alt="Cytidel continuous monitoring — 24/7 watch over the vendors and software your team depends on."
                 widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 879px) 85vw, 540px"
+                sizes="(max-width: 879px) 85vw, 460px"
                 formats={['avif', 'webp']}
                 loading="eager"
                 fetchpriority="high"
@@ -547,31 +553,26 @@ const faqSchema = {
 
   .showcase-card {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    width: min(54%, 620px);
     margin: 0;
-    transform: translate(-50%, 0);
-    transform-origin: center bottom;
+    transform-origin: center center;
     will-change: transform;
   }
-  .showcase-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent-deep);
-    text-align: center;
-    margin: 0 0 12px;
-  }
+  /* Sizes: centre is the anchor / hero, flanks read as supporting. */
+  .showcase-card-center { width: min(56%, 640px); }
+  .showcase-card-left,
+  .showcase-card-right  { width: min(40%, 460px); }
+
   .showcase-frame {
-    border-radius: 14px;
+    position: relative;
+    border-radius: 12px;
     overflow: hidden;
     background: #fff;
     border: 1px solid var(--color-border);
     box-shadow:
-      0 30px 80px -20px rgba(20, 30, 20, 0.18),
-      0 12px 30px -10px rgba(20, 30, 20, 0.08);
+      0 30px 80px -20px rgba(20, 30, 20, 0.22),
+      0 12px 30px -10px rgba(20, 30, 20, 0.10);
   }
   .showcase-frame picture,
   .showcase-frame img {
@@ -580,15 +581,35 @@ const faqSchema = {
     height: auto;
   }
 
-  /* Stacking order so the centre card sits on top while stacked. */
+  /* Window chrome bar — small traffic-light dots, sells the "device". */
+  .showcase-chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    background: #f4f4ef;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .showcase-chrome .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #d4d4cf;
+  }
+  .showcase-chrome .dot:nth-child(1) { background: #ff5f57; }
+  .showcase-chrome .dot:nth-child(2) { background: #febc2e; }
+  .showcase-chrome .dot:nth-child(3) { background: #28c840; }
+
+  /* Stacking order — centre on top while stacked. */
   .showcase-card-left   { z-index: 1; }
   .showcase-card-right  { z-index: 2; }
   .showcase-card-center { z-index: 3; }
 
   /* Default (fallback) state = final spread layout. Firefox and any
      other browser without scroll-driven animations lands here. */
-  .showcase-card-left  { transform: translate(-115%, 0) rotate(-2deg); }
-  .showcase-card-right { transform: translate(15%, 0) rotate(2deg); }
+  .showcase-card-center { transform: translate(-50%, -50%); }
+  .showcase-card-left   { transform: translate(-118%, -50%) rotate(-2deg); }
+  .showcase-card-right  { transform: translate(18%, -50%) rotate(2deg); }
 
   /* When scroll-driven animations are supported, start cards stacked
      and animate them out as the section moves through the viewport. */
@@ -604,12 +625,12 @@ const faqSchema = {
   }
 
   @keyframes showcase-spread-left {
-    from { transform: translate(-58%, 0) rotate(-3deg); }
-    to   { transform: translate(-115%, 0) rotate(-2deg); }
+    from { transform: translate(-62%, -50%) rotate(-4deg); }
+    to   { transform: translate(-118%, -50%) rotate(-2deg); }
   }
   @keyframes showcase-spread-right {
-    from { transform: translate(-42%, 0) rotate(3deg); }
-    to   { transform: translate(15%, 0) rotate(2deg); }
+    from { transform: translate(-38%, -50%) rotate(4deg); }
+    to   { transform: translate(18%, -50%) rotate(2deg); }
   }
 
   /* Reduced motion: skip the animation, land on the spread layout. */
@@ -618,8 +639,8 @@ const faqSchema = {
     .showcase-card-right {
       animation: none;
     }
-    .showcase-card-left  { transform: translate(-115%, 0) rotate(-2deg); }
-    .showcase-card-right { transform: translate(15%, 0) rotate(2deg); }
+    .showcase-card-left  { transform: translate(-118%, -50%) rotate(-2deg); }
+    .showcase-card-right { transform: translate(18%, -50%) rotate(2deg); }
   }
 
   /* Mobile: horizontal scroll-snap carousel. Stage becomes a flex row
