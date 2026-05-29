@@ -539,17 +539,31 @@ const faqSchema = {
   .showcase-track .container { position: relative; }
 
   /* Stage is a fixed-height row so all three cards align on the same
-     baseline. Card height clamps with viewport. --stack controls how
-     tight the cards sit on top of each other in the start state;
-     per-device --offset values (below) control where each lands when
-     spread, so different-aspect devices can clear each other cleanly. */
+     baseline. The whole composition is sized symmetrically around the
+     stage centre so it visually centres within the page.
+
+     Each card's half-width is derived from the card height + its
+     image aspect ratio (phone 0.42, tablet 1.23, desktop 2.00).
+     --tablet-offset sits the tablet 12px to the right of the desktop;
+     --outer-extent is the resulting tablet-outer position from centre,
+     and the phone is offset so its OUTER edge lands at the same
+     --outer-extent on the left — so the composition's left and right
+     extremes are equidistant from stage centre. */
   .showcase-stage {
     position: relative;
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    height: clamp(280px, 32vw, 380px);
-    --stack: 40px;
+    --card-h: clamp(200px, 20vw, 260px);
+    --gap: 12px;
+    --desktop-half: var(--card-h);
+    --tablet-half:  calc(var(--card-h) * 0.615);
+    --phone-half:   calc(var(--card-h) * 0.21);
+    --tablet-offset: calc(var(--desktop-half) + var(--gap) + var(--tablet-half));
+    --outer-extent:  calc(var(--tablet-offset) + var(--tablet-half));
+    --phone-offset:  calc(var(--outer-extent) - var(--phone-half));
+    --stack: 30px;
+    height: var(--card-h);
   }
 
   .showcase-card {
@@ -592,11 +606,10 @@ const faqSchema = {
     width: auto;
   }
 
-  /* Spread distance from stage centre for each flank. Phone is narrow
-     so it can sit closer; tablet is wider so it needs more room. Both
-     scale down with viewport via min(). */
-  .device-phone  { --offset: min(440px, 36vw); }
-  .device-tablet { --offset: min(600px, 50vw); }
+  /* Each flank's spread offset is computed on the stage so the two
+     outer extents match (composition stays centred). */
+  .device-phone  { --offset: var(--phone-offset); }
+  .device-tablet { --offset: var(--tablet-offset); }
 
   /* Stacking order — centre on top while stacked. */
   .showcase-card-left   { z-index: 1; }
@@ -649,11 +662,12 @@ const faqSchema = {
     }
   }
 
-  /* Mobile: horizontal scroll-snap carousel. Cards lose absolute
+  /* Mobile + small-desktop: horizontal scroll-snap carousel. Below
+     1024px the spread composition would overflow the container, so
+     we switch to a swipeable row instead. Cards lose absolute
      positioning, drop the fixed height, and switch back to a
-     width-driven sizing model where each device sets its own
-     flex-basis and the image fills it. */
-  @media (max-width: 879px) {
+     width-driven sizing model. */
+  @media (max-width: 1023px) {
     .product-showcase { padding-bottom: clamp(32px, 5vw, 56px); }
     .showcase-stage {
       height: auto;
