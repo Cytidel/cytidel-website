@@ -539,30 +539,44 @@ const faqSchema = {
   .showcase-track .container { position: relative; }
 
   /* Stage is a fixed-height row so all three cards align on the same
-     baseline. The whole composition is sized symmetrically around the
-     stage centre so it visually centres within the page.
+     baseline. Composition geometry below ensures both:
+       (a) Even gaps either side of the desktop card.
+       (b) The whole composition is centred within the stage.
+     Because the tablet (1.23:1) is wider than the phone (0.42:1),
+     keeping the desktop at stage centre + even gaps would push the
+     composition's visual centre to the right. So the desktop is
+     itself shifted LEFT by (tablet-half - phone-half) — the cards
+     all share the centring work.
 
-     Each card's half-width is derived from the card height + its
-     image aspect ratio (phone 0.42, tablet 1.23, desktop 2.00).
-     --tablet-offset sits the tablet 12px to the right of the desktop;
-     --outer-extent is the resulting tablet-outer position from centre,
-     and the phone is offset so its OUTER edge lands at the same
-     --outer-extent on the left — so the composition's left and right
-     extremes are equidistant from stage centre. */
+     End state (after scroll) — full spread, even gaps, fits 1280:
+       phone | gap | desktop | gap | tablet  →  composition ≈ 1272px.
+
+     Start state (before scroll) — desktop at stage centre with the
+     two flanks peeking out either edge by --peek-start. */
   .showcase-stage {
     position: relative;
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    --card-h: clamp(200px, 20vw, 260px);
-    --gap: 12px;
-    --desktop-half: var(--card-h);
-    --tablet-half:  calc(var(--card-h) * 0.615);
-    --phone-half:   calc(var(--card-h) * 0.21);
-    --tablet-offset: calc(var(--desktop-half) + var(--gap) + var(--tablet-half));
-    --outer-extent:  calc(var(--tablet-offset) + var(--tablet-half));
-    --phone-offset:  calc(var(--outer-extent) - var(--phone-half));
-    --stack: 30px;
+
+    --card-h: clamp(220px, 22vw, 340px);
+    --gap-end: 16px;
+    --peek-start: 32px;
+
+    --desktop-half: var(--card-h);                /* aspect 2.00 / 2 */
+    --tablet-half:  calc(var(--card-h) * 0.615);  /* aspect 1.23 / 2 */
+    --phone-half:   calc(var(--card-h) * 0.21);   /* aspect 0.42 / 2 */
+
+    /* End state x-offsets from stage centre. */
+    --desktop-end:  calc(var(--phone-half) - var(--tablet-half));
+    --phone-end:    calc(var(--desktop-end) - var(--desktop-half) - var(--gap-end) - var(--phone-half));
+    --tablet-end:   calc(var(--desktop-end) + var(--desktop-half) + var(--gap-end) + var(--tablet-half));
+
+    /* Start state x-offsets — desktop centred, flanks peeking out. */
+    --desktop-start: 0px;
+    --phone-start:   calc(0px - var(--desktop-half) - var(--peek-start) + var(--phone-half));
+    --tablet-start:  calc(var(--desktop-half) + var(--peek-start) - var(--tablet-half));
+
     height: var(--card-h);
   }
 
@@ -606,10 +620,6 @@ const faqSchema = {
     width: auto;
   }
 
-  /* Each flank's spread offset is computed on the stage so the two
-     outer extents match (composition stays centred). */
-  .device-phone  { --offset: var(--phone-offset); }
-  .device-tablet { --offset: var(--tablet-offset); }
 
   /* Stacking order — centre on top while stacked. */
   .showcase-card-left   { z-index: 1; }
@@ -618,48 +628,55 @@ const faqSchema = {
 
   /* Default (fallback) state = final spread layout. Firefox and any
      other browser without scroll-driven animations lands here. All
-     cards stay on the same vertical centreline — no tilts, no offset. */
-  .showcase-card-center { transform: translate(-50%, -50%); }
+     cards stay on the same horizontal centreline — no tilts, no
+     vertical movement. Each card translates to its --*-end offset
+     from stage centre. */
+  .showcase-card-center {
+    transform: translate(calc(-50% + var(--desktop-end)), -50%);
+  }
   .showcase-card-left {
-    transform: translate(calc(-50% - var(--offset)), -50%);
+    transform: translate(calc(-50% + var(--phone-end)), -50%);
   }
   .showcase-card-right {
-    transform: translate(calc(-50% + var(--offset)), -50%);
+    transform: translate(calc(-50% + var(--tablet-end)), -50%);
   }
 
-  /* When scroll-driven animations are supported, start cards stacked
-     and slide them out horizontally as the section moves through the
-     viewport. No rotation, no vertical movement. */
+  /* When scroll-driven animations are supported, each card slides
+     from its --*-start position (cramped, desktop centred, flanks
+     peeking out) to its --*-end position (spread, composition
+     centred, even gaps). All three move so the composition stays
+     centred throughout. */
   @supports (animation-timeline: view()) {
     .showcase-card-left,
+    .showcase-card-center,
     .showcase-card-right {
       animation: linear forwards;
       animation-timeline: view();
       animation-range: cover 10% cover 55%;
     }
-    .showcase-card-left  { animation-name: showcase-spread-left; }
-    .showcase-card-right { animation-name: showcase-spread-right; }
+    .showcase-card-left   { animation-name: showcase-spread-phone; }
+    .showcase-card-center { animation-name: showcase-spread-desktop; }
+    .showcase-card-right  { animation-name: showcase-spread-tablet; }
   }
 
-  @keyframes showcase-spread-left {
-    from { transform: translate(calc(-50% - var(--stack)), -50%); }
-    to   { transform: translate(calc(-50% - var(--offset)), -50%); }
+  @keyframes showcase-spread-phone {
+    from { transform: translate(calc(-50% + var(--phone-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--phone-end)), -50%); }
   }
-  @keyframes showcase-spread-right {
-    from { transform: translate(calc(-50% + var(--stack)), -50%); }
-    to   { transform: translate(calc(-50% + var(--offset)), -50%); }
+  @keyframes showcase-spread-desktop {
+    from { transform: translate(calc(-50% + var(--desktop-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--desktop-end)), -50%); }
+  }
+  @keyframes showcase-spread-tablet {
+    from { transform: translate(calc(-50% + var(--tablet-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--tablet-end)), -50%); }
   }
 
   /* Reduced motion: skip the animation, land on the spread layout. */
   @media (prefers-reduced-motion: reduce) {
     .showcase-card-left,
+    .showcase-card-center,
     .showcase-card-right { animation: none; }
-    .showcase-card-left {
-      transform: translate(calc(-50% - var(--offset)), -50%);
-    }
-    .showcase-card-right {
-      transform: translate(calc(-50% + var(--offset)), -50%);
-    }
   }
 
   /* Mobile + small-desktop: horizontal scroll-snap carousel. Below
