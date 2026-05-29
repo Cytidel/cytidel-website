@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Picture } from 'astro:assets';
-import productHero from '../assets/products/product-hero.png';
+import cveIntel from '../assets/products/cve-intel-2.png';
+import villainVault from '../assets/products/villain-vault.png';
+import monitoring from '../assets/products/monitoring-2.png';
 import { faqs } from '../data/faqs.ts';
 
 // FAQPage JSON-LD — same Q&A as the visible accordion, structured for
@@ -85,18 +87,53 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="hero-product" aria-label="Product preview">
-    <div class="container">
-      <div class="product-frame">
-        <Picture
-          src={productHero}
-          alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
-          widths={[600, 1200, 1800, 2400]}
-          sizes="(max-width: 1232px) 100vw, 1200px"
-          formats={['avif', 'webp']}
-          loading="eager"
-          fetchpriority="high"
-        />
+  <section class="product-showcase" aria-label="Product preview">
+    <div class="showcase-track">
+      <div class="container">
+        <div class="showcase-stage">
+          <figure class="showcase-card showcase-card-left">
+            <figcaption class="showcase-label">Vulnerability Intelligence</figcaption>
+            <div class="showcase-frame">
+              <Picture
+                src={cveIntel}
+                alt="Cytidel CVE intelligence — vulnerabilities tagged with risk rating, vendor, exploit evidence, and social volume."
+                widths={[480, 720, 960, 1200]}
+                sizes="(max-width: 879px) 85vw, 540px"
+                formats={['avif', 'webp']}
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+          </figure>
+          <figure class="showcase-card showcase-card-center">
+            <figcaption class="showcase-label">Threat Actor Intelligence</figcaption>
+            <div class="showcase-frame">
+              <Picture
+                src={villainVault}
+                alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
+                widths={[480, 720, 960, 1200]}
+                sizes="(max-width: 879px) 85vw, 540px"
+                formats={['avif', 'webp']}
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+          </figure>
+          <figure class="showcase-card showcase-card-right">
+            <figcaption class="showcase-label">Continuous Monitoring</figcaption>
+            <div class="showcase-frame">
+              <Picture
+                src={monitoring}
+                alt="Cytidel continuous monitoring — 24/7 watch over the vendors and software your team depends on."
+                widths={[480, 720, 960, 1200]}
+                sizes="(max-width: 879px) 85vw, 540px"
+                formats={['avif', 'webp']}
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -467,14 +504,22 @@ const faqSchema = {
     }
   }
 
-  /* Hero product preview */
-  .hero-product {
+  /* ------------------------------------------------------------------
+     Product showcase
+     ------------------------------------------------------------------
+     Desktop: 3 cards start stacked (slight fan) in the centre and
+     spread out to a horizontal row as the section scrolls through the
+     viewport. Driven by CSS `animation-timeline: view()` — no JS.
+     Browsers without scroll-driven animation support (currently
+     Firefox) get the final spread layout, which is the sane fallback.
+     Mobile: switches to a horizontal scroll-snap carousel.
+     ------------------------------------------------------------------ */
+  .product-showcase {
     padding-top: 0;
     padding-bottom: clamp(48px, 6vw, 80px);
     position: relative;
   }
-  .hero-product .container { position: relative; z-index: 1; }
-  .hero-product::before {
+  .product-showcase::before {
     content: "";
     position: absolute;
     top: -80px;
@@ -487,8 +532,39 @@ const faqSchema = {
     filter: blur(28px);
     z-index: 0;
   }
-  .product-frame {
+  .showcase-track { position: relative; z-index: 1; }
+  .showcase-track .container { position: relative; }
+
+  /* Stage sized by aspect-ratio so the absolutely-positioned cards
+     have somewhere to live without us hard-coding a height. */
+  .showcase-stage {
     position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .showcase-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(54%, 620px);
+    margin: 0;
+    transform: translate(-50%, 0);
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+  .showcase-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+    text-align: center;
+    margin: 0 0 12px;
+  }
+  .showcase-frame {
     border-radius: 14px;
     overflow: hidden;
     background: #fff;
@@ -497,11 +573,81 @@ const faqSchema = {
       0 30px 80px -20px rgba(20, 30, 20, 0.18),
       0 12px 30px -10px rgba(20, 30, 20, 0.08);
   }
-  .product-frame picture,
-  .product-frame img {
+  .showcase-frame picture,
+  .showcase-frame img {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  /* Stacking order so the centre card sits on top while stacked. */
+  .showcase-card-left   { z-index: 1; }
+  .showcase-card-right  { z-index: 2; }
+  .showcase-card-center { z-index: 3; }
+
+  /* Default (fallback) state = final spread layout. Firefox and any
+     other browser without scroll-driven animations lands here. */
+  .showcase-card-left  { transform: translate(-115%, 0) rotate(-2deg); }
+  .showcase-card-right { transform: translate(15%, 0) rotate(2deg); }
+
+  /* When scroll-driven animations are supported, start cards stacked
+     and animate them out as the section moves through the viewport. */
+  @supports (animation-timeline: view()) {
+    .showcase-card-left,
+    .showcase-card-right {
+      animation: linear forwards;
+      animation-timeline: view();
+      animation-range: cover 10% cover 55%;
+    }
+    .showcase-card-left  { animation-name: showcase-spread-left; }
+    .showcase-card-right { animation-name: showcase-spread-right; }
+  }
+
+  @keyframes showcase-spread-left {
+    from { transform: translate(-58%, 0) rotate(-3deg); }
+    to   { transform: translate(-115%, 0) rotate(-2deg); }
+  }
+  @keyframes showcase-spread-right {
+    from { transform: translate(-42%, 0) rotate(3deg); }
+    to   { transform: translate(15%, 0) rotate(2deg); }
+  }
+
+  /* Reduced motion: skip the animation, land on the spread layout. */
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-card-left,
+    .showcase-card-right {
+      animation: none;
+    }
+    .showcase-card-left  { transform: translate(-115%, 0) rotate(-2deg); }
+    .showcase-card-right { transform: translate(15%, 0) rotate(2deg); }
+  }
+
+  /* Mobile: horizontal scroll-snap carousel. Stage becomes a flex row
+     and cards lose absolute positioning + transforms. */
+  @media (max-width: 879px) {
+    .product-showcase { padding-bottom: clamp(32px, 5vw, 56px); }
+    .showcase-stage {
+      aspect-ratio: auto;
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 4px 24px;
+      scroll-padding-left: 4px;
+    }
+    .showcase-stage::-webkit-scrollbar { display: none; }
+    .showcase-stage { scrollbar-width: none; }
+    .showcase-card {
+      position: static;
+      flex: 0 0 86%;
+      width: auto;
+      transform: none !important;
+      animation: none !important;
+      scroll-snap-align: center;
+    }
+    .showcase-card:first-child { scroll-snap-align: start; }
+    .showcase-card:last-child  { scroll-snap-align: end; }
   }
 
   /* Proof strip */
