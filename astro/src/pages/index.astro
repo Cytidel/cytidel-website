@@ -93,13 +93,12 @@ const faqSchema = {
         <div class="showcase-stage">
           <figure class="showcase-card showcase-card-left device-phone">
             <div class="device-frame">
-              <span class="device-notch" aria-hidden="true"></span>
               <div class="device-screen">
                 <Picture
                   src={mobileCve}
                   alt="Cytidel on mobile — a CVE detail view with risk rating, signals, and key metrics."
                   widths={[300, 450, 600]}
-                  sizes="(max-width: 879px) 70vw, 220px"
+                  sizes="(max-width: 879px) 50vw, 200px"
                   formats={['avif', 'webp']}
                   loading="eager"
                   fetchpriority="high"
@@ -109,15 +108,12 @@ const faqSchema = {
           </figure>
           <figure class="showcase-card showcase-card-center device-desktop">
             <div class="device-frame">
-              <div class="device-chrome" aria-hidden="true">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              </div>
               <div class="device-screen">
                 <Picture
                   src={villainVault}
                   alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
                   widths={[600, 900, 1200, 1600]}
-                  sizes="(max-width: 879px) 85vw, 640px"
+                  sizes="(max-width: 879px) 85vw, 760px"
                   formats={['avif', 'webp']}
                   loading="eager"
                   fetchpriority="high"
@@ -132,7 +128,7 @@ const faqSchema = {
                   src={inventoryIpad}
                   alt="Cytidel on tablet — inventory of vendors and products under continuous monitoring."
                   widths={[480, 720, 960]}
-                  sizes="(max-width: 879px) 80vw, 380px"
+                  sizes="(max-width: 879px) 75vw, 460px"
                   formats={['avif', 'webp']}
                   loading="eager"
                   fetchpriority="high"
@@ -542,19 +538,18 @@ const faqSchema = {
   .showcase-track { position: relative; z-index: 1; }
   .showcase-track .container { position: relative; }
 
-  /* Stage sized by aspect-ratio so the absolutely-positioned cards
-     have somewhere to live without us hard-coding a height. The
-     custom properties control how far the flanks spread on scroll
-     and how tightly they stack — both scale down on narrower screens
-     via min(). */
+  /* Stage is a fixed-height row so all three cards align on the same
+     baseline. Card height clamps with viewport. --stack controls how
+     tight the cards sit on top of each other in the start state;
+     per-device --offset values (below) control where each lands when
+     spread, so different-aspect devices can clear each other cleanly. */
   .showcase-stage {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
     max-width: 1280px;
     margin: 0 auto;
-    --spread: min(440px, 36vw);
-    --stack: 60px;
+    height: clamp(280px, 32vw, 380px);
+    --stack: 40px;
   }
 
   .showcase-card {
@@ -562,87 +557,46 @@ const faqSchema = {
     top: 50%;
     left: 50%;
     margin: 0;
+    height: 100%;
+    width: auto;
     transform-origin: center center;
     will-change: transform;
   }
 
   /* ----- Device frames --------------------------------------------
-     Each card type renders its bare screenshot inside a chrome shell
-     so it reads as a real device: phone, desktop window, tablet.
+     One bezel style for all three — dark border, rounded corners, no
+     window chrome. Cards size by height (set on .showcase-card) and
+     image width follows aspect ratio. Per-device --offset controls
+     spread distance so different widths can still clear each other.
      ----------------------------------------------------------------- */
   .device-frame {
     position: relative;
+    height: 100%;
+    padding: 10px;
+    border-radius: 18px;
     background: #111;
     box-shadow:
       0 30px 80px -20px rgba(20, 30, 20, 0.30),
       0 12px 30px -10px rgba(20, 30, 20, 0.16);
   }
   .device-screen {
+    height: 100%;
     overflow: hidden;
+    border-radius: 10px;
     background: #fff;
   }
   .device-screen picture,
   .device-screen img {
     display: block;
-    width: 100%;
-    height: auto;
+    height: 100%;
+    width: auto;
   }
 
-  /* Desktop: macOS-style window with traffic-light chrome bar. */
-  .device-desktop  { width: min(54%, 620px); }
-  .device-desktop .device-frame {
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f4f4ef;
-    border: 1px solid var(--color-border);
-  }
-  .device-chrome {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 12px;
-    background: #f4f4ef;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .device-chrome .dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: #d4d4cf;
-  }
-  .device-chrome .dot:nth-child(1) { background: #ff5f57; }
-  .device-chrome .dot:nth-child(2) { background: #febc2e; }
-  .device-chrome .dot:nth-child(3) { background: #28c840; }
-
-  /* Tablet: medium dark bezel, rounded corners, no chrome bar. */
-  .device-tablet  { width: min(32%, 360px); }
-  .device-tablet .device-frame {
-    padding: 14px;
-    border-radius: 22px;
-  }
-  .device-tablet .device-screen {
-    border-radius: 8px;
-  }
-
-  /* Phone: portrait, thicker proportional bezel, pill notch up top. */
-  .device-phone  { width: min(17%, 200px); }
-  .device-phone .device-frame {
-    padding: 9px;
-    border-radius: 28px;
-  }
-  .device-phone .device-screen {
-    border-radius: 20px;
-  }
-  .device-notch {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 44px;
-    height: 6px;
-    border-radius: 999px;
-    background: #000;
-    z-index: 2;
-  }
+  /* Spread distance from stage centre for each flank. Phone is narrow
+     so it can sit closer; tablet is wider so it needs more room. Both
+     scale down with viewport via min(). */
+  .device-phone  { --offset: min(440px, 36vw); }
+  .device-tablet { --offset: min(600px, 50vw); }
 
   /* Stacking order — centre on top while stacked. */
   .showcase-card-left   { z-index: 1; }
@@ -650,20 +604,19 @@ const faqSchema = {
   .showcase-card-center { z-index: 3; }
 
   /* Default (fallback) state = final spread layout. Firefox and any
-     other browser without scroll-driven animations lands here.
-     -50% on each axis is the card-self-centre offset; --spread is
-     the stage-relative horizontal distance (same for both flanks
-     regardless of their own widths). */
+     other browser without scroll-driven animations lands here. All
+     cards stay on the same vertical centreline — no tilts, no offset. */
   .showcase-card-center { transform: translate(-50%, -50%); }
   .showcase-card-left {
-    transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg);
+    transform: translate(calc(-50% - var(--offset)), -50%);
   }
   .showcase-card-right {
-    transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg);
+    transform: translate(calc(-50% + var(--offset)), -50%);
   }
 
   /* When scroll-driven animations are supported, start cards stacked
-     and animate them out as the section moves through the viewport. */
+     and slide them out horizontally as the section moves through the
+     viewport. No rotation, no vertical movement. */
   @supports (animation-timeline: view()) {
     .showcase-card-left,
     .showcase-card-right {
@@ -676,35 +629,34 @@ const faqSchema = {
   }
 
   @keyframes showcase-spread-left {
-    from { transform: translate(calc(-50% - var(--stack)), -50%) rotate(-7deg); }
-    to   { transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg); }
+    from { transform: translate(calc(-50% - var(--stack)), -50%); }
+    to   { transform: translate(calc(-50% - var(--offset)), -50%); }
   }
   @keyframes showcase-spread-right {
-    from { transform: translate(calc(-50% + var(--stack)), -50%) rotate(7deg); }
-    to   { transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg); }
+    from { transform: translate(calc(-50% + var(--stack)), -50%); }
+    to   { transform: translate(calc(-50% + var(--offset)), -50%); }
   }
 
   /* Reduced motion: skip the animation, land on the spread layout. */
   @media (prefers-reduced-motion: reduce) {
     .showcase-card-left,
-    .showcase-card-right {
-      animation: none;
-    }
+    .showcase-card-right { animation: none; }
     .showcase-card-left {
-      transform: translate(calc(-50% - var(--spread)), -50%) rotate(-3deg);
+      transform: translate(calc(-50% - var(--offset)), -50%);
     }
     .showcase-card-right {
-      transform: translate(calc(-50% + var(--spread)), -50%) rotate(3deg);
+      transform: translate(calc(-50% + var(--offset)), -50%);
     }
   }
 
-  /* Mobile: horizontal scroll-snap carousel. Stage becomes a flex row
-     and cards lose absolute positioning + transforms. Per-device
-     widths so the phone stays phone-shaped instead of stretching. */
+  /* Mobile: horizontal scroll-snap carousel. Cards lose absolute
+     positioning, drop the fixed height, and switch back to a
+     width-driven sizing model where each device sets its own
+     flex-basis and the image fills it. */
   @media (max-width: 879px) {
     .product-showcase { padding-bottom: clamp(32px, 5vw, 56px); }
     .showcase-stage {
-      aspect-ratio: auto;
+      height: auto;
       align-items: center;
       display: flex;
       gap: 16px;
@@ -718,10 +670,17 @@ const faqSchema = {
     .showcase-stage { scrollbar-width: none; }
     .showcase-card {
       position: static;
+      height: auto;
       width: auto;
       transform: none !important;
       animation: none !important;
       scroll-snap-align: center;
+    }
+    .device-frame { height: auto; }
+    .device-screen { height: auto; }
+    .device-screen img {
+      height: auto;
+      width: 100%;
     }
     .device-phone   { flex: 0 0 52%; }
     .device-tablet  { flex: 0 0 78%; }
