@@ -77,6 +77,28 @@ const organizationSchema = {
       })();
     </script>
 
+    <!-- Leadfeeder Website Tracker — B2B visitor identification. Loads
+         sc.lfeeder.com/lftracker_v1_<siteId>.js. Cookiebot above
+         auto-blocks this until the user consents to marketing cookies,
+         provided Leadfeeder is categorised as "marketing" in the
+         Cookiebot dashboard (it usually is by default via the scanner).
+         Site ID lives in the IIFE arg; rotate by editing here. -->
+    <script is:inline>
+      (function(ss,ex){
+        window.ldfdr = window.ldfdr || function(){(ldfdr._q = ldfdr._q || []).push([].slice.call(arguments));};
+        (function(d,s){
+          var fs = d.getElementsByTagName(s)[0];
+          function ce(src){
+            var cs = d.createElement(s);
+            cs.src = src;
+            cs.async = 1;
+            fs.parentNode.insertBefore(cs, fs);
+          }
+          ce('https://sc.lfeeder.com/lftracker_v1_' + ss + (ex ? '_' + ex : '') + '.js');
+        })(document, 'script');
+      })('bElvO73lK9V4ZMqj');
+    </script>
+
     <!-- Per-page head extras (preconnect hints, JSON-LD schema, etc.) -->
     <slot name="head" />
   </head>
