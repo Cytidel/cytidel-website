@@ -60,20 +60,49 @@ const organizationSchema = {
       href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Matomo Cloud — analytics for cytidel.com. The Cookiebot script
-         above auto-blocks this until the user consents to statistics. -->
-    <script is:inline>
+    <!-- Matomo Cloud — analytics for cytidel.com.
+
+         Tiered consent model:
+         - Default (no consent / declined): Matomo runs in cookieless
+           mode via `requireCookieConsent`. Page views, events, devices
+           and referrers are tracked anonymously, no cookies set. This
+           sits inside CNIL's "measurement only" exemption from
+           ePrivacy consent, on the assumption that Matomo Cloud's
+           default IP anonymisation is on (confirm in Matomo settings).
+         - On accepting Statistics: Matomo upgrades to full cookie
+           mode — return-visitor tracking, sessions, funnels light up
+           for that visitor going forward.
+         - On withdrawing: Matomo downgrades back to cookieless.
+
+         Both <script> tags are marked `data-cookieconsent="ignore"`
+         so Cookiebot's auto-blocker leaves Matomo alone (Matomo is
+         handling its own consent gating via `_paq`). The
+         Cookiebot/Matomo sync listener below wires the events. -->
+    <script is:inline data-cookieconsent="ignore">
       var _paq = window._paq = window._paq || [];
+      _paq.push(['requireCookieConsent']);
+      _paq.push(['setTrackerUrl', 'https://cytidel.matomo.cloud/matomo.php']);
+      _paq.push(['setSiteId', '1']);
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
+    </script>
+    <script is:inline async src="https://cdn.matomo.cloud/cytidel.matomo.cloud/matomo.js" data-cookieconsent="ignore"></script>
+    <script is:inline data-cookieconsent="ignore">
+      // Cookiebot ↔ Matomo consent bridge. Fires on initial page load
+      // for returning visitors (CookiebotOnConsentReady) and when the
+      // consent state changes (Accept / Decline).
       (function() {
-        var u = "https://cytidel.matomo.cloud/";
-        _paq.push(['setTrackerUrl', u + 'matomo.php']);
-        _paq.push(['setSiteId', '1']);
-        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-        g.async = true;
-        g.src = 'https://cdn.matomo.cloud/cytidel.matomo.cloud/matomo.js';
-        s.parentNode.insertBefore(g, s);
+        function syncMatomoConsent() {
+          if (!window.Cookiebot || !window.Cookiebot.consent) return;
+          if (window.Cookiebot.consent.statistics) {
+            window._paq.push(['setCookieConsentGiven']);
+          } else {
+            window._paq.push(['forgetCookieConsentGiven']);
+          }
+        }
+        window.addEventListener('CookiebotOnConsentReady', syncMatomoConsent);
+        window.addEventListener('CookiebotOnAccept', syncMatomoConsent);
+        window.addEventListener('CookiebotOnDecline', syncMatomoConsent);
       })();
     </script>
 
@@ -110,8 +139,11 @@ const organizationSchema = {
     </main>
     <Footer />
     <script>
-      // Sitewide click + FAQ-open tracking. No-ops until Matomo loads
-      // (which only happens after Cookiebot consent).
+      // Sitewide click + FAQ-open tracking. Matomo is now always
+      // loaded (cookieless by default, full mode after Statistics
+      // consent), so trackEvent calls fire for every visitor — the
+      // event itself is recorded either way, just without the
+      // visitor-ID linkage for non-consenters.
       import '../scripts/analytics.ts';
     </script>
   </body>
