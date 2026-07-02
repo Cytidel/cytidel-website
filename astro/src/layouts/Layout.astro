@@ -82,6 +82,19 @@ const organizationSchema = {
   </head>
   <body class="bg-bg text-text font-sans antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-text focus:text-bg focus:px-4 focus:py-2.5 focus:font-semibold">Skip to content</a>
+    <!-- Sitewide announcement bar — ECSO CISO Choice Award 2026 win. -->
+    <a
+      href="/blog/cytidel-wins-the-ecso-ciso-choice-award-2026"
+      class="group flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 bg-dark-bg px-4 py-2.5 text-center text-sm text-dark-text no-underline transition-colors hover:bg-dark-bg-elev"
+    >
+      <svg class="h-4 w-4 flex-none text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+        <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+        <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+      </svg>
+      <span><span class="font-semibold text-accent">Winner:</span> ECSO CISO Choice Award 2026</span>
+      <span class="font-semibold text-accent underline-offset-2 group-hover:underline">Read more &rarr;</span>
+    </a>
     <Nav />
     <main id="main">
       <slot />
