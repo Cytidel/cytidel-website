@@ -133,7 +133,30 @@ import foundersPhoto from '../assets/founders.jpeg';
   <section class="careers-roles" aria-labelledby="roles-h2" id="open-roles">
     <div class="container">
       <h2 id="roles-h2">Open roles</h2>
-      <p class="roles-status">No open roles right now.</p>
+      <p class="roles-status">One open role right now.</p>
+      <ul class="roles-list">
+        <li>
+          <a
+            href="https://talent.sage.hr/jobs/4d13f30b-5446-4318-9490-8b2f5721c7ad"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="role-card"
+          >
+            <span class="role-card-main">
+              <span class="role-title">Senior Machine Learning Engineer</span>
+              <span class="role-meta">
+                <span class="role-meta-item">Ireland</span>
+                <span class="role-meta-sep" aria-hidden="true">·</span>
+                <span class="role-meta-item">Hybrid / remote</span>
+              </span>
+            </span>
+            <span class="role-cta">
+              View role
+              <span class="arrow" aria-hidden="true">→</span>
+            </span>
+          </a>
+        </li>
+      </ul>
       <p>We're growing carefully. If you've read this far and the values land for you, we'd rather hear from you now than miss you later.</p>
       <a href="https://www.linkedin.com/company/cytidel/" target="_blank" rel="noopener noreferrer" class="linkedin-cta">
         Follow Cytidel on LinkedIn
@@ -405,6 +428,73 @@ import foundersPhoto from '../assets/founders.jpeg';
     line-height: 1.65;
     color: var(--color-text-secondary);
     margin: 0 0 28px;
+  }
+
+  /* Role cards */
+  .roles-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px;
+    display: grid;
+    gap: 14px;
+  }
+  .role-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(20px, 2.4vw, 28px) clamp(20px, 2.4vw, 30px);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg-elev);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .role-card:hover {
+    border-color: var(--color-accent-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(128, 252, 19, 0.12);
+  }
+  .role-card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .role-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--color-text);
+  }
+  .role-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    color: var(--color-text-secondary);
+  }
+  .role-meta-sep { color: var(--color-border); }
+  .role-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    color: var(--color-accent-deep);
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+  .role-cta .arrow { transition: transform 0.2s ease; }
+  .role-card:hover .role-cta .arrow { transform: translateX(3px); }
+  @media (max-width: 560px) {
+    .role-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
   }
   .linkedin-cta {
     display: inline-flex;
