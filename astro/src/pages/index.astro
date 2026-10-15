@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Picture } from 'astro:assets';
-import productHero from '../assets/products/product-hero.png';
+import mobileCve from '../assets/products/mobile-cve.png';
+import villainVault from '../assets/products/villain-vault.png';
+import inventoryIpad from '../assets/products/inventory-ipad.png';
 import { faqs } from '../data/faqs.ts';
 
 // FAQPage JSON-LD — same Q&A as the visible accordion, structured for
@@ -85,18 +87,56 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="hero-product" aria-label="Product preview">
-    <div class="container">
-      <div class="product-frame">
-        <Picture
-          src={productHero}
-          alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
-          widths={[600, 1200, 1800, 2400]}
-          sizes="(max-width: 1232px) 100vw, 1200px"
-          formats={['avif', 'webp']}
-          loading="eager"
-          fetchpriority="high"
-        />
+  <section class="product-showcase" aria-label="Product preview">
+    <div class="showcase-track">
+      <div class="container">
+        <div class="showcase-stage">
+          <figure class="showcase-card showcase-card-left device-phone">
+            <div class="device-frame">
+              <div class="device-screen">
+                <Picture
+                  src={mobileCve}
+                  alt="Cytidel on mobile — a CVE detail view with risk rating, signals, and key metrics."
+                  widths={[300, 450, 600]}
+                  sizes="(max-width: 879px) 50vw, 200px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+            </div>
+          </figure>
+          <figure class="showcase-card showcase-card-center device-desktop">
+            <div class="device-frame">
+              <div class="device-screen">
+                <Picture
+                  src={villainVault}
+                  alt="Cytidel Villain Vault — adversary profiles mapped to CVEs in their arsenal, with TTPs and campaign history."
+                  widths={[600, 900, 1200, 1600]}
+                  sizes="(max-width: 879px) 85vw, 760px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+            </div>
+          </figure>
+          <figure class="showcase-card showcase-card-right device-tablet">
+            <div class="device-frame">
+              <div class="device-screen">
+                <Picture
+                  src={inventoryIpad}
+                  alt="Cytidel on tablet — inventory of vendors and products under continuous monitoring."
+                  widths={[480, 720, 960]}
+                  sizes="(max-width: 879px) 75vw, 460px"
+                  formats={['avif', 'webp']}
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+            </div>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -467,14 +507,22 @@ const faqSchema = {
     }
   }
 
-  /* Hero product preview */
-  .hero-product {
+  /* ------------------------------------------------------------------
+     Product showcase
+     ------------------------------------------------------------------
+     Desktop: 3 cards start stacked (slight fan) in the centre and
+     spread out to a horizontal row as the section scrolls through the
+     viewport. Driven by CSS `animation-timeline: view()` — no JS.
+     Browsers without scroll-driven animation support (currently
+     Firefox) get the final spread layout, which is the sane fallback.
+     Mobile: switches to a horizontal scroll-snap carousel.
+     ------------------------------------------------------------------ */
+  .product-showcase {
     padding-top: 0;
     padding-bottom: clamp(48px, 6vw, 80px);
     position: relative;
   }
-  .hero-product .container { position: relative; z-index: 1; }
-  .hero-product::before {
+  .product-showcase::before {
     content: "";
     position: absolute;
     top: -80px;
@@ -487,21 +535,189 @@ const faqSchema = {
     filter: blur(28px);
     z-index: 0;
   }
-  .product-frame {
+  .showcase-track { position: relative; z-index: 1; }
+  .showcase-track .container { position: relative; }
+
+  /* Stage is a fixed-height row so all three cards align on the same
+     baseline. Composition geometry below ensures both:
+       (a) Even gaps either side of the desktop card.
+       (b) The whole composition is centred within the stage.
+     Because the tablet (1.23:1) is wider than the phone (0.42:1),
+     keeping the desktop at stage centre + even gaps would push the
+     composition's visual centre to the right. So the desktop is
+     itself shifted LEFT by (tablet-half - phone-half) — the cards
+     all share the centring work.
+
+     End state (after scroll) — full spread, even gaps, fits 1280:
+       phone | gap | desktop | gap | tablet  →  composition ≈ 1272px.
+
+     Start state (before scroll) — desktop at stage centre with the
+     two flanks peeking out either edge by --peek-start. */
+  .showcase-stage {
     position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #fff;
-    border: 1px solid var(--color-border);
-    box-shadow:
-      0 30px 80px -20px rgba(20, 30, 20, 0.18),
-      0 12px 30px -10px rgba(20, 30, 20, 0.08);
-  }
-  .product-frame picture,
-  .product-frame img {
-    display: block;
     width: 100%;
-    height: auto;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    --card-h: clamp(220px, 22vw, 340px);
+    --gap-end: 16px;
+    --peek-start: 32px;
+
+    --desktop-half: var(--card-h);                /* aspect 2.00 / 2 */
+    --tablet-half:  calc(var(--card-h) * 0.615);  /* aspect 1.23 / 2 */
+    --phone-half:   calc(var(--card-h) * 0.21);   /* aspect 0.42 / 2 */
+
+    /* End state x-offsets from stage centre. */
+    --desktop-end:  calc(var(--phone-half) - var(--tablet-half));
+    --phone-end:    calc(var(--desktop-end) - var(--desktop-half) - var(--gap-end) - var(--phone-half));
+    --tablet-end:   calc(var(--desktop-end) + var(--desktop-half) + var(--gap-end) + var(--tablet-half));
+
+    /* Start state x-offsets — desktop centred, flanks peeking out. */
+    --desktop-start: 0px;
+    --phone-start:   calc(0px - var(--desktop-half) - var(--peek-start) + var(--phone-half));
+    --tablet-start:  calc(var(--desktop-half) + var(--peek-start) - var(--tablet-half));
+
+    height: var(--card-h);
+  }
+
+  .showcase-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    height: 100%;
+    width: auto;
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  /* ----- Device frames --------------------------------------------
+     One bezel style for all three — dark border, rounded corners, no
+     window chrome. Cards size by height (set on .showcase-card) and
+     image width follows aspect ratio. Per-device --offset controls
+     spread distance so different widths can still clear each other.
+     ----------------------------------------------------------------- */
+  .device-frame {
+    position: relative;
+    height: 100%;
+    padding: 10px;
+    border-radius: 18px;
+    background: #111;
+    box-shadow:
+      0 30px 80px -20px rgba(20, 30, 20, 0.30),
+      0 12px 30px -10px rgba(20, 30, 20, 0.16);
+  }
+  .device-screen {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #fff;
+  }
+  .device-screen picture,
+  .device-screen img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+
+
+  /* Stacking order — centre on top while stacked. */
+  .showcase-card-left   { z-index: 1; }
+  .showcase-card-right  { z-index: 2; }
+  .showcase-card-center { z-index: 3; }
+
+  /* Default (fallback) state = final spread layout. Firefox and any
+     other browser without scroll-driven animations lands here. All
+     cards stay on the same horizontal centreline — no tilts, no
+     vertical movement. Each card translates to its --*-end offset
+     from stage centre. */
+  .showcase-card-center {
+    transform: translate(calc(-50% + var(--desktop-end)), -50%);
+  }
+  .showcase-card-left {
+    transform: translate(calc(-50% + var(--phone-end)), -50%);
+  }
+  .showcase-card-right {
+    transform: translate(calc(-50% + var(--tablet-end)), -50%);
+  }
+
+  /* When scroll-driven animations are supported, each card slides
+     from its --*-start position (cramped, desktop centred, flanks
+     peeking out) to its --*-end position (spread, composition
+     centred, even gaps). All three move so the composition stays
+     centred throughout. */
+  @supports (animation-timeline: view()) {
+    .showcase-card-left,
+    .showcase-card-center,
+    .showcase-card-right {
+      animation: linear forwards;
+      animation-timeline: view();
+      animation-range: cover 10% cover 55%;
+    }
+    .showcase-card-left   { animation-name: showcase-spread-phone; }
+    .showcase-card-center { animation-name: showcase-spread-desktop; }
+    .showcase-card-right  { animation-name: showcase-spread-tablet; }
+  }
+
+  @keyframes showcase-spread-phone {
+    from { transform: translate(calc(-50% + var(--phone-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--phone-end)), -50%); }
+  }
+  @keyframes showcase-spread-desktop {
+    from { transform: translate(calc(-50% + var(--desktop-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--desktop-end)), -50%); }
+  }
+  @keyframes showcase-spread-tablet {
+    from { transform: translate(calc(-50% + var(--tablet-start)), -50%); }
+    to   { transform: translate(calc(-50% + var(--tablet-end)), -50%); }
+  }
+
+  /* Reduced motion: skip the animation, land on the spread layout. */
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-card-left,
+    .showcase-card-center,
+    .showcase-card-right { animation: none; }
+  }
+
+  /* Mobile + small-desktop: horizontal scroll-snap carousel. Below
+     1024px the spread composition would overflow the container, so
+     we switch to a swipeable row instead. Cards lose absolute
+     positioning, drop the fixed height, and switch back to a
+     width-driven sizing model. */
+  @media (max-width: 1023px) {
+    .product-showcase { padding-bottom: clamp(32px, 5vw, 56px); }
+    .showcase-stage {
+      height: auto;
+      align-items: center;
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 4px 24px;
+      scroll-padding-left: 4px;
+    }
+    .showcase-stage::-webkit-scrollbar { display: none; }
+    .showcase-stage { scrollbar-width: none; }
+    .showcase-card {
+      position: static;
+      height: auto;
+      width: auto;
+      transform: none !important;
+      animation: none !important;
+      scroll-snap-align: center;
+    }
+    .device-frame { height: auto; }
+    .device-screen { height: auto; }
+    .device-screen img {
+      height: auto;
+      width: 100%;
+    }
+    .device-phone   { flex: 0 0 52%; }
+    .device-tablet  { flex: 0 0 78%; }
+    .device-desktop { flex: 0 0 86%; }
+    .showcase-card:first-child { scroll-snap-align: start; }
+    .showcase-card:last-child  { scroll-snap-align: end; }
   }
 
   /* Proof strip */
