@@ -105,10 +105,6 @@ const faqSchema = {
             <p>Attention goes to the strategic few. Exposure reaches further, into the vendors and software your suppliers depend on.</p>
           </article>
         </div>
-        <p class="stat-line">
-          <strong>35.5%</strong> of breaches in 2024 were third-party related. <strong>41.4%</strong> of ransomware attacks now start through third parties.
-          <span class="stat-source">(<a href="https://securityscorecard.com/company/press/securityscorecard-2025-global-third-party-breach-report-reveals-surge-in-vendor-driven-attacks" target="_blank" rel="noopener">SecurityScorecard, 2025</a>)</span>
-        </p>
       </div>
     </section>
 
@@ -152,7 +148,7 @@ const faqSchema = {
             <h3>Earlier follow-up</h3>
             <p class="shift-from"><span class="shift-tag">Today</span>You find out when the supplier tells you.</p>
             <span class="shift-arrow" aria-hidden="true">→</span>
-            <p class="shift-to"><span class="shift-tag">With Cytidel</span>You see the signal sooner, and ask the supplier the first question.</p>
+            <p class="shift-to"><span class="shift-tag">With Cytidel</span>You see the signal sooner and ask the supplier the first question.</p>
           </li>
           <li class="shift">
             <h3>Less manual monitoring</h3>
@@ -347,7 +343,7 @@ const faqSchema = {
     .visual-wide { aspect-ratio: 4 / 3; }
   }
 
-  /* Why now: small label above each card heading, stat line under the grid */
+  /* Why now: small label above each card heading */
   .pain-label {
     font-size: 0.74rem;
     font-weight: 600;
@@ -356,29 +352,6 @@ const faqSchema = {
     color: var(--color-accent-deep);
     margin-bottom: -8px;
   }
-  .stat-line {
-    margin: clamp(32px, 4vw, 48px) 0 0;
-    padding-left: 18px;
-    border-left: 3px solid var(--color-accent);
-    font-size: clamp(1.02rem, 1.5vw, 1.15rem);
-    line-height: 1.6;
-    color: var(--color-text);
-  }
-  .stat-line strong {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--color-accent-deep);
-  }
-  .stat-source {
-    font-size: 0.88rem;
-    color: var(--color-text-tertiary);
-  }
-  .stat-source a {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
   /* How it works: three steps in a row */
   .sbm-page .steps { grid-template-columns: repeat(3, 1fr); }
   @media (max-width: 960px) {
