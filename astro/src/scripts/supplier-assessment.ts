@@ -20,6 +20,8 @@ type HSFormsField = { objectTypeId: string; name: string; value: string };
 interface State {
   step: number;
   resume: number;
+  /** Furthest screen reached, so visited screens can be jumped to */
+  furthest: number;
   example: boolean;
   org: { company: string; industry: string; headcount: string; fte: string; suppliers: string; critical: string };
   a: Record<string, string | string[]>;
@@ -39,9 +41,14 @@ interface Result {
 
 const RES = STEPS.length - 1;
 const LEAD = RES - 1;
-const NSTEPS = STEPS.length - 2;
+// Step indexes of the single-question screens, for "Question 3 of 7"
+const QUESTION_STEPS = STEPS.flatMap((s, i) => (s.id === 'q' ? [i] : []));
+// Single-choice questions that move on by themselves when an answer is
+// clicked. Coverage stays manual: it can open a licence-cap field.
+const AUTO_ADVANCE = new Set(['approach', 'list', 'nth', 'prioritise', 'threat']);
 // Draft answers survive a reload; contact details are never stored.
-const DRAFT_KEY = 'cyd-sca-draft-v1';
+// v2: one question per step (v1 drafts had grouped steps).
+const DRAFT_KEY = 'cyd-sca-draft-v2';
 
 const app = document.getElementById('sca-app') as HTMLElement | null;
 const portalId = app?.dataset.portalId ?? '';
@@ -51,7 +58,7 @@ const linkedinConversion = Number(app?.dataset.linkedinConversion) || 0;
 const LIVE = !!(portalId && formGuid);
 
 const blank = (): State => ({
-  step: 0, resume: 1, example: false,
+  step: 0, resume: 1, furthest: 0, example: false,
   org: { company: '', industry: '', headcount: '', fte: '', suppliers: '', critical: '' },
   a: { providers: [], regs: [] }, cap: '',
   lead: { firstname: '', lastname: '', email: '', title: '', walk: false, marketing: false },
@@ -218,13 +225,26 @@ function quadCardsHTML(here?: QuadKey): string {
   return `<div class="sca-quads">${card('over')}${card('pro')}${card('re')}${card('blind')}</div>`;
 }
 
+// One segment per screen (organisation, each question, your details).
+// Screens already reached are buttons, so people can go straight back to
+// an answer; screens not yet reached can't be skipped to.
 function progressHTML(): string {
-  return `<nav class="sca-progress" aria-label="Progress">${STEPS.slice(1)
-    .map((s, i) => {
-      const n = i + 1;
-      return `<span class="${n < S.step ? 'is-done' : n === S.step ? 'is-on' : ''}">${s.name}</span>`;
+  const st = STEPS[S.step];
+  const label = st.id === 'org'
+    ? 'About your organisation'
+    : st.id === 'lead'
+      ? 'Last step: your details'
+      : `Question ${QUESTION_STEPS.indexOf(S.step) + 1} of ${QUESTION_STEPS.length}`;
+  const segs = STEPS.slice(1, LEAD + 1)
+    .map((step, idx) => {
+      const i = idx + 1;
+      const name = esc(step.name);
+      if (i === S.step) return `<span class="sca-seg is-current" aria-current="step" title="${name}"><span class="sr-only">${name}, current</span></span>`;
+      if (i <= S.furthest) return `<button type="button" class="sca-seg is-done" data-jump="${i}" title="${name}"><span class="sr-only">Go to ${name}</span></button>`;
+      return `<span class="sca-seg" aria-hidden="true"></span>`;
     })
-    .join('')}</nav>`;
+    .join('');
+  return `<nav class="sca-progress" aria-label="Assessment progress"><div class="sca-segs">${segs}</div><span class="sca-progress-label">${label}</span></nav>`;
 }
 
 function optsHTML(qid: string): string {
@@ -242,7 +262,9 @@ function optsHTML(qid: string): string {
     const sq = Q[q.sub], sv = multi(q.sub);
     extra += `<div class="sca-q-sub"><p class="sca-q-help">${esc(sq.label)}</p><div class="sca-opts">${sq.opts.map((o) => opt(q.sub!, o, true, sv.includes(o.v))).join('')}</div></div>`;
   }
-  return `<fieldset class="sca-q" id="sca-q-${qid}"><legend class="sca-q-label">${esc(q.label)}</legend>${q.help ? `<p class="sca-q-help">${esc(q.help)}</p>` : ''}<div class="sca-opts${q.grid ? ' is-grid4' : ''}">${inputs}</div>${extra}<p class="sca-err" hidden></p></fieldset>`;
+  // The divider between questions sits on the wrapper, not the fieldset:
+  // browsers cut a fieldset's top border around its legend.
+  return `<div class="sca-q" id="sca-q-${qid}"><fieldset class="sca-q-set"><legend class="sca-q-label"><h2>${esc(q.label)}</h2></legend>${q.help ? `<p class="sca-q-help">${esc(q.help)}</p>` : ''}<div class="sca-opts">${inputs}</div>${extra}<p class="sca-err" hidden></p></fieldset></div>`;
 }
 
 function navHTML(next = 'Continue', act = 'next'): string {
@@ -285,7 +307,7 @@ function orgHTML(): string {
   const f = (id: keyof State['org'], label: string, hint: string, ph: string, mode = 'numeric'): string =>
     `<div class="sca-field"><label for="sca-${id}">${label}</label><input id="sca-${id}" data-org="${id}" inputmode="${mode}" value="${esc(o[id])}" placeholder="${ph}">${hint ? `<span class="sca-hint">${hint}</span>` : ''}</div>`;
   const st = STEPS[S.step];
-  return `<section class="sca-card"><div class="sca-card-head"><span class="sca-eyebrow-plain">Step 1 of ${NSTEPS}</span><h2>${st.title}</h2><p>${st.lede}</p></div>
+  return `<section class="sca-card"><div class="sca-card-head"><h2>${st.title}</h2><p>${st.lede}</p></div>
     <div class="sca-fields">
       ${f('company', 'Company name', '', 'e.g. Northbridge Group', 'text')}
       <div class="sca-field"><label for="sca-industry">Industry</label><select id="sca-industry" required><option value="" disabled ${o.industry ? '' : 'selected'}>Select an industry</option>${Object.entries(INDUSTRIES)
@@ -302,7 +324,7 @@ function orgHTML(): string {
 
 function leadHTML(): string {
   const l = S.lead;
-  return `<section class="sca-card"><div class="sca-card-head"><span class="sca-eyebrow-plain">Step ${NSTEPS} of ${NSTEPS}</span><h2>Where should we send your results?</h2><p>Your full report appears straight after this step.</p></div>
+  return `<section class="sca-card"><div class="sca-card-head"><h2>Where should we send your results?</h2><p>Your full report appears straight after this step.</p></div>
     <div class="sca-fields">
       <div class="sca-field"><label for="sca-firstname">First name</label><input id="sca-firstname" data-lead="firstname" autocomplete="given-name" value="${esc(l.firstname)}"></div>
       <div class="sca-field"><label for="sca-lastname">Last name</label><input id="sca-lastname" data-lead="lastname" autocomplete="family-name" value="${esc(l.lastname)}"></div>
@@ -429,12 +451,17 @@ function render(): void {
   else
     app.innerHTML =
       progressHTML() +
-      `<section class="sca-card"><div class="sca-card-head"><span class="sca-eyebrow-plain">Step ${S.step} of ${NSTEPS}</span><h2>${st.title}</h2><p>${st.lede}</p></div>${(st.qs ?? []).map(optsHTML).join('')}${navHTML()}</section>`;
+      `<section class="sca-card sca-qcard">${(st.qs ?? []).map(optsHTML).join('')}${navHTML()}</section>`;
   bind();
   save();
 }
 
 /* ---------------- interaction ---------------- */
+// Was the last interaction a click/tap (auto-advance) or the keyboard (not)?
+let pointerPick = false;
+app?.addEventListener('pointerdown', () => { pointerPick = true; }, true);
+app?.addEventListener('keydown', () => { pointerPick = false; }, true);
+
 function bind(): void {
   if (!app) return;
   app.querySelectorAll<HTMLInputElement>('input[type=radio], input[type=checkbox]').forEach((inp) => {
@@ -450,6 +477,12 @@ function bind(): void {
       const y = window.scrollY;
       render();
       window.scrollTo(0, y);
+      // Move on after a click on a single-choice answer. Not on keyboard
+      // selection: arrow keys change a radio as you move through the list.
+      if (!q.multi && AUTO_ADVANCE.has(inp.name) && pointerPick) {
+        const step = S.step;
+        window.setTimeout(() => { if (S.step === step) void act('next'); }, 350);
+      }
     });
   });
   const cap = $<HTMLInputElement>('#sca-cap', app);
@@ -468,10 +501,12 @@ function bind(): void {
   const mkt = $<HTMLInputElement>('#sca-marketing', app);
   mkt?.addEventListener('change', () => { S.lead.marketing = mkt.checked; });
   app.querySelectorAll<HTMLElement>('[data-act]').forEach((b) => b.addEventListener('click', () => act(b.dataset.act!)));
+  app.querySelectorAll<HTMLElement>('[data-jump]').forEach((b) => b.addEventListener('click', () => jump(Number(b.dataset.jump))));
 }
 
 function go(step: number): void {
   S.step = step;
+  if (step <= LEAD) S.furthest = Math.max(S.furthest, step);
   render();
   window.scrollTo({ top: 0 });
   const h = $<HTMLElement>('h1, h2', app!);
@@ -579,6 +614,17 @@ function loadExample(): void {
   S.org = { company: 'Example Manufacturing Group', industry: 'mfg', headcount: '4500', fte: '1.5', suppliers: '1200', critical: '140' };
   S.a = { approach: 'over', list: 'flat', coverage: 'cap', providers: ['grc', 'ratings'], nth: 'mapped', prioritise: 'score', threat: 'reports', regs: ['nis2', 'cra'] };
   S.cap = '300';
+}
+
+// Jump from the progress bar. Going forward checks the current screen first,
+// like Continue, so no answer is skipped.
+function jump(target: number): void {
+  if (!(target >= 1 && target <= S.furthest) || target === S.step) return;
+  if (target > S.step) {
+    if (STEPS[S.step].id === 'org' && !validateOrg()) return;
+    if (STEPS[S.step].qs && !validateQs()) return;
+  }
+  go(target);
 }
 
 async function act(a: string): Promise<void> {

@@ -33,13 +33,14 @@ export interface Question {
   help?: string;
   opts: Option[];
   multi?: boolean;
-  grid?: boolean;
   /** Follow-up multi-select shown once an answer other than "none" is picked */
   sub?: string;
 }
 
 export interface Step {
-  id: 'intro' | 'org' | 'approach' | 'vis' | 'prio' | 'lead' | 'res';
+  /** 'q' is a single-question screen; the question is in qs[0] */
+  id: 'intro' | 'org' | 'q' | 'lead' | 'res';
+  /** Short name, used for Matomo step events */
   name?: string;
   title?: string;
   lede?: string;
@@ -127,7 +128,6 @@ export const Q: Record<string, Question> = {
   approach: {
     label: 'How would you describe your approach to supply chain risk today?',
     help: 'Pick the description closest to how things work in practice, not how the policy reads.',
-    grid: true,
     opts: [
       { v: 're', t: 'Reactive / Ad Hoc', s: 'We act when a supplier tells us about an incident or it reaches the news.', d: 20, p: 20 },
       { v: 'over', t: 'Overwhelmed / Alert Fatigue', s: 'We collect plenty of supplier data, but struggle to tell which supplier issues matter.', d: 75, p: 25 },
@@ -218,12 +218,18 @@ export const Q: Record<string, Question> = {
   },
 };
 
+// One question per screen: less to take in at once, and Matomo step events
+// show exactly which question people leave on.
 export const STEPS: Step[] = [
   { id: 'intro' },
   { id: 'org', name: 'Organisation', title: 'About your organisation', lede: 'These figures set the scale of your supplier base and the team looking after it. Estimates are fine.' },
-  { id: 'approach', name: 'Approach', title: 'Your approach to supply chain risk', lede: 'Place yourself on the grid, then tell us how complete your supplier view is.', qs: ['approach', 'list'] },
-  { id: 'vis', name: 'Visibility', title: 'Coverage and visibility', lede: 'How much of your supply chain you can see today.', qs: ['coverage', 'nth'] },
-  { id: 'prio', name: 'Action', title: 'Prioritisation and early warning', lede: 'How supplier risk turns into action, and what is driving requirements over the next year.', qs: ['prioritise', 'threat', 'regs'] },
+  { id: 'q', name: 'Approach', qs: ['approach'] },
+  { id: 'q', name: 'Supplier register', qs: ['list'] },
+  { id: 'q', name: 'Coverage', qs: ['coverage'] },
+  { id: 'q', name: 'Beyond P1', qs: ['nth'] },
+  { id: 'q', name: 'Prioritisation', qs: ['prioritise'] },
+  { id: 'q', name: 'Early warning', qs: ['threat'] },
+  { id: 'q', name: 'Regulation', qs: ['regs'] },
   { id: 'lead', name: 'Your details', title: 'Where should we send your results?', lede: 'Your full report appears straight after this step.' },
   { id: 'res', name: 'Results' },
 ];

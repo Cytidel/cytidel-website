@@ -207,24 +207,38 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
   .sca-quad.is-target .sca-tag.is-here { top: 46px; }
 
   /* Progress */
-  /* One equal column per step, however many steps there are */
-  .sca-progress { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; }
-  .sca-progress span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-tertiary); border-top: 3px solid var(--color-border-strong); padding-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sca-progress span.is-done { border-color: var(--color-accent-deep); color: var(--color-text-secondary); }
-  .sca-progress span.is-on { border-color: var(--color-accent); color: var(--color-text); font-weight: 600; }
+  .sca .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+  /* Progress: one segment per screen. Reached screens are buttons; the
+     button is taller than its bar so it's an easy target. */
+  .sca-progress { display: flex; flex-direction: column; gap: 6px; }
+  .sca-segs { display: flex; gap: 4px; }
+  .sca-seg { position: relative; flex: 1; height: 20px; padding: 0; border: 0; background: none; }
+  .sca-seg::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 6px; border-radius: 3px; background: var(--color-border-strong); transition: background 0.15s ease; }
+  .sca-seg.is-done { cursor: pointer; }
+  .sca-seg.is-done::before { background: var(--color-accent-deep); }
+  .sca-seg.is-done:hover::before { background: var(--color-text); }
+  .sca-seg.is-current::before { background: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent-deep); }
+  .sca-progress-label { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
 
   /* Questions */
-  .sca-q { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .sca-q { min-width: 0; }
   .sca-q + .sca-q { border-top: 1px solid var(--color-border); padding-top: 24px; }
-  .sca-q-label { padding: 0; font-weight: 600; font-size: 1.05rem; line-height: 1.4; color: var(--color-text); }
-  .sca-q-help { font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .sca-q-set { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .sca-q-label { padding: 0; margin-bottom: 10px; }
+  .sca-q-label h2 { font-weight: 600; font-size: clamp(1.3rem, 2.4vw, 1.7rem); line-height: 1.2; letter-spacing: -0.018em; color: var(--color-text); }
+  .sca-q-help { font-size: 1rem; line-height: 1.55; color: var(--color-text-secondary); max-width: 68ch; }
+  /* A single question per screen gets more room */
+  .sca-qcard { padding: clamp(26px, 4vw, 48px); gap: 32px; }
+  .sca-qcard .sca-q-set { gap: 16px; }
+  .sca-qcard .sca-opts { gap: 12px; margin-top: 8px; }
   .sca-q-sub { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
   .sca-q-sub .sca-q-help { font-weight: 500; }
-  .sca-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
-  .sca-opts.is-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Same two-column grid for every question; one column on phones */
+  .sca-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .sca-opt {
     display: flex; gap: 12px; align-items: flex-start;
-    padding: 13px 15px; border-radius: 10px; cursor: pointer; min-width: 0;
+    padding: 16px 18px; border-radius: 10px; cursor: pointer; min-width: 0;
     background: var(--color-bg); border: 1px solid var(--color-border);
     transition: border-color 0.15s ease;
   }
@@ -358,8 +372,7 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
     .sca-axis-notes { flex-direction: column; }
     .sca-chart-q { padding: 8px 10px; }
     .sca-chart-q span { font-size: 0.72rem; }
-    .sca-opts.is-grid4 { grid-template-columns: 1fr; }
-    .sca-progress span { font-size: 0; padding-top: 0; }
+    .sca-opts { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
     .sca * { transition: none !important; }
