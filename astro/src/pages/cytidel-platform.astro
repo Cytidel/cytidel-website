@@ -183,6 +183,16 @@ import smartAlerts from '../assets/products/smart-alerts.png';
               <span class="chip"><span class="chip-dot" aria-hidden="true"></span>NIS2 Ready</span>
               <span class="chip"><span class="chip-dot" aria-hidden="true"></span>DORA Ready</span>
             </div>
+            <div class="cap-actions">
+              <a href="/supplier-breach-monitoring" class="btn btn-dark" data-analytics="CTA|Supplier Breach Monitoring|Platform supplier section">
+                Explore supplier breach monitoring
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="/supplier-monitoring-assessment" class="cap-link" data-analytics="CTA|Score Supplier Monitoring|Platform supplier section">
+                Score your supplier monitoring
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </div>
         <div class="cap-visual cap-visual-img">
@@ -852,4 +862,25 @@ import smartAlerts from '../assets/products/smart-alerts.png';
   }
   .btn .arrow { transition: transform 0.2s ease; }
   .btn:hover .arrow { transform: translateX(3px); }
+
+  /* Button + secondary text link in a capability block */
+  .cap-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+    margin-top: clamp(20px, 2.5vw, 28px);
+  }
+  .cap-actions .btn-dark { margin-top: 0; }
+  .cap-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--color-accent-deep);
+    text-decoration: none;
+  }
+  .cap-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .cap-link .arrow { transition: transform 0.2s ease; }
+  .cap-link:hover .arrow { transform: translateX(3px); }
 </style>
