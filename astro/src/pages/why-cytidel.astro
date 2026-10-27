@@ -181,9 +181,15 @@ import Layout from '../layouts/Layout.astro';
           <div class="methodology-card">
             <h4>The methodology works</h4>
             <p>Cytidel's predictive flagging on vulnerabilities that later show real exploitation signals — proof-of-concept, exploit availability, or threat actor association.</p>
-            <div class="methodology-stat">
-              <span class="num">~70%</span>
-              <span class="label">Flagged early,<br/>exploited later</span>
+            <div class="methodology-stats">
+              <div class="methodology-stat">
+                <span class="num">~70%</span>
+                <span class="label">Flagged early,<br/>exploited later</span>
+              </div>
+              <div class="methodology-stat">
+                <span class="num">79 days</span>
+                <span class="label">Ahead of CISA KEV,<br/>on average</span>
+              </div>
             </div>
           </div>
         </div>
@@ -632,6 +638,18 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.55;
     margin: 0 0 22px;
   }
+  .methodology-stats {
+    display: grid;
+    gap: 18px;
+  }
+  .methodology-stats .methodology-stat + .methodology-stat {
+    padding-top: 18px;
+    border-top: 1px solid var(--color-dark-border-strong);
+  }
+  /* Figure left, label right-aligned to the card edge, so labels line up
+     whatever the width of the figure */
+  .methodology-stats .methodology-stat { justify-content: space-between; }
+  .methodology-stats .methodology-stat .label { text-align: right; }
   .methodology-stat {
     display: flex;
     align-items: center;
