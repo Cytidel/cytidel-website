@@ -1,0 +1,640 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/role-page.css';
+
+// Campaign landing page for supplier breach monitoring. Copy comes from the
+// GTM page draft; FAQ answers are drafted to stay inside what the product
+// does today (news reporting + ransomware leak sites, no dark web).
+//
+// The assessment page doesn't exist yet — every "Score" CTA points here so
+// it only needs building, not re-linking.
+const ASSESSMENT_URL = '/supplier-monitoring-assessment';
+
+const faqs = [
+  {
+    question: 'What is supplier breach monitoring?',
+    answer:
+      "Supplier breach monitoring watches the suppliers and software vendors you depend on for signs they've been breached or hit by ransomware. Cytidel reads security news reporting and ransomware leak-site claims, matches them to your supplier list, and alerts the right people with the source and the evidence behind each alert.",
+  },
+  {
+    question: 'How is it different from security ratings and questionnaires?',
+    answer:
+      "Questionnaires record what a supplier told you on one day. Security ratings score a supplier's external posture. Neither tells you that a supplier was named in a breach report this morning. Cytidel watches for that signal continuously, so you can follow up when it happens instead of at the next review.",
+  },
+  {
+    question: 'Which suppliers can I monitor?',
+    answer:
+      'The named suppliers and software vendors you choose. Add them one at a time or upload a list, set a priority for each, and add any other names a supplier is known by so reports that use a different name are still caught.',
+  },
+  {
+    question: 'How does it fit with our scanner and third-party risk process?',
+    answer:
+      'Keep both. Your scanner covers your own estate, and your third-party risk process covers due diligence and reviews. Cytidel adds the signal in between: when a supplier is reported breached, or when software they run has a serious vulnerability. Alerts go to email, Microsoft Teams, Slack or a webhook, so they reach the team that owns the relationship.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+---
+<Layout
+  title="Supplier Breach Monitoring · Cytidel"
+  description="A supplier is breached and your exposure changes. Cytidel monitors the suppliers and software vendors you depend on, so you can ask what it means for your business sooner."
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <div class="role-page sbm-page">
+    <section class="hero" aria-labelledby="hero-h1">
+      <div class="container">
+        <div class="hero-inner hero-split">
+          <div>
+            <span class="eyebrow">✳ Supplier Breach Monitoring</span>
+            <h1 id="hero-h1">Their breach. <span class="role">Your next question.</span></h1>
+            <p class="hero-sub">A supplier is breached and your exposure changes. Cytidel monitors the suppliers and software vendors you depend on, so you can ask what it means for your business sooner.</p>
+            <div class="hero-cta">
+              <a href={ASSESSMENT_URL} class="btn btn-primary" data-analytics="CTA|Score Supplier Monitoring|SBM Hero">
+                Score your supplier monitoring
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="/book-a-demo" class="btn btn-outline" data-analytics="CTA|Book a Demo|SBM Hero">
+                Book a demo
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+          <!-- TODO: swap for the V2 supplier watchlist product view -->
+          <figure class="visual-placeholder" aria-label="Illustrative supplier watchlist product view">
+            <span class="visual-tag">Illustrative</span>
+            <span class="visual-note">Supplier watchlist product view</span>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pains" aria-labelledby="why-h2">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="why-h2">Supplier risk moves faster than supplier reviews.</h2>
+          <p class="lead">A questionnaire records one day. A breach can happen on any other. Between reviews, you learn about supplier incidents when the supplier tells you, or when the news does. Cytidel watches the suppliers and software vendors you depend on, so that gap gets smaller.</p>
+        </div>
+        <div class="pain-grid">
+          <article class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></span>
+            <span class="pain-label">Point in time</span>
+            <h3>Reviews describe one day.</h3>
+            <p>Annual questionnaires and assessments show where a supplier stood when they were completed, not what has happened since.</p>
+          </article>
+          <article class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="pain-label">Waiting to be told</span>
+            <h3>Their timing, not yours.</h3>
+            <p>When awareness depends on a supplier's disclosure, you find out when they choose to tell you.</p>
+          </article>
+          <article class="pain">
+            <span class="pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg></span>
+            <span class="pain-label">A shortlist</span>
+            <h3>Oversight stops where the list does.</h3>
+            <p>Attention goes to the strategic few. Exposure reaches further, into the vendors and software your suppliers depend on.</p>
+          </article>
+        </div>
+        <p class="stat-line">
+          <strong>35.5%</strong> of breaches in 2024 were third-party related. <strong>41.4%</strong> of ransomware attacks now start through third parties.
+          <span class="stat-source">(<a href="https://securityscorecard.com/company/press/securityscorecard-2025-global-third-party-breach-report-reveals-surge-in-vendor-driven-attacks" target="_blank" rel="noopener">SecurityScorecard, 2025</a>)</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="capabilities" aria-labelledby="how-h2">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="how-h2">From supplier signal to your next question.</h2>
+        </div>
+        <div class="capabilities-list steps">
+          <div class="cap-item">
+            <span class="cap-no">01</span>
+            <div><h3>Name the relationships that matter.</h3><p>Add the suppliers and software vendors your service depends on. Start with the ones you would call first in an outage.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">02</span>
+            <div><h3>See the signal as it surfaces.</h3><p>Breach reports, advisories and threat activity for every name on your watchlist, in one place instead of in someone's browser tabs.</p></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-no">03</span>
+            <div><h3>Ask the right question, with the evidence.</h3><p>Open the record: what was reported, what attacker activity sits behind it, what those attackers tend to target. Then take one specific question to the supplier: what does this mean for our service? Your team decides what happens next.</p></div>
+          </div>
+        </div>
+        <!-- TODO: swap for a breach report product view -->
+        <figure class="visual-placeholder visual-wide" aria-label="Illustrative breach report product view">
+          <span class="visual-tag">Illustrative</span>
+          <span class="visual-note">Breach report product view</span>
+        </figure>
+      </div>
+    </section>
+
+    <section class="outcomes" aria-labelledby="outcomes-h2">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="outcomes-h2">What changes for your business</h2>
+        </div>
+        <div class="shift-head" aria-hidden="true">
+          <span></span><span>Today</span><span></span><span>With Cytidel</span>
+        </div>
+        <ul class="shift-list">
+          <li class="shift">
+            <h3>Earlier follow-up</h3>
+            <p class="shift-from"><span class="shift-tag">Today</span>You find out when the supplier tells you.</p>
+            <span class="shift-arrow" aria-hidden="true">→</span>
+            <p class="shift-to"><span class="shift-tag">With Cytidel</span>You see the signal sooner, and ask the supplier the first question.</p>
+          </li>
+          <li class="shift">
+            <h3>Less manual monitoring</h3>
+            <p class="shift-from"><span class="shift-tag">Today</span>Someone checks news and advisories for each supplier by hand.</p>
+            <span class="shift-arrow" aria-hidden="true">→</span>
+            <p class="shift-to"><span class="shift-tag">With Cytidel</span>One watchlist instead of manual checking.</p>
+          </li>
+          <li class="shift">
+            <h3>A better-informed conversation when it matters</h3>
+            <p class="shift-from"><span class="shift-tag">Today</span>Continuity conversations start from a headline.</p>
+            <span class="shift-arrow" aria-hidden="true">→</span>
+            <p class="shift-to"><span class="shift-tag">With Cytidel</span>Conversations start from the evidence: what was reported, and what it means for your service.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="scenarios" aria-labelledby="why-cytidel-h2">
+      <div class="container">
+        <div class="scenario-card why-card">
+          <span class="why-eyebrow">Why Cytidel</span>
+          <h2 id="why-cytidel-h2">Attacker context on supplier signals.</h2>
+          <p>Threat activity, plus the products, sectors and vulnerability patterns attackers target, from Villain Vault, Cytidel's threat actor intelligence.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof" aria-label="Proof">
+      <div class="container">
+        <figure class="proof-quote">
+          <q>It is like having an extra team member dedicated to vulnerability intelligence.</q>
+          <cite>— Threat Intelligence Manager, An Post</cite>
+        </figure>
+        <ul class="trust-pills">
+          <li><span class="dot" aria-hidden="true"></span>ISO 27001:2022 certified</li>
+          <li><span class="dot" aria-hidden="true"></span>EU-hosted SaaS</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="capabilities board-questions" aria-labelledby="board-h2">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="board-h2">Five questions your board may ask</h2>
+        </div>
+        <ol class="capabilities-list question-list">
+          <li class="cap-item"><span class="cap-no">01</span><p>How many suppliers do we have, and how many are continuously monitored?</p></li>
+          <li class="cap-item"><span class="cap-no">02</span><p>If a long-tail supplier were breached tonight, how long until we knew?</p></li>
+          <li class="cap-item"><span class="cap-no">03</span><p>When a supplier is breached, who decides what it means for us, and how fast?</p></li>
+          <li class="cap-item"><span class="cap-no">04</span><p>Which threat actors target our sector, and which supplier technologies are they exploiting?</p></li>
+          <li class="cap-item"><span class="cap-no">05</span><p>Could we evidence our supplier risk decisions to a regulator tomorrow?</p></li>
+        </ol>
+        <div class="board-cta">
+          <a href={ASSESSMENT_URL} class="btn btn-primary" data-analytics="CTA|Score Supplier Monitoring|SBM Board Questions">
+            Score yourself in 3 minutes
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-h2">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="faq-h2">Frequently asked questions</h2>
+        </div>
+        <div class="faq-list" role="list">
+          {faqs.map((faq) => (
+            <details class="faq-item" role="listitem">
+              <summary class="faq-q">
+                <span>{faq.question}</span>
+                <span class="icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-a"><div class="faq-a-inner">
+                {faq.answer}
+              </div></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="final-cta-h2">
+      <div class="container">
+        <div class="final-cta-card">
+          <h2 id="final-cta-h2">Start with the suppliers you depend on.</h2>
+          <div class="final-cta-actions">
+            <a href={ASSESSMENT_URL} class="btn btn-primary" data-analytics="CTA|Score Supplier Monitoring|SBM Final CTA">
+              Score your supplier monitoring
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="/book-a-demo" class="btn btn-outline btn-outline-dark" data-analytics="CTA|Book a Demo|SBM Final CTA">
+              Book your demo
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  // Single-open FAQ accordion, same behaviour as /faq.
+  const items = document.querySelectorAll<HTMLDetailsElement>('.faq-item');
+  items.forEach((item) => {
+    const summary = item.querySelector('.faq-q');
+    summary?.addEventListener('click', () => {
+      setTimeout(() => {
+        if (item.open) {
+          items.forEach((other) => {
+            if (other !== item) other.removeAttribute('open');
+          });
+        }
+      }, 0);
+    });
+  });
+</script>
+
+<style>
+  /* Page-specific additions on top of role-page.css. Shared shells (hero,
+     pain cards, numbered list, dark card, final CTA) come from there. */
+
+  /* Hero: text + product visual side by side */
+  .hero-split {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  @media (max-width: 960px) {
+    .hero-split { grid-template-columns: 1fr; }
+  }
+
+  /* Secondary button — outline on light, inverted on the dark CTA card */
+  .sbm-page .btn-outline {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+  }
+  .sbm-page .btn-outline:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-text);
+  }
+  .sbm-page .btn-outline-dark {
+    color: #f7f9f3;
+    border-color: rgba(247, 249, 243, 0.4);
+  }
+  .sbm-page .btn-outline-dark:hover { border-color: #f7f9f3; }
+
+  /* Placeholder frame until the product visuals land */
+  .visual-placeholder {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    border: 1.5px dashed var(--color-border-strong);
+    background:
+      linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg-elev) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .visual-wide {
+    aspect-ratio: 16 / 7;
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+  .visual-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+  .visual-note {
+    font-size: 0.95rem;
+    color: var(--color-text-tertiary);
+  }
+  @media (max-width: 760px) {
+    .visual-wide { aspect-ratio: 4 / 3; }
+  }
+
+  /* Why now: small label above each card heading, stat line under the grid */
+  .pain-label {
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+    margin-bottom: -8px;
+  }
+  .stat-line {
+    margin: clamp(32px, 4vw, 48px) 0 0;
+    padding-left: 18px;
+    border-left: 3px solid var(--color-accent);
+    font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+  .stat-line strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-accent-deep);
+  }
+  .stat-source {
+    font-size: 0.88rem;
+    color: var(--color-text-tertiary);
+  }
+  .stat-source a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* How it works: three steps in a row */
+  .sbm-page .steps { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 960px) {
+    .sbm-page .steps { grid-template-columns: 1fr; }
+  }
+
+  /* What changes: from → to rows */
+  .outcomes { border-top: 1px solid var(--color-border); }
+  .shift-head,
+  .shift {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr auto 1.3fr;
+    gap: clamp(16px, 2.5vw, 32px);
+    align-items: center;
+  }
+  .shift-head {
+    padding: 0 0 12px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+  .shift-head span:last-child { color: var(--color-accent-deep); }
+  .shift-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .shift {
+    padding: clamp(20px, 2.5vw, 28px) 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .shift h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    margin: 0;
+  }
+  .shift p {
+    margin: 0;
+    font-size: clamp(0.96rem, 1.35vw, 1.02rem);
+    line-height: 1.6;
+  }
+  .shift-from { color: var(--color-text-secondary); }
+  .shift-to {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  .shift-arrow {
+    color: var(--color-accent-deep);
+    font-size: 1.2rem;
+  }
+  .shift-tag { display: none; }
+  @media (max-width: 860px) {
+    .shift-head { display: none; }
+    .shift {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .shift-arrow { display: none; }
+    .shift-tag {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .shift-to .shift-tag { color: var(--color-accent-deep); }
+  }
+
+  /* Why Cytidel: dark band, single statement */
+  .why-card { max-width: none; }
+  .why-eyebrow {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 18px;
+  }
+  .why-card h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--color-dark-text);
+    margin: 0 0 18px;
+  }
+  .why-card p {
+    max-width: 720px;
+    margin: 0;
+    font-size: clamp(1.02rem, 1.5vw, 1.15rem);
+    line-height: 1.65;
+    color: var(--color-dark-text-secondary);
+  }
+
+  /* Proof: quote card (from the homepage) + trust pills */
+  .proof { border-top: 1px solid var(--color-border); }
+  .proof-quote {
+    position: relative;
+    margin: 0;
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: clamp(34px, 4vw, 50px) clamp(28px, 3.5vw, 44px) clamp(28px, 3.5vw, 40px);
+  }
+  .proof-quote::before {
+    content: "\201C";
+    position: absolute;
+    top: 10px;
+    left: 22px;
+    font-family: var(--font-display);
+    font-size: clamp(3.6rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.7;
+    letter-spacing: -0.05em;
+    color: var(--color-accent-deep);
+    opacity: 0.26;
+    pointer-events: none;
+  }
+  .proof-quote q {
+    display: block;
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(26px, 3.5vw, 40px);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.1vw, 1.65rem);
+    line-height: 1.35;
+    letter-spacing: -0.012em;
+    color: var(--color-text);
+    quotes: none;
+  }
+  .proof-quote q::before, .proof-quote q::after { content: none; }
+  .proof-quote cite {
+    display: block;
+    margin-top: 24px;
+    font-style: normal;
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+  .trust-pills {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .trust-pills li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+  }
+  .trust-pills .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  /* Board questions: numbered list reusing .cap-item, plus CTA */
+  .question-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .question-list .cap-item p {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+    line-height: 1.45;
+    color: var(--color-text);
+  }
+  .board-cta { margin-top: clamp(36px, 4.5vw, 56px); }
+
+  /* FAQ accordion (same as /faq) */
+  .faq { border-top: 1px solid var(--color-border); }
+  .faq-list { max-width: 880px; }
+  .faq-item { border-bottom: 1px solid var(--color-border); }
+  .faq-q {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    padding: 22px 0;
+    text-align: left;
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    transition: color 0.15s ease;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q:hover { color: var(--color-accent-deep); }
+  .faq-q:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .faq-q .icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    color: var(--color-text-tertiary);
+  }
+  .faq-q .icon::before,
+  .faq-q .icon::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+  }
+  .faq-q .icon::before { width: 14px; height: 1.5px; transform: translate(-50%, -50%); }
+  .faq-q .icon::after  { width: 1.5px; height: 14px; transform: translate(-50%, -50%); }
+  .faq-item[open] .faq-q { color: var(--color-text); }
+  .faq-item[open] .faq-q .icon::after { transform: translate(-50%, -50%) scaleY(0); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    color: var(--color-text-secondary);
+  }
+  .faq-item[open] .faq-a { max-height: 1600px; }
+  .faq-a-inner {
+    padding: 0 0 28px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* Final CTA: two buttons, centred */
+  .final-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+</style>
