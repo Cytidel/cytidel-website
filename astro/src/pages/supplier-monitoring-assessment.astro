@@ -1,0 +1,366 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Supply Chain Risk Maturity Grid — the self-assessment the supplier breach
+// monitoring campaign sends traffic to. Logic: src/scripts/supplier-assessment.ts.
+// Content: src/data/supplier-assessment.ts.
+//
+// HubSpot: leave HUBSPOT_FORM_GUID empty and the page runs in preview mode
+// (nothing is sent). Set it to the assessment form's GUID once marketing has
+// created the form. Public IDs, safe to expose.
+const HUBSPOT_PORTAL_ID = '25744711';
+const HUBSPOT_FORM_GUID = 'a74d7e66-87b7-43ec-b5e4-d31b2839a892';
+
+// LinkedIn event-specific conversion fired on a successful submission
+// ("Supplier assessment – lead" in Campaign Manager). Empty = not fired.
+const LINKEDIN_LEAD_CONVERSION_ID = '';
+---
+<Layout
+  title="Supply Chain Risk Maturity Grid · Cytidel"
+  description="Score your supplier monitoring in about three minutes. See where your supply chain risk sits on the Maturity Grid, how you compare with your industry, and where to focus first."
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://api.hsforms.com" crossorigin />
+  </Fragment>
+
+  <div class="sca">
+    <div
+      id="sca-app"
+      class="sca-wrap"
+      data-portal-id={HUBSPOT_PORTAL_ID}
+      data-form-guid={HUBSPOT_FORM_GUID}
+      data-linkedin-conversion={LINKEDIN_LEAD_CONVERSION_ID}
+      data-booking-url="/book-a-demo"
+      aria-live="polite"
+    >
+      <noscript>
+        <p class="sca-note">This assessment needs JavaScript. You can also email <strong>info@cytidel.com</strong> and we'll walk you through it.</p>
+      </noscript>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import '../scripts/supplier-assessment';
+</script>
+
+<style is:global>
+  /* All rules are prefixed .sca: the app renders its markup from script, so
+     Astro's scoped styles can't reach it. Semantic colours are local to the
+     assessment and defined on the wrapper. */
+  .sca {
+    --sca-amber: #b7791f;
+    --sca-amber-soft: #fbf1de;
+    --sca-red: #b8432f;
+    --sca-red-soft: #fbe6e3;
+    --sca-ink: #0b0e0a;
+    background: var(--color-bg);
+  }
+  .sca-wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 48px) clamp(56px, 7vw, 96px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.5vw, 28px);
+  }
+  .sca h1, .sca h2, .sca h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; color: var(--color-text); }
+  .sca p { margin: 0; }
+  .sca a { color: var(--color-accent-deep); text-underline-offset: 2px; }
+  .sca :focus-visible { outline: 2px solid var(--color-accent-deep); outline-offset: 3px; }
+
+  /* Labels */
+  .sca-eyebrow {
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 15px; border-radius: 999px;
+    background: var(--color-accent-dim); color: var(--color-accent-deep);
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .sca-eyebrow-plain { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-deep); }
+
+  /* Buttons */
+  .sca-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .sca-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 22px; border-radius: 10px; border: 1px solid transparent;
+    font: inherit; font-weight: 600; font-size: 0.98rem; line-height: 1.2;
+    text-decoration: none; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.15s ease;
+  }
+  .sca a.sca-btn-primary, .sca-btn-primary { background: var(--color-accent); color: #0b2000; }
+  .sca-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35); }
+  .sca-btn-primary:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+  .sca-btn-outline { background: transparent; color: var(--color-text); border-color: var(--color-border-strong); }
+  .sca-btn-outline:hover { border-color: var(--color-text); }
+  .sca-link { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--color-accent-deep); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+  /* Intro */
+  .sca-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: end; }
+  .sca-hero-copy { display: flex; flex-direction: column; gap: 20px; }
+  .sca-hero h1, .sca-res-head h1 { font-weight: 600; letter-spacing: -0.028em; line-height: 1.06; font-size: clamp(2.1rem, 4.6vw, 3.4rem); }
+  .sca-lede { font-size: clamp(1.05rem, 1.5vw, 1.18rem); line-height: 1.6; color: var(--color-text-secondary); max-width: 60ch; }
+  .sca-facts { margin: 0; display: grid; gap: 18px; padding-left: 20px; border-left: 3px solid var(--color-accent); }
+  .sca-facts div { display: grid; gap: 2px; }
+  .sca-facts dt { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; color: var(--color-text); }
+  .sca-facts dd { margin: 0; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); }
+
+  /* Cards */
+  .sca-card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: clamp(22px, 3.5vw, 40px);
+    display: flex; flex-direction: column; gap: 24px;
+    min-width: 0;
+  }
+  .sca-card-head { display: flex; flex-direction: column; gap: 10px; }
+  .sca-card-head h2 { font-weight: 600; letter-spacing: -0.018em; line-height: 1.12; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+  .sca-card-head p { font-size: 1.02rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 68ch; }
+  .sca-card-head p strong { color: var(--color-text); }
+  .sca-sub { font-size: 0.93rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 72ch; }
+
+  /* The Maturity Grid chart (intro and results). Plot area is 0–100 on both
+     axes; quadrant boundaries sit at 50. */
+  .sca-chart-wrap { display: flex; flex-direction: column; gap: 16px; }
+  .sca-chart { margin: 0; display: grid; grid-template-columns: 22px minmax(0, 1fr); grid-template-rows: auto auto; gap: 6px 10px; width: 100%; max-width: 620px; margin-inline: auto; }
+  .sca-chart-yl, .sca-chart-xl { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-secondary); }
+  .sca-chart-yl { grid-row: 1; grid-column: 1; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; }
+  .sca-chart-yl::after, .sca-chart-xl::after { content: "  →"; }
+  .sca-chart-xl { grid-row: 2; grid-column: 2; text-align: center; padding-top: 22px; }
+  .sca-chart-plot { grid-row: 1; grid-column: 2; padding-left: 30px; }
+  .sca-chart-area {
+    position: relative; aspect-ratio: 1 / 1; max-width: 100%;
+    border-left: 2px solid var(--sca-ink); border-bottom: 2px solid var(--sca-ink);
+  }
+  /* Axis arrowheads */
+  .sca-chart-area::before, .sca-chart-area::after { content: ""; position: absolute; border: 6px solid transparent; }
+  .sca-chart-area::before { left: -7px; top: -12px; border-bottom: 9px solid var(--sca-ink); border-top: 0; }
+  .sca-chart-area::after { right: -12px; bottom: -7px; border-left: 9px solid var(--sca-ink); border-right: 0; }
+  .sca-chart-q { position: absolute; width: 50%; height: 50%; display: flex; padding: 12px 14px; background: var(--color-bg); }
+  .sca-chart-over { left: 0; top: 0; align-items: flex-start; justify-content: flex-start; }
+  .sca-chart-pro { right: 0; top: 0; align-items: flex-start; justify-content: flex-end; text-align: right; }
+  .sca-chart-re { left: 0; bottom: 0; align-items: flex-end; justify-content: flex-start; }
+  .sca-chart-blind { right: 0; bottom: 0; align-items: flex-end; justify-content: flex-end; text-align: right; }
+  .sca-chart-q span { font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); display: flex; flex-direction: column; gap: 4px; }
+  .sca-chart-q.is-target { background: var(--color-accent-dim); }
+  .sca-chart-q.is-target span { color: var(--color-accent-deep); }
+  .sca-chart-q.is-here { background: var(--color-surface-2); }
+  .sca-chart-q.is-here span { color: var(--color-text); font-weight: 700; }
+  .sca-chart-q.is-here.is-target { background: var(--color-accent-dim); }
+  /* Quadrant boundaries at 50 */
+  .sca-mid { position: absolute; background: var(--color-border-strong); z-index: 1; }
+  .sca-mid-v { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px); }
+  .sca-mid-h { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-1px); }
+  /* Ticks */
+  .sca-ticks-y, .sca-ticks-x { position: absolute; pointer-events: none; }
+  .sca-ticks-y { right: calc(100% + 8px); top: 0; bottom: 0; width: 28px; }
+  .sca-ticks-x { left: 0; right: 0; top: calc(100% + 6px); height: 18px; }
+  .sca-tick { position: absolute; font-size: 0.75rem; font-variant-numeric: tabular-nums; color: var(--color-text-tertiary); line-height: 1; }
+  .sca-tick-y { right: 0; transform: translateY(-50%); }
+  .sca-tick-x { transform: translateX(-50%); }
+  .sca-tick.is-you { padding: 3px 6px; border-radius: 5px; background: var(--sca-ink); color: #fff; font-weight: 700; }
+  .sca-tick-x.is-you { top: -2px; }
+  /* Guide lines from your marker to each axis */
+  .sca-guide { position: absolute; z-index: 2; pointer-events: none; }
+  .sca-guide-v { bottom: 0; border-left: 2px dashed var(--sca-ink); transform: translateX(-1px); height: auto; }
+  .sca-guide-h { left: 0; border-top: 2px dashed var(--sca-ink); transform: translateY(-1px); }
+  /* Markers */
+  .sca-mk { position: absolute; transform: translate(-50%, -50%); display: block; z-index: 3; }
+  .sca-mk-you, .sca-legend .sca-mk-you {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--sca-ink); box-shadow: 0 0 0 3px var(--color-accent), 0 2px 8px rgba(11, 14, 10, 0.35);
+  }
+  .sca-mk-you { z-index: 4; }
+  .sca-mk-you b {
+    position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
+    padding: 2px 8px; border-radius: 6px; background: var(--sca-ink); color: #fff;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+  }
+  .sca-mk-peer, .sca-legend .sca-mk-peer { width: 14px; height: 14px; background: var(--sca-amber); border: 2px solid #fff; transform: translate(-50%, -50%) rotate(45deg); }
+  .sca-mk-peer.is-nudged { transform: translate(calc(-50% + 16px), calc(-50% + 16px)) rotate(45deg); }
+  .sca-mk-target, .sca-legend .sca-mk-target { width: 16px; height: 16px; border-radius: 50%; background: var(--color-accent); border: 3px solid var(--color-accent-deep); }
+  .sca-mk-target b {
+    position: absolute; right: calc(100% + 6px); top: 50%; transform: translateY(-50%);
+    padding: 2px 8px; border-radius: 999px; background: var(--color-accent); color: #0b2000;
+    font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+  }
+
+  .sca-axis-notes { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; max-width: 620px; width: 100%; margin-inline: auto; }
+  .sca-axis-notes p { font-size: 0.85rem; color: var(--color-text-secondary); display: flex; align-items: center; gap: 8px; }
+  .sca-chip { display: inline-block; padding: 3px 9px; border-radius: 999px; background: var(--color-bg-elev); color: var(--color-text); font-weight: 600; font-size: 0.8rem; white-space: nowrap; }
+  .sca-chip.is-accent { background: var(--color-accent); color: #0b2000; }
+
+  /* Quadrant explanation cards, in the chart's 2×2 order */
+  .sca-quads { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sca-quad { position: relative; background: var(--color-bg); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .sca-quad h3 { font-size: 1.08rem; font-weight: 600; letter-spacing: -0.01em; padding-right: 96px; }
+  .sca-quad p { font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+  .sca-quad .sca-quad-sub { font-size: 0.8rem; font-weight: 600; color: var(--color-accent-deep); }
+  .sca-quad.is-target { background: var(--color-dark-bg); }
+  .sca-quad.is-target h3 { color: var(--color-dark-text); }
+  .sca-quad.is-target p { color: var(--color-dark-text-secondary); }
+  .sca-quad.is-target .sca-quad-sub { color: var(--color-accent); }
+  .sca-quad.is-here { box-shadow: inset 0 0 0 2px var(--sca-ink); }
+  .sca-quad.is-here.is-target { box-shadow: inset 0 0 0 2px var(--color-accent); }
+  .sca-tag { position: absolute; top: 16px; right: 16px; padding: 4px 10px; border-radius: 999px; background: var(--color-accent); color: #0b2000; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .sca-tag.is-here { background: var(--sca-ink); color: #fff; }
+  .sca-quad.is-target .sca-tag.is-here { top: 46px; }
+
+  /* Progress */
+  .sca-progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .sca-progress span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-tertiary); border-top: 3px solid var(--color-border-strong); padding-top: 8px; }
+  .sca-progress span.is-done { border-color: var(--color-accent-deep); color: var(--color-text-secondary); }
+  .sca-progress span.is-on { border-color: var(--color-accent); color: var(--color-text); font-weight: 600; }
+
+  /* Questions */
+  .sca-q { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .sca-q + .sca-q { border-top: 1px solid var(--color-border); padding-top: 24px; }
+  .sca-q-label { padding: 0; font-weight: 600; font-size: 1.05rem; line-height: 1.4; color: var(--color-text); }
+  .sca-q-help { font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .sca-q-sub { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .sca-q-sub .sca-q-help { font-weight: 500; }
+  .sca-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+  .sca-opts.is-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sca-opt {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 13px 15px; border-radius: 10px; cursor: pointer; min-width: 0;
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    transition: border-color 0.15s ease;
+  }
+  .sca-opt:hover { border-color: var(--color-border-strong); }
+  .sca-opt input { margin: 3px 0 0; flex: none; accent-color: var(--color-accent-deep); }
+  .sca-opt b { display: block; font-weight: 600; font-size: 0.95rem; color: var(--color-text); }
+  .sca-opt small { display: block; margin-top: 3px; font-size: 0.85rem; line-height: 1.45; color: var(--color-text-secondary); }
+  .sca-opt.is-sel { border-color: var(--color-accent-deep); background: var(--color-accent-dim); box-shadow: inset 0 0 0 1px var(--color-accent-deep); }
+
+  /* Fields */
+  /* Each field spans three shared rows (label, input, hint) so inputs line
+     up across a row even when one label wraps or one hint is longer. */
+  .sca-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 18px; }
+  .sca-field { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; row-gap: 6px; padding-bottom: 18px; min-width: 0; }
+  .sca-field label { align-self: end; }
+  .sca-field label { font-weight: 600; font-size: 0.92rem; color: var(--color-text); }
+  .sca-hint { font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+  .sca-field input, .sca-field select {
+    font: inherit; font-size: 1rem; color: var(--color-text);
+    padding: 11px 13px; border-radius: 8px; width: 100%;
+    background: var(--color-bg); border: 1px solid var(--color-border-strong);
+  }
+  .sca-field select {
+    appearance: none; -webkit-appearance: none; cursor: pointer;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%234d524d' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; background-size: 12px 8px;
+  }
+  /* Unselected state reads like an input placeholder */
+  .sca-field select:invalid { color: var(--color-text-tertiary); }
+  .sca-field select option { color: var(--color-text); }
+  .sca-field input[aria-invalid="true"], .sca-field select[aria-invalid="true"] { border-color: var(--sca-red); box-shadow: inset 0 0 0 1px var(--sca-red); }
+  .sca-check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; line-height: 1.5; color: var(--color-text); cursor: pointer; }
+  .sca-check input { margin-top: 4px; accent-color: var(--color-accent-deep); }
+  .sca-privacy { font-size: 0.85rem; color: var(--color-text-secondary); }
+  .sca-err { color: var(--sca-red); font-size: 0.9rem; font-weight: 500; }
+  .sca-note { font-size: 0.88rem; color: var(--color-text-secondary); background: var(--color-bg); border: 1px dashed var(--color-border-strong); border-radius: 8px; padding: 10px 14px; }
+  .sca-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: 20px; }
+
+  /* Results */
+  .sca-example { font-size: 0.9rem; color: var(--color-text-secondary); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .sca-example span { padding: 3px 10px; border-radius: 999px; background: var(--sca-amber-soft); color: var(--sca-amber); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .sca-res-head { display: flex; flex-direction: column; gap: 16px; }
+
+  .sca-position { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
+  .sca-position-side { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .sca-position-cards { grid-column: 1 / -1; }
+
+  .sca-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 0.85rem; color: var(--color-text-secondary); }
+  .sca-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .sca-legend i { display: inline-block; flex: none; }
+  .sca-legend .sca-mk-you { width: 12px; height: 12px; box-shadow: 0 0 0 2px var(--color-accent); }
+  .sca-legend .sca-mk-peer { width: 10px; height: 10px; transform: rotate(45deg); border: 0; }
+  .sca-legend .sca-mk-target { width: 12px; height: 12px; border-width: 2px; }
+
+  .sca-scores { display: grid; gap: 14px; }
+  .sca-score { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 6px 12px; padding-top: 12px; border-top: 1px solid var(--color-border); }
+  .sca-score > span:first-child { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
+  .sca-score b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .sca-score b small { font-size: 0.8rem; font-weight: 500; color: var(--color-text-tertiary); }
+  .sca-meter { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--color-bg); overflow: hidden; }
+  .sca-meter i { display: block; height: 100%; background: var(--color-accent-deep); border-radius: 3px; }
+  .sca-band { grid-column: 1 / -1; justify-self: start; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .sca-band-low { background: var(--color-accent-dim); color: var(--color-accent-deep); }
+  .sca-band-moderate { background: var(--sca-amber-soft); color: var(--sca-amber); }
+  .sca-band-elevated, .sca-band-high { background: var(--sca-red-soft); color: var(--sca-red); }
+
+  /* Oversight bar */
+  .sca-stack { display: flex; height: 36px; border-radius: 8px; overflow: hidden; background: var(--color-bg); }
+  .sca-stack .is-good { background: var(--color-accent-deep); }
+  .sca-stack .is-mid { background: var(--sca-amber); }
+  .sca-stack .is-bad { background: var(--sca-red); }
+  .sca-stack-key { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .sca-stack-key div { display: flex; flex-direction: column; gap: 2px; padding-left: 12px; border-left: 4px solid; font-size: 0.9rem; line-height: 1.45; color: var(--color-text-secondary); }
+  .sca-stack-key div.is-good { border-color: var(--color-accent-deep); }
+  .sca-stack-key div.is-mid { border-color: var(--sca-amber); }
+  .sca-stack-key div.is-bad { border-color: var(--sca-red); }
+  .sca-stack-key b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--color-text); font-variant-numeric: tabular-nums; }
+
+  /* Industry comparison */
+  .sca-cmp { display: grid; gap: 12px; }
+  .sca-cmp-row { display: grid; grid-template-columns: 220px minmax(0, 1fr) 44px; gap: 14px; align-items: center; font-size: 0.93rem; color: var(--color-text); }
+  .sca-cmp-track { height: 24px; border-radius: 6px; background: var(--color-bg); overflow: hidden; }
+  .sca-cmp-track i { display: block; height: 100%; border-radius: 6px; }
+  .sca-cmp-track i.is-you { background: var(--sca-ink); }
+  .sca-cmp-track i.is-peer { background: var(--sca-amber); }
+  .sca-cmp-track i.is-target { background: var(--color-accent); }
+  .sca-cmp-row b { font-family: var(--font-display); font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Gaps */
+  .sca-gaps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .sca-gap { background: var(--color-bg); border-radius: 10px; border-bottom: 3px solid var(--color-accent); padding: 22px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .sca-gap-no { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--color-accent-deep); }
+  .sca-gap-ax { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); }
+  .sca-gap h3 { font-size: 1.08rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+  .sca-gap p { font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+  .sca-gap .sca-gap-now { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-text); }
+  .sca-gap-now span { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 2px; }
+
+  /* Wider picture */
+  .sca-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .sca-stat { display: flex; flex-direction: column; gap: 6px; padding-top: 14px; border-top: 3px solid var(--color-accent); }
+  .sca-stat b { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: var(--color-text); }
+  .sca-stat span { font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .sca-stat cite { font-style: normal; font-size: 0.8rem; color: var(--color-text-secondary); }
+
+  /* Walkthrough CTA */
+  .sca-cta {
+    background: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-cta-bg) 100%);
+    border-radius: 16px; padding: clamp(28px, 4.5vw, 52px);
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: center;
+  }
+  .sca-cta h2 { color: #f7f9f3; font-weight: 600; letter-spacing: -0.018em; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+  .sca-cta p { margin-top: 10px; color: rgba(247, 249, 243, 0.86); font-size: 1rem; line-height: 1.6; }
+  .sca-cta > div:last-child { justify-self: end; }
+  .sca-done { color: var(--color-accent); font-weight: 600; }
+
+  .sca-method summary { cursor: pointer; font-weight: 600; color: var(--color-text); }
+  .sca-method ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 0.9rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+  @media (max-width: 860px) {
+    .sca-hero, .sca-position, .sca-cta { grid-template-columns: 1fr; }
+    .sca-cta > div:last-child { justify-self: start; }
+    .sca-gaps, .sca-stats, .sca-stack-key { grid-template-columns: 1fr; }
+    .sca-cmp-row { grid-template-columns: minmax(0, 1fr) 44px; }
+    .sca-cmp-row .sca-cmp-l { grid-column: 1 / -1; }
+    .sca-cmp-row .sca-cmp-track { grid-column: 1; }
+  }
+  @media (max-width: 640px) {
+    .sca-quads { grid-template-columns: 1fr; }
+    .sca-axis-notes { flex-direction: column; }
+    .sca-chart-q { padding: 8px 10px; }
+    .sca-chart-q span { font-size: 0.72rem; }
+    .sca-opts.is-grid4 { grid-template-columns: 1fr; }
+    .sca-progress span { font-size: 0; padding-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sca * { transition: none !important; }
+  }
+</style>
