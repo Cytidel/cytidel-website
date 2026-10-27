@@ -207,8 +207,9 @@ const LINKEDIN_LEAD_CONVERSION_ID = '';
   .sca-quad.is-target .sca-tag.is-here { top: 46px; }
 
   /* Progress */
-  .sca-progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-  .sca-progress span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-tertiary); border-top: 3px solid var(--color-border-strong); padding-top: 8px; }
+  /* One equal column per step, however many steps there are */
+  .sca-progress { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; }
+  .sca-progress span { font-size: 0.8rem; font-weight: 500; color: var(--color-text-tertiary); border-top: 3px solid var(--color-border-strong); padding-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sca-progress span.is-done { border-color: var(--color-accent-deep); color: var(--color-text-secondary); }
   .sca-progress span.is-on { border-color: var(--color-accent); color: var(--color-text); font-weight: 600; }
 
