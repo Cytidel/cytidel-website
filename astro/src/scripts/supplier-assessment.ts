@@ -293,10 +293,6 @@ function introHTML(): string {
       <div class="sca-card-head"><h2>The Supply Chain Risk Maturity Grid</h2><p>Where does your supply chain risk sit today, and which quadrant do you need to be in twelve months from now?</p></div>
       <div class="sca-chart-wrap">
         ${chartHTML(null)}
-        <div class="sca-axis-notes">
-          <p><span class="sca-chip">50 to 70%</span> of findings treated as urgent at low prioritisation ability</p>
-          <p><span class="sca-chip is-accent">Around 1%</span> carry real business exposure</p>
-        </div>
       </div>
       ${quadCardsHTML()}
     </section>`;
