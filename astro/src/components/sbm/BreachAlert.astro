@@ -1,0 +1,128 @@
+---
+// Illustrative product view for "How it works": one breach alert opened up.
+// Shows the fields the product really carries: who the supplier is to you,
+// the classification, the source report, the sentences that back the
+// classification, the organisations / software / threat actor the report
+// names, and the rule and channels it was routed through. Fictional data.
+---
+<figure
+  class="ba"
+  role="img"
+  aria-label="Product view: a breach alert for Northwind Logistics, a P1 freight supplier. It shows the source report, the sentences that triggered the ransomware classification, the threat actor and software the report names, and that the alert went to the supplier risk team by Microsoft Teams and email."
+>
+  <div class="ba-window" aria-hidden="true">
+    <div class="ba-main">
+      <div class="ba-head">
+        <span class="ba-kicker"><span class="ba-dot"></span>Breach alert · 21 Oct, 15:47</span>
+        <div class="ba-title"><b>Northwind Logistics</b><i class="ba-pri">P1 Critical</i></div>
+        <p class="ba-role">Freight and warehousing · Runs EU distribution for three product lines</p>
+        <div class="ba-chips"><span class="ba-chip is-bad">Ransomware</span><span class="ba-chip is-bad">Breach</span></div>
+      </div>
+
+      <div class="ba-source">
+        <span class="ba-label">Source report</span>
+        <p>SafePay claims attack on Northwind Logistics, says shipping data was taken</p>
+        <small>Security news · Ransomware leak site</small>
+      </div>
+
+      <div class="ba-evidence">
+        <span class="ba-label">Why this was flagged</span>
+        <blockquote>“The SafePay group listed <mark>Northwind Logistics</mark> on its leak site, claiming to have <mark>taken 400GB of data</mark>.”</blockquote>
+        <blockquote>“The company confirmed it is investigating <mark>a cyber incident affecting its warehouse systems</mark>.”</blockquote>
+      </div>
+    </div>
+
+    <aside class="ba-side">
+      <div class="ba-group">
+        <span class="ba-label">Named in the report</span>
+        <dl>
+          <div><dt>Organisation</dt><dd><span class="ba-chip">Northwind Logistics</span></dd></div>
+          <div><dt>Threat actor</dt><dd><span class="ba-chip is-actor">SafePay</span></dd></div>
+          <div><dt>Software</dt><dd><span class="ba-chip">RClone</span><span class="ba-chip">WinSCP</span><span class="ba-chip">PsExec</span></dd></div>
+        </dl>
+      </div>
+      <div class="ba-group">
+        <span class="ba-label">Sent to</span>
+        <p class="ba-rule">Rule: P1 suppliers</p>
+        <ul class="ba-channels">
+          <li><span class="ba-ch">Teams</span>Supplier risk channel</li>
+          <li><span class="ba-ch">Email</span>Third-party risk team</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</figure>
+
+<style>
+  .ba {
+    position: relative;
+    margin: clamp(40px, 5vw, 64px) 0 0;
+    font-family: var(--font-sans);
+    max-width: 100%;
+  }
+  .ba-window {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -20px rgba(20, 30, 20, 0.18), 0 12px 30px -10px rgba(20, 30, 20, 0.08);
+  }
+  .ba-main { padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .ba-side { padding: clamp(20px, 3vw, 32px); background: var(--color-bg); border-left: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+
+  .ba-kicker { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); }
+  .ba-dot { width: 8px; height: 8px; border-radius: 50%; background: #b8432f; }
+  .ba-title { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .ba-title b { font-family: var(--font-display); font-size: clamp(1.2rem, 2vw, 1.45rem); font-weight: 600; letter-spacing: -0.015em; color: var(--color-text); }
+  .ba-pri { font-style: normal; font-weight: 700; font-size: 0.7rem; padding: 3px 9px; border-radius: 999px; background: #fbe6e3; color: #a63a28; }
+  .ba-role { margin: 6px 0 0; font-size: 0.85rem; color: var(--color-text-secondary); }
+  .ba-chips { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+
+  .ba-label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+  .ba-source p { margin: 0; font-weight: 600; font-size: 0.92rem; line-height: 1.4; color: var(--color-text); }
+  .ba-source small { display: block; margin-top: 4px; font-size: 0.75rem; color: var(--color-text-tertiary); }
+
+  .ba-evidence { display: flex; flex-direction: column; gap: 8px; }
+  .ba-evidence .ba-label { margin-bottom: 0; }
+  .ba-evidence blockquote {
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-bg);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+  .ba-evidence mark { background: var(--color-accent-dim); color: var(--color-text); padding: 0 2px; border-radius: 3px; }
+
+  .ba-chip {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--color-bg-elev);
+    color: var(--color-text-secondary);
+    margin: 0 4px 4px 0;
+  }
+  .ba-chip.is-bad { background: #fbe6e3; color: #a63a28; margin: 0; }
+  .ba-chip.is-actor { background: var(--color-dark-bg); color: var(--color-accent); }
+
+  .ba-group dl { margin: 0; display: grid; gap: 10px; }
+  .ba-group dl div { display: grid; grid-template-columns: 92px 1fr; align-items: start; }
+  .ba-group dt { font-size: 0.75rem; color: var(--color-text-tertiary); padding-top: 3px; }
+  .ba-group dd { margin: 0; }
+  .ba-rule { margin: 0 0 10px; font-size: 0.8rem; font-weight: 600; color: var(--color-text); }
+  .ba-channels { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ba-channels li { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--color-text-secondary); }
+  .ba-ch { min-width: 54px; text-align: center; font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #fff; border: 1px solid var(--color-border-strong); color: var(--color-text); }
+  .ba-channels li::after { content: "✓ Sent"; margin-left: auto; font-size: 0.72rem; font-weight: 600; color: var(--color-accent-deep); }
+
+  @media (max-width: 760px) {
+    .ba-window { grid-template-columns: 1fr; }
+    .ba-side { border-left: 0; border-top: 1px solid var(--color-border); }
+  }
+</style>

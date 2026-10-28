@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import '../styles/role-page.css';
+import SupplierWatchlist from '../components/sbm/SupplierWatchlist.astro';
+import BreachAlert from '../components/sbm/BreachAlert.astro';
 
 // Campaign landing page for supplier breach monitoring. Copy comes from the
 // GTM page draft; FAQ answers are drafted to stay inside what the product
@@ -70,11 +72,7 @@ const faqSchema = {
               </a>
             </div>
           </div>
-          <!-- TODO: swap for the V2 supplier watchlist product view -->
-          <figure class="visual-placeholder" aria-label="Illustrative supplier watchlist product view">
-            <span class="visual-tag">Illustrative</span>
-            <span class="visual-note">Supplier watchlist product view</span>
-          </figure>
+          <SupplierWatchlist />
         </div>
       </div>
     </section>
@@ -127,11 +125,7 @@ const faqSchema = {
             <div><h3>Ask the right question, with the evidence.</h3><p>Open the record: what was reported, what attacker activity sits behind it, what those attackers tend to target. Then take one specific question to the supplier: what does this mean for our service? Your team decides what happens next.</p></div>
           </div>
         </div>
-        <!-- TODO: swap for a breach report product view -->
-        <figure class="visual-placeholder visual-wide" aria-label="Illustrative breach report product view">
-          <span class="visual-tag">Illustrative</span>
-          <span class="visual-note">Breach report product view</span>
-        </figure>
+        <BreachAlert />
       </div>
     </section>
 
@@ -304,45 +298,6 @@ const faqSchema = {
   }
   .sbm-page .btn-outline-dark:hover { border-color: #f7f9f3; }
 
-  /* Placeholder frame until the product visuals land */
-  .visual-placeholder {
-    position: relative;
-    margin: 0;
-    aspect-ratio: 4 / 3;
-    border-radius: 16px;
-    border: 1.5px dashed var(--color-border-strong);
-    background:
-      linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg-elev) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .visual-wide {
-    aspect-ratio: 16 / 7;
-    margin-top: clamp(40px, 5vw, 64px);
-  }
-  .visual-tag {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-tertiary);
-  }
-  .visual-note {
-    font-size: 0.95rem;
-    color: var(--color-text-tertiary);
-  }
-  @media (max-width: 760px) {
-    .visual-wide { aspect-ratio: 4 / 3; }
-  }
-
   /* Why now: small label above each card heading */
   .pain-label {
     font-size: 0.74rem;
@@ -352,6 +307,7 @@ const faqSchema = {
     color: var(--color-accent-deep);
     margin-bottom: -8px;
   }
+
   /* How it works: three steps in a row */
   .sbm-page .steps { grid-template-columns: repeat(3, 1fr); }
   @media (max-width: 960px) {
