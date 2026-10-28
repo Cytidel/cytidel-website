@@ -1,0 +1,180 @@
+---
+// Illustrative product view for the supplier breach monitoring hero: a
+// simplified supplier watchlist with a new alert card over it. Fictional
+// companies only. Mirrors real product fields (priority tiers, breaches in
+// the last 90 days, monitoring coverage, alert classification, threat actor,
+// rule) without claiming anything the product doesn't do.
+
+const suppliers = [
+  { name: 'Northwind Logistics', role: 'Freight and warehousing', priority: 'P1', breaches: 2, flagged: true },
+  { name: 'Halcyon Payroll', role: 'Payroll processing', priority: 'P1', breaches: 0 },
+  { name: 'Brightline Cloud', role: 'Hosting and backups', priority: 'P1', breaches: 0 },
+  { name: 'Meridian Freight', role: 'Customs brokerage', priority: 'P2', breaches: 0 },
+  { name: 'Kestrel Facilities', role: 'Building access control', priority: 'P3', breaches: 0 },
+];
+---
+<figure
+  class="wl"
+  role="img"
+  aria-label="Product view: a supplier watchlist ranked by priority. Northwind Logistics, a P1 supplier, shows two breaches in the last 90 days, and a new ransomware alert for it names the SafePay group."
+>
+  <div class="wl-window" aria-hidden="true">
+    <div class="wl-bar">
+      <span class="wl-title">Suppliers</span>
+      <span class="wl-search">Search suppliers</span>
+      <span class="wl-filter">Priority</span>
+    </div>
+    <div class="wl-table">
+      <div class="wl-row wl-head">
+        <span>Supplier</span><span>Priority</span><span>Breaches, 90 days</span><span class="wl-col-mon">Monitoring</span>
+      </div>
+      {suppliers.map((s) => (
+        <div class:list={['wl-row', { 'is-flagged': s.flagged }]}>
+          <span class="wl-name"><b>{s.name}</b><small>{s.role}</small></span>
+          <span><i class:list={['wl-pri', `wl-${s.priority.toLowerCase()}`]}>{s.priority}</i></span>
+          <span>{s.breaches ? <i class="wl-breach">{s.breaches} breaches</i> : <span class="wl-none">—</span>}</span>
+          <span class="wl-col-mon wl-covered">✓ Covered</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="wl-alert" aria-hidden="true">
+    <div class="wl-alert-top"><span class="wl-dot"></span>New supplier alert<span class="wl-time">2 min ago</span></div>
+    <div class="wl-alert-name"><b>Northwind Logistics</b><i class="wl-pri wl-p1">P1 Critical</i></div>
+    <dl>
+      <div><dt>Classification</dt><dd>Ransomware</dd></div>
+      <div><dt>Threat actor</dt><dd>SafePay</dd></div>
+      <div><dt>Rule</dt><dd>P1 suppliers</dd></div>
+    </dl>
+    <div class="wl-alert-actions"><span class="wl-btn">View evidence</span><span class="wl-btn-ghost">Open supplier</span></div>
+  </div>
+</figure>
+
+<style>
+  .wl {
+    position: relative;
+    margin: 0;
+    padding-bottom: 72px;
+    font-family: var(--font-sans);
+    max-width: 100%;
+  }
+
+  /* Watchlist window */
+  .wl-window {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -20px rgba(20, 30, 20, 0.18), 0 12px 30px -10px rgba(20, 30, 20, 0.08);
+  }
+  .wl-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .wl-title { font-weight: 700; font-size: 0.95rem; color: var(--color-text); margin-right: auto; }
+  .wl-search, .wl-filter {
+    font-size: 0.74rem;
+    color: var(--color-text-tertiary);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 7px;
+    padding: 5px 10px;
+  }
+  .wl-search { min-width: 120px; }
+  .wl-filter { border-style: dashed; }
+
+  .wl-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 0.8fr) minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.78rem;
+    color: var(--color-text-secondary);
+  }
+  .wl-row:last-child { border-bottom: 0; }
+  .wl-head {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    background: var(--color-bg);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+  .wl-row.is-flagged { background: #fdf1ef; box-shadow: inset 3px 0 0 #b8432f; }
+  .wl-name { display: flex; flex-direction: column; min-width: 0; }
+  .wl-name b { font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wl-name small { font-size: 0.7rem; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .wl-pri {
+    display: inline-block;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .wl-p1 { background: #fbe6e3; color: #a63a28; }
+  .wl-p2 { background: #fbf1de; color: #8a5a12; }
+  .wl-p3 { background: var(--color-bg-elev); color: var(--color-text-secondary); }
+  .wl-breach {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #a63a28;
+  }
+  .wl-breach::before { content: "●  "; font-size: 0.6rem; vertical-align: 1px; }
+  .wl-none { color: var(--color-text-tertiary); }
+  .wl-covered { color: var(--color-accent-deep); font-weight: 600; font-size: 0.74rem; }
+
+  /* Alert card over the bottom-right corner */
+  .wl-alert {
+    position: absolute;
+    right: -14px;
+    bottom: 0;
+    width: min(320px, 72%);
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: var(--color-dark-bg);
+    color: var(--color-dark-text);
+    box-shadow: 0 24px 60px -16px rgba(11, 14, 10, 0.55);
+    z-index: 2;
+  }
+  .wl-alert-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .wl-dot { width: 8px; height: 8px; border-radius: 50%; background: #e7735f; box-shadow: 0 0 0 4px rgba(231, 115, 95, 0.2); }
+  .wl-time { margin-left: auto; letter-spacing: 0; text-transform: none; font-weight: 500; color: var(--color-dark-text-tertiary); }
+  .wl-alert-name { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .wl-alert-name b { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; letter-spacing: -0.01em; }
+  .wl-alert dl { margin: 12px 0 0; display: grid; gap: 6px; }
+  .wl-alert dl div { display: grid; grid-template-columns: 96px 1fr; font-size: 0.76rem; }
+  .wl-alert dt { color: var(--color-dark-text-tertiary); }
+  .wl-alert dd { margin: 0; color: var(--color-dark-text); font-weight: 500; }
+  .wl-alert-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .wl-btn, .wl-btn-ghost { font-size: 0.72rem; font-weight: 600; padding: 7px 12px; border-radius: 8px; }
+  .wl-btn { background: var(--color-accent); color: #0b2000; }
+  .wl-btn-ghost { border: 1px solid var(--color-dark-border-strong); color: var(--color-dark-text); }
+
+  @media (max-width: 640px) {
+    .wl { padding-bottom: 0; }
+    .wl-col-mon { display: none; }
+    .wl-row { grid-template-columns: minmax(0, 2fr) minmax(0, 0.8fr) minmax(0, 1.2fr); padding-inline: 14px; }
+    .wl-search { display: none; }
+    .wl-alert { position: relative; right: auto; width: auto; margin: -24px 12px 0; }
+  }
+</style>
