@@ -24,82 +24,85 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 
-  <section class="hero" aria-labelledby="hero-h1">
-    <div class="container">
-      <div class="hero-inner">
-        <span class="hero-eyebrow">The early warning layer for overwhelmed security teams</span>
-        <h1 id="hero-h1">
-          <span class="line-1">Your scanner tells you what's <span class="hi-soft">vulnerable.</span></span>
-          <span class="line-2">Cytidel tells you what's <span class="hi-deep">dangerous.</span></span>
-        </h1>
-        <p class="hero-sub">Stay ahead of emerging vulnerabilities, threat actors and supply chain risk.</p>
-        <div class="hero-cta">
-          <a href="/book-a-demo" class="btn btn-primary" data-analytics="CTA|Book a Demo|Hero">
-            Book a Demo
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="awards-strip" aria-label="Awards and recognition">
-    <div class="container">
-      <div class="awards-band">
-        <div class="awards-grid">
-          <div class="award-item">
-            <span class="award-status">
-              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
-                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
-                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
-              </svg>
-              Grand Prix Winner
-            </span>
-            <div class="award-name">Irish National Startup of the Year, 2024</div>
-          </div>
-          <div class="award-item">
-            <span class="award-status">
-              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
-                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
-                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
-              </svg>
-              Finalist
-            </span>
-            <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
-          </div>
-          <div class="award-item">
-            <span class="award-status">
-              <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
-                <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
-                <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
-              </svg>
-              Winner
-            </span>
-            <div class="award-name">ECSO CISO Choice Award, 2026</div>
+  <!-- Hero, awards and product preview: one continuous navy band -->
+  <div class="lp-dark lp-top">
+    <section class="hero" aria-labelledby="hero-h1">
+      <div class="container">
+        <div class="hero-inner">
+          <span class="hero-eyebrow">The early warning layer for overwhelmed security teams</span>
+          <h1 id="hero-h1">
+            <span class="line-1">Your scanner tells you what's <span class="hi-soft">vulnerable.</span></span>
+            <span class="line-2">Cytidel tells you what's <span class="hi-deep">dangerous.</span></span>
+          </h1>
+          <p class="hero-sub">Stay ahead of emerging vulnerabilities, threat actors and supply chain risk.</p>
+          <div class="hero-cta">
+            <a href="/book-a-demo" class="btn btn-primary" data-analytics="CTA|Book a Demo|Hero">
+              Book a Demo
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="hero-product" aria-label="Product preview">
-    <div class="container">
-      <div class="product-frame">
-        <Picture
-          src={productHero}
-          alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
-          widths={[600, 1200, 1800, 2400]}
-          sizes="(max-width: 1232px) 100vw, 1200px"
-          formats={['avif', 'webp']}
-          loading="eager"
-          fetchpriority="high"
-        />
+    <section class="awards-strip" aria-label="Awards and recognition">
+      <div class="container">
+        <div class="awards-band">
+          <div class="awards-grid">
+            <div class="award-item">
+              <span class="award-status">
+                <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                  <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                  <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+                </svg>
+                Grand Prix Winner
+              </span>
+              <div class="award-name">Irish National Startup of the Year, 2024</div>
+            </div>
+            <div class="award-item">
+              <span class="award-status">
+                <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                  <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                  <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+                </svg>
+                Finalist
+              </span>
+              <div class="award-name">Cyber Startup Award, Infosecurity Europe 2026</div>
+            </div>
+            <div class="award-item">
+              <span class="award-status">
+                <svg class="award-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+                  <path d="M7 6H4.5a2.5 2.5 0 0 0 2.5 4.5M17 6h2.5a2.5 2.5 0 0 1-2.5 4.5"/>
+                  <path d="M12 14v3M8.5 21h7M9.5 21a2.5 2.5 0 0 1 5 0"/>
+                </svg>
+                Winner
+              </span>
+              <div class="award-name">ECSO CISO Choice Award, 2026</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="hero-product" aria-label="Product preview">
+      <div class="container">
+        <div class="product-frame">
+          <Picture
+            src={productHero}
+            alt="Cytidel dashboard surfacing emerging vulnerability signals — real CVEs tagged with risk rating, vendor, exploit evidence, and social volume."
+            widths={[600, 1200, 1800, 2400]}
+            sizes="(max-width: 1232px) 100vw, 1200px"
+            formats={['avif', 'webp']}
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
 
   <section class="proof-strip" aria-label="At a glance">
     <div class="container">
@@ -362,7 +365,7 @@ const faqSchema = {
   .spotlight-headline,
   .final-cta-card h2 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-text);
     letter-spacing: -0.02em;
     margin: 0;
@@ -389,13 +392,25 @@ const faqSchema = {
   }
   .hero-inner { position: relative; z-index: 1; }
   .hero-eyebrow {
-    display: inline-block;
-    font-size: 0.82rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+    /* Nov 2026 uplift: plain capitals with a rule, from the marketing mockups (was a pill / small text) */
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.4;
     color: var(--color-accent-deep);
     margin-bottom: 22px;
-    line-height: 1.4;
+  }
+  .hero-eyebrow::after {
+    content: "";
+    flex: none;
+    width: 56px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.8;
   }
   .hero h1 {
     font-size: clamp(3rem, 8.2vw, 6.6rem);
@@ -403,7 +418,7 @@ const faqSchema = {
     letter-spacing: -0.03em;
   }
   .hero h1 .line-1,
-  .hero h1 .line-2 { color: var(--color-text); display: block; }
+  .hero h1 .line-2 { color: var(--color-text); display: block; text-wrap: balance; }
   .hi-soft,
   .hi-deep { color: var(--color-accent-deep); }
   .hero-sub {
@@ -420,7 +435,7 @@ const faqSchema = {
     padding-bottom: clamp(44px, 6vw, 76px);
   }
   .awards-band {
-    background: linear-gradient(135deg, #1f2823 0%, #0e1612 100%);
+    background: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-dark-bg) 100%);
     border-radius: 12px;
     padding: clamp(13px, 1.6vw, 18px) clamp(20px, 2.8vw, 40px);
   }
@@ -492,10 +507,10 @@ const faqSchema = {
     border-radius: 14px;
     overflow: hidden;
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow:
-      0 30px 80px -20px rgba(20, 30, 20, 0.18),
-      0 12px 30px -10px rgba(20, 30, 20, 0.08);
+      0 40px 90px -20px rgba(0, 0, 0, 0.55),
+      0 0 70px rgba(128, 252, 19, 0.10);
   }
   .product-frame picture,
   .product-frame img {
@@ -525,13 +540,14 @@ const faqSchema = {
   .proof-item .num {
     font-family: var(--font-display);
     font-size: clamp(1.15rem, 1.8vw, 1.35rem);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-accent-deep);
     letter-spacing: -0.015em;
     line-height: 1.25;
     margin-bottom: 8px;
+    text-wrap: balance;
   }
-  .proof-item .num strong { font-weight: 600; }
+  .proof-item .num strong { font-weight: 700; }
   .proof-item p {
     color: var(--color-text-secondary);
     font-size: clamp(0.88rem, 1.2vw, 0.95rem);
@@ -599,7 +615,7 @@ const faqSchema = {
     margin: 0;
   }
   .morning-help {
-    background: linear-gradient(135deg, #1f2823 0%, var(--color-dark-bg) 100%);
+    background: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-dark-bg) 100%);
     border-radius: 16px;
     padding: clamp(32px, 4vw, 52px);
     color: var(--color-dark-text);
@@ -955,16 +971,16 @@ const faqSchema = {
     border-top: 1px solid var(--color-border);
   }
   .final-cta-card {
-    background: linear-gradient(135deg, #1f2823 0%, var(--color-cta-bg) 100%);
+    background: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-cta-bg) 100%);
     border-radius: 16px;
     padding: clamp(56px, 8vw, 96px) clamp(28px, 4vw, 56px);
     text-align: center;
-    color: #f7f9f3;
+    color: var(--color-dark-text);
     position: relative;
     overflow: hidden;
   }
   .final-cta-card h2 {
-    color: #f7f9f3;
+    color: var(--color-dark-text);
     font-size: clamp(1.6rem, 3vw, 2.4rem);
     line-height: 1.08;
     margin: 0 auto 20px;
@@ -973,7 +989,7 @@ const faqSchema = {
   .final-cta-card p {
     font-size: clamp(1.02rem, 1.5vw, 1.15rem);
     line-height: 1.6;
-    color: rgba(247, 249, 243, 0.82);
+    color: rgba(244, 247, 246, 0.82);
     margin: 0 auto 36px;
     max-width: 640px;
   }

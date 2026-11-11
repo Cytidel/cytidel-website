@@ -53,7 +53,7 @@ const organizationSchema = {
     <SEO title={title} description={description} ogImage={ogImage} ogType={ogType} />
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
-    <meta name="theme-color" content="#f1f1ec" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -74,19 +74,33 @@ const organizationSchema = {
            for that visitor going forward.
          - On withdrawing: Matomo downgrades back to cookieless.
 
-         Both <script> tags are marked `data-cookieconsent="ignore"`
-         so Cookiebot's auto-blocker leaves Matomo alone (Matomo is
-         handling its own consent gating via `_paq`). The
-         Cookiebot/Matomo sync listener below wires the events. -->
+         The config <script> and the injected matomo.js tag are marked
+         `data-cookieconsent="ignore"` so Cookiebot's auto-blocker leaves
+         Matomo alone (Matomo is handling its own consent gating via
+         `_paq`). The Cookiebot/Matomo sync listener below wires the
+         events. Matomo only loads on cytidel.com (see the host check). -->
     <script is:inline data-cookieconsent="ignore">
       var _paq = window._paq = window._paq || [];
-      _paq.push(['requireCookieConsent']);
-      _paq.push(['setTrackerUrl', 'https://cytidel.matomo.cloud/matomo.php']);
-      _paq.push(['setSiteId', '1']);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
+      // Only report from the production host. Netlify deploy previews and
+      // local dev used to land in the production reports. Elsewhere _paq
+      // stays a plain array: page scripts still push their events, and
+      // `window._paq` in the console shows what would have been sent.
+      if (/^(www\.)?cytidel\.com$/.test(location.hostname)) {
+        _paq.push(['requireCookieConsent']);
+        _paq.push(['setTrackerUrl', 'https://cytidel.matomo.cloud/matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        // Pings while the tab is active, so time on page is measured for
+        // visits that never trigger a second action.
+        _paq.push(['enableHeartBeatTimer']);
+        var m = document.createElement('script');
+        m.async = true;
+        m.setAttribute('data-cookieconsent', 'ignore');
+        m.src = 'https://cdn.matomo.cloud/cytidel.matomo.cloud/matomo.js';
+        document.head.appendChild(m);
+      }
     </script>
-    <script is:inline async src="https://cdn.matomo.cloud/cytidel.matomo.cloud/matomo.js" data-cookieconsent="ignore"></script>
     <script is:inline data-cookieconsent="ignore">
       // Cookiebot ↔ Matomo consent bridge. Fires on initial page load
       // for returning visitors (CookiebotOnConsentReady) and when the

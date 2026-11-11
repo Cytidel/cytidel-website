@@ -9,7 +9,7 @@ import Layout from '../layouts/Layout.astro';
   title="Page not found · Cytidel"
   description="We couldn't find that page. Try one of these instead."
 >
-  <section class="not-found">
+  <section class="not-found lp-dark">
     <div class="container">
       <div class="not-found-inner">
         <span class="eyebrow">404</span>
@@ -67,18 +67,30 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .eyebrow {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    /* Nov 2026 uplift: plain capitals with a rule, from the marketing mockups (was a pill / small text) */
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.4;
     color: var(--color-accent-deep);
     margin-bottom: 1.25rem;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: none;
+    width: 56px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.8;
   }
 
   .not-found h1 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.028em;
     line-height: 1.06;
     color: var(--color-text);
@@ -96,7 +108,7 @@ import Layout from '../layouts/Layout.astro';
 
   .suggestions h2 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.018em;
     color: var(--color-text);
     font-size: clamp(1.1rem, 1.6vw, 1.3rem);
