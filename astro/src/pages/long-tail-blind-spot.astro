@@ -1,0 +1,375 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/role-page.css';
+
+// Gated landing page for the executive summary "Don't Let the Long Tail Be
+// Your Blind Spot" (Jim, October 2026). Swappable content lives in the
+// constants below. The page runs in preview mode (nothing sent, success
+// shown) until HUBSPOT_FORM_GUID is set. Logic: the script block at the bottom.
+const EYEBROW = 'Executive summary';
+const TITLE = 'Don’t Let the Long Tail Be Your Blind Spot';
+const SUB =
+  'How the explosion in AI vulnerabilities is reshaping cyber supply chain risk, and why continuous monitoring across hundreds to thousands of suppliers is now a board-level requirement.';
+const DESCRIPTION =
+  'A free executive summary on cyber supply chain risk: how AI is multiplying supplier vulnerabilities, why the long tail of suppliers sits outside oversight, and five questions every board should ask.';
+// The paper itself, exported from Word, and its first page as the cover.
+const PDF_URL = '/downloads/cytidel-long-tail-blind-spot.pdf';
+const COVER_IMAGE = '/img/white-paper-long-tail-blind-spot.jpg';
+// Shown only when COVER_IMAGE is empty: a cover drawn from the title.
+const COVER_SUB = 'Cyber supply chain risk';
+// HubSpot Forms API — public values. The form needs firstname, lastname,
+// email and company fields. Empty GUID = preview mode.
+const HUBSPOT_PORTAL_ID = '25744711';
+const HUBSPOT_FORM_GUID = '';
+
+const trust = [
+  { label: 'Latest industry data', icon: 'chart' },
+  { label: 'A real breach case', icon: 'layers' },
+  { label: 'Five questions for your board', icon: 'shield' },
+];
+const learn = [
+  {
+    icon: 'bolt',
+    h: 'Why AI is multiplying supplier risk',
+    p: 'Record vulnerability volumes, a fast-growing AI attack surface, and why exploitation now often comes before a patch.',
+  },
+  {
+    icon: 'layers',
+    h: 'Where the long tail hides risk',
+    p: 'How capped watchlists and annual questionnaires leave hundreds of suppliers outside continuous oversight.',
+  },
+  {
+    icon: 'target',
+    h: 'What continuous oversight looks like',
+    p: 'Early warning and threat actor context across the whole supplier base, plus five questions every board should ask.',
+  },
+];
+const icons: Record<string, string> = {
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  layers: '<path d="M12 4l9 5-9 5-9-5 9-5z"/><path d="M3 14l9 5 9-5"/>',
+  shield: '<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+  bolt: '<path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z"/>',
+};
+const svg = (name: string): string =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
+---
+<Layout title={`${TITLE} · Cytidel`} description={DESCRIPTION} ogType="article" ogImage={COVER_IMAGE}>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://api.hsforms.com" crossorigin />
+  </Fragment>
+
+  <div class="role-page wp-page">
+    <section class="wp-hero lp-dark" aria-labelledby="hero-h1">
+      <div class="container wp-hero-inner">
+        <div class="wp-copy">
+          <span class="lp-eyebrow">{EYEBROW}</span>
+          <h1 id="hero-h1" class="lp-h1">{TITLE}</h1>
+          <p class="lp-sub">{SUB}</p>
+          <div class="wp-cta">
+            <a href="#wp-form" class="lp-btn-xl" data-analytics="CTA|White paper|Hero">
+              Download the summary
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+          <ul class="lp-trust">
+            {trust.map((t) => (
+              <li><Fragment set:html={svg(t.icon)} /><span>{t.label}</span></li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="wp-cover" aria-hidden="true">
+          {COVER_IMAGE ? (
+            <img src={COVER_IMAGE} alt="" width="840" height="1189" loading="eager" />
+          ) : (
+            <div class="wp-cover-card">
+              <span class="wp-cover-brand">Cytidel</span>
+              <span class="wp-cover-eyebrow">{EYEBROW}</span>
+              <span class="wp-cover-title">{TITLE}</span>
+              <span class="wp-cover-sub">{COVER_SUB}</span>
+            </div>
+          )}
+        </div>
+
+        <div class="wp-form-wrap lp-island">
+          <form
+            id="wp-form"
+            class="wp-form"
+            data-portal-id={HUBSPOT_PORTAL_ID}
+            data-form-guid={HUBSPOT_FORM_GUID}
+            data-pdf-url={PDF_URL}
+            data-title={TITLE}
+            data-hs-do-not-collect="true"
+            novalidate
+          >
+            <h2>Get the executive summary</h2>
+            <p class="wp-form-lede">Fill in your details and the download is ready straight away.</p>
+
+            <div class="field">
+              <label for="wp-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="wp-name" name="name" type="text" autocomplete="name" placeholder="e.g. Alex Murphy" />
+            </div>
+            <div class="field">
+              <label for="wp-email">Work email <span class="req" aria-hidden="true">*</span></label>
+              <input id="wp-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="e.g. alex@company.com" />
+            </div>
+            <div class="field">
+              <label for="wp-company">Company <span class="req" aria-hidden="true">*</span></label>
+              <input id="wp-company" name="company" type="text" autocomplete="organization" placeholder="e.g. Acme Industries" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="lp-btn-xl">
+                <span class="btn-label">Download now</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <p class="form-note">We'll only use your details to send the executive summary and relevant insights from Cytidel. See our <a href="/privacy">privacy policy</a>.</p>
+            {HUBSPOT_FORM_GUID ? null : <p class="form-preview">Preview build. Details entered here are not sent anywhere until the HubSpot form is configured.</p>}
+            <div class="form-status" role="status" aria-live="polite"></div>
+          </form>
+
+          <div class="wp-form wp-success" id="wp-success" hidden tabindex="-1">
+            <h2>Your executive summary is ready</h2>
+            <p class="wp-form-lede">Thanks. Open the PDF now, or come back to this page any time.</p>
+            <a href={PDF_URL} class="lp-btn-xl" download data-analytics={`Download|White paper|${TITLE}`}>
+              Download the PDF
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="/book-a-demo" class="btn btn-outline" data-analytics="CTA|Book a Demo|White paper success">
+              Book a demo
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <noscript>
+            <div class="noscript-fallback">
+              JavaScript is required for this form. Email <a href="mailto:info@cytidel.com">info@cytidel.com</a> and we'll send the executive summary over.
+            </div>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="wp-learn lp-light" aria-labelledby="learn-h2">
+      <div class="container wp-learn-grid">
+        <h2 id="learn-h2" class="lp-h2">What you'll learn</h2>
+        {learn.map((l) => (
+          <article class="wp-learn-item">
+            <span class="wp-learn-icon"><Fragment set:html={svg(l.icon)} /></span>
+            <h3>{l.h}</h3>
+            <p>{l.p}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="final-cta-h2">
+      <div class="container">
+        <div class="final-cta-card">
+          <h2 id="final-cta-h2">Ready to see Cytidel?</h2>
+          <p>Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand the latest threat actor activity relevant to your business, and monitor critical software and suppliers 24/7.</p>
+          <a href="/book-a-demo" class="btn btn-primary" data-analytics="CTA|Book a Demo|Final CTA">
+            Book a Demo
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  // Native form → HubSpot Forms API → success state with the download link.
+  // Same pattern as /book-a-demo; validation and name splitting are shared
+  // with the assessment gate (scripts/lead-fields.ts).
+  import { hubspotContext } from '../scripts/hubspot';
+  import { companyFromEmail, splitName, validateLead, type LeadProblem } from '../scripts/lead-fields';
+
+  type HSFormsField = { objectTypeId: string; name: string; value: string };
+  const track = (action: string): void => {
+    (window as unknown as { _paq?: unknown[][] })._paq?.push(['trackEvent', 'Form', 'White paper', action]);
+  };
+
+  const form = document.getElementById('wp-form') as HTMLFormElement | null;
+  const success = document.getElementById('wp-success') as HTMLElement | null;
+  if (form && success) {
+    const portalId = form.dataset.portalId ?? '';
+    const formGuid = form.dataset.formGuid ?? '';
+    const live = !!(portalId && formGuid);
+    const status = form.querySelector('.form-status') as HTMLElement;
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
+    const originalLabel = submitLabel.textContent ?? '';
+    const input = (id: string): HTMLInputElement => form.querySelector(`#${id}`) as HTMLInputElement;
+    const nameEl = input('wp-name'), emailEl = input('wp-email'), companyEl = input('wp-company');
+
+    // Guess the company from the work email's domain, unless one is typed.
+    emailEl.addEventListener('change', () => {
+      if (companyEl.value.trim()) return;
+      const guess = companyFromEmail(emailEl.value);
+      if (guess) companyEl.value = guess;
+    });
+
+    const messages: Record<Exclude<LeadProblem, 'ok'>, { el: HTMLInputElement; msg: string }> = {
+      name: { el: nameEl, msg: 'Add your name.' },
+      email: { el: emailEl, msg: 'Enter a valid work email.' },
+      free: { el: emailEl, msg: "Please use your work email. We can't send the executive summary to personal email addresses." },
+      company: { el: companyEl, msg: 'Add your company name.' },
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.classList.remove('is-error');
+      for (const el of [nameEl, emailEl, companyEl]) el.removeAttribute('aria-invalid');
+
+      const lead = { name: nameEl.value, email: emailEl.value, company: companyEl.value };
+      const problem = validateLead(lead);
+      if (problem !== 'ok') {
+        const { el, msg } = messages[problem];
+        el.setAttribute('aria-invalid', 'true');
+        status.textContent = msg;
+        status.classList.add('is-error');
+        el.focus();
+        if (problem === 'free') track('Rejected Free Email');
+        return;
+      }
+
+      const { firstname, lastname } = splitName(lead.name);
+      const fields: HSFormsField[] = [
+        { objectTypeId: '0-1', name: 'firstname', value: firstname },
+        ...(lastname ? [{ objectTypeId: '0-1', name: 'lastname', value: lastname }] : []),
+        { objectTypeId: '0-1', name: 'email', value: lead.email.trim() },
+        { objectTypeId: '0-1', name: 'company', value: lead.company.trim() },
+      ];
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Preparing your download…';
+      try {
+        if (live) {
+          const res = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fields, context: hubspotContext() }),
+          });
+          if (!res.ok) throw new Error(`HubSpot Forms API returned ${res.status}`);
+          track('Submit');
+        }
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      } catch (err) {
+        console.error('White paper form submit failed:', err);
+        status.textContent = 'Something went wrong. Please try again, or email info@cytidel.com and we will send it over.';
+        status.classList.add('is-error');
+        submitBtn.disabled = false;
+        submitLabel.textContent = originalLabel;
+        track('Error');
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Navy hero (landing.css): copy, cover and form side by side. Shared
+     shells (container, final CTA) come from role-page.css. */
+  .wp-hero {
+    padding-top: clamp(56px, 8vw, 104px);
+    padding-bottom: clamp(56px, 8vw, 104px);
+  }
+  .wp-hero-inner {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.75fr) minmax(0, 0.95fr);
+    gap: clamp(28px, 4vw, 56px); align-items: center;
+  }
+  .wp-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .wp-hero .lp-h1 { font-size: clamp(2.2rem, 4.4vw, 3.8rem); }
+  .wp-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  /* Narrow copy column: icon above its label so all three fit on one row */
+  .wp-hero .lp-trust li { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 0.95rem; }
+  .wp-hero .lp-trust :global(svg) { width: 26px; height: 26px; }
+
+  /* Cover: an image when supplied, otherwise a styled cover built from the title */
+  .wp-cover { display: flex; justify-content: center; min-width: 0; }
+  .wp-cover img { width: 100%; max-width: 360px; height: auto; border-radius: 6px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); transform: rotate(4deg); }
+  .wp-cover-card {
+    width: 100%; max-width: 320px; aspect-ratio: 3 / 4;
+    padding: clamp(20px, 2.5vw, 30px); border-radius: 6px 12px 12px 6px;
+    background: linear-gradient(160deg, #15303b 0%, var(--color-navy) 55%, #123320 100%);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 2px 0 0 rgba(255, 255, 255, 0.12);
+    transform: rotate(4deg);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .wp-cover-brand { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--color-dark-text); }
+  .wp-cover-eyebrow { margin-top: auto; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent); }
+  .wp-cover-title { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: clamp(1.25rem, 1.8vw, 1.6rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--color-dark-text); }
+  .wp-cover-sub { font-size: 0.82rem; line-height: 1.45; color: var(--color-dark-text-secondary); }
+
+  /* Form card */
+  .wp-form-wrap { min-width: 0; }
+  .wp-form {
+    display: grid; gap: 16px;
+    padding: clamp(24px, 3vw, 34px);
+    background: #fff; color: var(--color-ink);
+    border-radius: 20px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(128, 252, 19, 0.18);
+  }
+  .wp-form h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(1.4rem, 2vw, 1.75rem); margin: 0; color: var(--color-text); }
+  .wp-form-lede { margin: -6px 0 2px; font-size: 0.95rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .field { display: grid; gap: 6px; }
+  .field label { font-size: 0.88rem; font-weight: 500; color: var(--color-text); }
+  .field label .req { color: var(--color-accent-deep); margin-left: 2px; }
+  .field input {
+    font: inherit; font-size: 1rem; padding: 12px 14px;
+    border: 1px solid var(--color-border-strong); border-radius: 8px;
+    background: #fff; color: var(--color-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .field input::placeholder { color: var(--color-text-tertiary); opacity: 0.7; }
+  .field input:focus { outline: none; border-color: var(--color-accent-deep); box-shadow: 0 0 0 3px rgba(53, 122, 18, 0.15); }
+  .field input[aria-invalid="true"] { border-color: #b94a48; box-shadow: inset 0 0 0 1px #b94a48; }
+  .form-actions { margin-top: 2px; }
+  .form-actions .lp-btn-xl { width: 100%; min-height: 58px; padding-inline: 18px; font-size: 1.02rem; white-space: nowrap; }
+  .wp-page .btn { cursor: pointer; font-family: inherit; }
+  .wp-page .btn-outline { background: transparent; color: var(--color-text); border-color: var(--color-border-strong); justify-content: center; }
+  .wp-page .btn-outline:hover { transform: translateY(-1px); border-color: var(--color-text); }
+  .form-note { margin: 0; font-size: 0.82rem; line-height: 1.5; color: var(--color-text-tertiary); }
+  .form-note a { color: var(--color-accent-deep); font-weight: 600; text-decoration: none; }
+  .form-note a:hover { text-decoration: underline; }
+  .form-preview { margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); background: var(--color-bg); border: 1px dashed var(--color-border-strong); border-radius: 8px; padding: 10px 14px; }
+  .form-status { font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .form-status:empty { display: none; }
+  .form-status.is-error { color: #b94a48; }
+  .wp-success .btn, .wp-success .lp-btn-xl { width: 100%; }
+  .wp-success:focus { outline: none; }
+  .noscript-fallback { margin-top: 16px; padding: 16px 20px; background: var(--color-dark-bg-elev); border: 1px solid var(--color-dark-border); border-radius: 10px; font-size: 0.95rem; line-height: 1.55; }
+  .noscript-fallback a { color: var(--color-accent); font-weight: 600; }
+
+  /* What you'll learn */
+  .wp-learn { border-bottom: 1px solid var(--color-line); }
+  .wp-learn-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 40px); align-items: start; }
+  .wp-learn-item { display: grid; gap: 10px; padding-left: clamp(16px, 2vw, 28px); border-left: 1px solid var(--color-line); }
+  .wp-learn-icon { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; color: var(--color-accent-deep); }
+  .wp-learn-icon :global(svg) { width: 30px; height: 30px; }
+  .wp-learn-item h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.015em; margin: 0; color: var(--color-ink); }
+  .wp-learn-item p { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--color-ink-secondary); }
+
+  @media (max-width: 1100px) {
+    .wp-hero-inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+    .wp-cover { display: none; }
+  }
+  @media (max-width: 860px) {
+    .wp-hero-inner { grid-template-columns: 1fr; }
+    .wp-form-wrap { max-width: 520px; }
+    .wp-learn-grid { grid-template-columns: 1fr; }
+    .wp-learn-item { padding-left: 0; border-left: 0; padding-top: 20px; border-top: 1px solid var(--color-line); }
+  }
+  @media (max-width: 640px) {
+    .wp-hero { padding-top: 32px; padding-bottom: 40px; }
+    .wp-copy { gap: 18px; }
+    .wp-hero .lp-h1 { font-size: 2rem; }
+    .wp-hero .lp-eyebrow::after { width: 40px; }
+    .wp-hero .lp-trust li { flex-direction: row; align-items: center; }
+  }
+</style>

@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
   title="Privacy Policy · Cytidel"
   description="How Cytidel collects, uses, and protects your information."
 >
-  <section class="hero" aria-labelledby="hero-h1">
+  <section class="hero lp-dark" aria-labelledby="hero-h1">
     <div class="container">
       <div class="hero-inner">
         <span class="eyebrow">Legal</span>
@@ -122,13 +122,25 @@ import Layout from '../layouts/Layout.astro';
 
   /* Eyebrow */
   .eyebrow {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 500;
+    /* Nov 2026 uplift: plain capitals with a rule, from the marketing mockups */
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+    line-height: 1.4;
     color: var(--color-accent-deep);
     margin-bottom: 1.25rem;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: none;
+    width: 56px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.8;
   }
 
   /* Headings */
@@ -136,7 +148,7 @@ import Layout from '../layouts/Layout.astro';
   .legal-body h2,
   .legal-body h3 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.08;
     margin: 0;

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Landing style: navy bands, big call to action, trust row, feature rows. */
+@import "./landing.css";
 
 /* ---------------------------------------------------------------------------
    Design tokens — ported from the current static site's per-page CSS.
@@ -7,36 +9,50 @@
    max-w-*, rounded-*).
    --------------------------------------------------------------------------- */
 @theme static {
-  /* Surfaces (light theme) */
-  --color-bg: #f5f5f5;
-  --color-bg-elev: #e8e9e3;
-  --color-surface: #e8eae4;
-  --color-surface-2: #dde0d7;
-  --color-border: rgba(20, 30, 20, 0.10);
-  --color-border-strong: rgba(20, 30, 20, 0.18);
+  /* Surfaces (light theme). Nov 2026 uplift: white paper with cool grey
+     panels, from the marketing mockups (was warm grey #f5f5f5 / #e8eae4). */
+  --color-bg: #ffffff;
+  --color-bg-elev: #f4f6f7;
+  --color-surface: #f2f5f6;
+  --color-surface-2: #e6ebed;
+  --color-border: rgba(12, 26, 34, 0.10);
+  --color-border-strong: rgba(12, 26, 34, 0.18);
 
   /* Text */
-  --color-text: #0b0e0a;
-  --color-text-secondary: #4d524d;
-  --color-text-tertiary: #7a807a;
+  --color-text: #0c1a22;
+  --color-text-secondary: #4b5a63;
+  --color-text-tertiary: #7b8890;
 
   /* Accents — the two-greens rule (vivid for decoration/CTA, deep for text) */
   --color-accent: #80FC13;
   --color-accent-deep: #357A12;
   --color-accent-dim: rgba(128, 252, 19, 0.18);
 
-  /* Dark sections (used inside .section-dark or dark cards) */
-  --color-dark-bg: #0e1612;
-  --color-dark-bg-elev: #1a221d;
-  --color-dark-surface: #1f2823;
+  /* Dark sections and dark cards. Nov 2026 uplift: deep navy (was green-black #0e1612). */
+  --color-dark-bg: #0a1a23;
+  --color-dark-bg-elev: #112630;
+  --color-dark-surface: #16303b;
   --color-dark-border: rgba(255, 255, 255, 0.10);
   --color-dark-border-strong: rgba(255, 255, 255, 0.18);
-  --color-dark-text: #f5f6f0;
-  --color-dark-text-secondary: #a8b0a6;
-  --color-dark-text-tertiary: #707870;
+  --color-dark-text: #f4f7f6;
+  --color-dark-text-secondary: #a9b6bc;
+  --color-dark-text-tertiary: #6f8089;
 
-  /* Final-CTA deep green block */
-  --color-cta-bg: #357A12;
+  /* Final-CTA block: navy with a green glow since the Nov 2026 uplift
+     (was deep green #357A12). The glow lives in landing.css. */
+  --color-cta-bg: #0a1a23;
+
+  /* Landing style names (Nov 2026 uplift). Same palette as the tokens
+     above, under the names src/styles/landing.css uses. */
+  --color-navy: #0a1a23;
+  --color-navy-elev: #112630;
+  --color-ink: #0c1a22;
+  --color-ink-secondary: #4b5a63;
+  --color-paper: #ffffff;
+  --color-paper-alt: #f4f6f7;
+  --color-line: rgba(12, 26, 34, 0.10);
+  --color-line-strong: rgba(12, 26, 34, 0.20);
+  --color-accent-tile: #e8f8da;
 
   /* Type — Mona Sans loaded via Google Fonts in the Layout head */
   --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -53,3 +69,7 @@
 /* Global base — minimal; the rest lives in component classes / utilities. */
 html { scroll-behavior: smooth; }
 body { background: var(--color-bg); color: var(--color-text); }
+/* Even line lengths in headings and no single-word last lines in body
+   copy (Nov 2026 uplift). Unsupported browsers ignore both. */
+h1, h2, h3 { text-wrap: balance; }
+p, li, blockquote { text-wrap: pretty; }
