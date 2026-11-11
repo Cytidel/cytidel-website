@@ -13,6 +13,9 @@ const SUB =
 const DESCRIPTION =
   'A free executive summary on cyber supply chain risk: how AI is multiplying supplier vulnerabilities, why the long tail of suppliers sits outside oversight, and five questions every board should ask.';
 // The paper itself, exported from Word, and its first page as the cover.
+// public/img links to the repo's top-level img/ folder, so the cover file
+// lives at img/white-paper-long-tail-blind-spot.jpg. Netlify only rebuilds
+// when something under astro/ changes, so an image-only commit won't deploy.
 const PDF_URL = '/downloads/cytidel-long-tail-blind-spot.pdf';
 const COVER_IMAGE = '/img/white-paper-long-tail-blind-spot.jpg';
 // Shown only when COVER_IMAGE is empty: a cover drawn from the title.
