@@ -1,54 +1,49 @@
 // Supplier monitoring self-assessment — page logic.
-// Scoring model by John (GTM), ported unchanged from his standalone build;
-// rendering rebuilt on the site's design tokens. Content and weights live
-// in src/data/supplier-assessment.ts.
+// Scoring lives in supplier-assessment-model.ts (pure, unit-tested); content,
+// weights and steps in src/data/supplier-assessment.ts. This file renders the
+// screens and talks to HubSpot and Matomo.
 //
-// Flow: intro → organisation → three question steps → lead form → results.
-// The lead form posts to HubSpot's Forms API (same pattern as /book-a-demo)
-// before the results show. With no form GUID configured it runs in preview
-// mode and sends nothing.
+// Flow: landing page → one question per screen → details gate → results.
+// Every screen after the landing page sits under a navy band (progress or
+// the results headline) in the landing style from src/styles/landing.css. The gate posts to HubSpot's Forms API (same pattern
+// as /book-a-demo) before the results show. With no form GUID configured it
+// runs in preview mode and sends nothing.
 
-import {
-  GAP_TEXT, INDUSTRIES, Q, QUADS, SOURCES, STEPS, TARGET,
-  type Industry, type Option, type QuadKey,
-} from '../data/supplier-assessment';
-import { isFreeEmail } from './free-email';
+import { GAP_TEXT, Q, QUADS, SOURCES, STEPS, TARGET, type Option, type QuadKey } from '../data/supplier-assessment';
 import { hubspotContext } from './hubspot';
+import { companyFromEmail, splitName, validateLead, type LeadProblem } from './lead-fields';
+import {
+  EXAMPLE, gaps, multi, num, optOf, score, single, supplierCount,
+  type Answers, type Result,
+} from './supplier-assessment-model';
 
 type HSFormsField = { objectTypeId: string; name: string; value: string };
 
 interface State {
   step: number;
+  /** Where "Continue" takes a returning visitor */
   resume: number;
   /** Furthest screen reached, so visited screens can be jumped to */
   furthest: number;
   example: boolean;
-  org: { company: string; industry: string; headcount: string; fte: string; suppliers: string; critical: string };
-  a: Record<string, string | string[]>;
+  a: Answers;
   cap: string;
-  lead: { firstname: string; lastname: string; email: string; title: string; walk: boolean; marketing: boolean };
+  lead: { name: string; email: string; company: string; marketing: boolean };
   sent: boolean;
 }
 
-interface Result {
-  D: number; P: number;
-  D_parts: Record<string, [number, number]>;
-  P_parts: Record<string, [number, number]>;
-  N: number; C: number; fte: number; cov: number; ind: Industry;
-  R: number; Rp: number; Rt: number; band: string; quad: QuadKey; ratio: number;
-  inView: number; prioritised: number; outside: number; perFte: number | null;
-}
-
 const RES = STEPS.length - 1;
-const LEAD = RES - 1;
-// Step indexes of the single-question screens, for "Question 3 of 7"
-const QUESTION_STEPS = STEPS.flatMap((s, i) => (s.id === 'q' ? [i] : []));
+const GATE = STEPS.findIndex((s) => s.id === 'lead');
+// Screens that ask a question, for "Question 3 of 8" and the progress bar
+const QUESTION_STEPS = STEPS.flatMap((s, i) => (s.qs ? [i] : []));
+const FIRST_Q = QUESTION_STEPS[0];
 // Single-choice questions that move on by themselves when an answer is
 // clicked. Coverage stays manual: it can open a licence-cap field.
-const AUTO_ADVANCE = new Set(['approach', 'list', 'nth', 'prioritise', 'threat']);
+const AUTO_ADVANCE = new Set(['approach', 'list', 'suppliers', 'nth', 'prioritise', 'threat']);
 // Draft answers survive a reload; contact details are never stored.
-// v2: one question per step (v1 drafts had grouped steps).
-const DRAFT_KEY = 'cyd-sca-draft-v2';
+// v3: no organisation screen. Older drafts are dropped.
+const DRAFT_KEY = 'cyd-sca-draft-v3';
+const OLD_DRAFT_KEYS = ['cyd-sca-draft-v2'];
 
 const app = document.getElementById('sca-app') as HTMLElement | null;
 const portalId = app?.dataset.portalId ?? '';
@@ -59,18 +54,18 @@ const LIVE = !!(portalId && formGuid);
 
 const blank = (): State => ({
   step: 0, resume: 1, furthest: 0, example: false,
-  org: { company: '', industry: '', headcount: '', fte: '', suppliers: '', critical: '' },
   a: { providers: [], regs: [] }, cap: '',
-  lead: { firstname: '', lastname: '', email: '', title: '', walk: false, marketing: false },
+  lead: { name: '', email: '', company: '', marketing: false },
   sent: false,
 });
 
 let S: State = blank();
 try {
+  for (const k of OLD_DRAFT_KEYS) localStorage.removeItem(k);
   const saved = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? 'null');
-  if (saved && saved.org) {
+  if (saved && saved.a) {
     S = { ...blank(), ...saved, lead: blank().lead, sent: false };
-    if (S.step >= LEAD) S.step = LEAD;
+    if (S.step >= GATE) S.step = GATE;
   }
 } catch { /* storage unavailable — start fresh */ }
 
@@ -85,99 +80,42 @@ const save = (): void => {
 const track = (action: string, name?: string): void => {
   (window as unknown as { _paq?: unknown[][] })._paq?.push(['trackEvent', 'Assessment', action, name ?? 'Supplier Monitoring']);
 };
+// Start is counted once per page load, however often someone goes back and forward.
+let started = false;
 
 const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document): T | null => el.querySelector<T>(sel);
 const esc = (s: unknown): string =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-const num = (v: string): number => { const n = parseFloat(String(v).replace(/,/g, '')); return isFinite(n) ? n : NaN; };
 const fmt = (n: number): string => Math.round(n).toLocaleString('en-GB');
-const clamp = (x: number, a: number, b: number): number => Math.max(a, Math.min(b, x));
-const optOf = (qid: string, v: string | string[] | undefined): Option =>
-  Q[qid].opts.find((o) => o.v === v) ?? Q[qid].opts[0];
-const single = (qid: string): string => (S.a[qid] as string) ?? '';
-const multi = (qid: string): string[] => (S.a[qid] as string[]) ?? [];
-
-/* ---------------- scoring (John's model) ---------------- */
-function coverageFraction(): number {
-  const c = single('coverage');
-  if (!c || c === 'none') return 0;
-  if (c === 'cap') {
-    const n = num(S.cap), N = num(S.org.suppliers);
-    return n > 0 && N > 0 ? clamp(n / N, 0, 1) : 0;
-  }
-  return optOf('coverage', c).f ?? 0;
-}
-
-function capacityScore(N: number, fte: number): number {
-  if (!(fte > 0)) return 5;
-  const r = N / fte;
-  return r <= 50 ? 90 : r <= 150 ? 65 : r <= 400 ? 40 : 20;
-}
-
-function score(): Result {
-  const o = S.org;
-  const N = num(o.suppliers), C = Math.min(num(o.critical) || 0, N), fte = num(o.fte);
-  const ap = optOf('approach', single('approach')), li = optOf('list', single('list')), th = optOf('threat', single('threat'));
-  const cov = coverageFraction();
-  const D_parts: Record<string, [number, number]> = {
-    approach: [0.15, ap.d ?? 0], list: [0.2, li.d ?? 0], coverage: [0.3, Math.round(cov * 100)],
-    nth: [0.25, optOf('nth', single('nth')).d ?? 0], threat: [0.1, th.d ?? 0],
-  };
-  const P_parts: Record<string, [number, number]> = {
-    approach: [0.15, ap.p ?? 0], tier: [0.1, li.tier ?? 0], prioritise: [0.3, optOf('prioritise', single('prioritise')).p ?? 0],
-    threat: [0.35, th.p ?? 0], capacity: [0.1, capacityScore(N, fte)],
-  };
-  const sum = (parts: Record<string, [number, number]>): number =>
-    Math.round(Object.values(parts).reduce((t, [w, v]) => t + w * v, 0));
-  const D = sum(D_parts), P = sum(P_parts);
-  const ind = INDUSTRIES[o.industry] ?? INDUSTRIES.oth;
-  const eff = (d: number, p: number): number => (d / 100) * (0.4 + (0.6 * p) / 100);
-  const W = 3 * C + (N - C);
-  const scale = clamp(0.6 + 0.13 * Math.log10(Math.max(W, 1)), 0.6, 1);
-  const risk = (d: number, p: number): number => Math.round(100 * (1 - eff(d, p)) * scale);
-  const R = risk(D, P), Rp = risk(ind.D, ind.P), Rt = risk(TARGET.D, TARGET.P);
-  const band = R < 35 ? 'Low' : R < 55 ? 'Moderate' : R < 72 ? 'Elevated' : 'High';
-  const quad: QuadKey = D >= 50 ? (P >= 50 ? 'pro' : 'over') : P >= 50 ? 'blind' : 're';
-  const inView = Math.round((N * D) / 100), prioritised = Math.round((inView * P) / 100);
-  return {
-    D, P, D_parts, P_parts, N, C, fte, cov, ind, R, Rp, Rt, band, quad,
-    ratio: (1 - eff(D, P)) / (1 - eff(ind.D, ind.P)), inView, prioritised, outside: N - inView,
-    perFte: fte > 0 ? N / fte : null,
-  };
-}
+const sVal = (qid: string): string => single(S.a, qid);
+const mVal = (qid: string): string[] => multi(S.a, qid);
 
 const CURRENT: Record<string, (r: Result) => string> = {
-  list: () => optOf('list', single('list')).t,
+  list: () => optOf('list', sVal('list')).t,
   coverage: (r) => (r.cov === 0 ? 'No provider today' : `${Math.round(r.cov * 100)}% of suppliers monitored`),
-  nth: () => optOf('nth', single('nth')).t,
-  tier: () => optOf('list', single('list')).t,
-  prioritise: () => optOf('prioritise', single('prioritise')).t,
-  threat: () => optOf('threat', single('threat')).t,
-  capacity: (r) => (r.perFte ? `${fmt(r.perFte)} suppliers per person` : 'No dedicated headcount'),
+  nth: () => optOf('nth', sVal('nth')).t,
+  tier: () => optOf('list', sVal('list')).t,
+  prioritise: () => optOf('prioritise', sVal('prioritise')).t,
+  threat: () => optOf('threat', sVal('threat')).t,
 };
 
-// Top three gaps by weighted shortfall.
-function gaps(r: Result): { k: string }[] {
-  const all: { k: string; s: number; v: number }[] = [];
-  for (const [k, [w, v]] of Object.entries(r.D_parts)) if (k !== 'approach') all.push({ k, s: w * (100 - v), v });
-  for (const [k, [w, v]] of Object.entries(r.P_parts)) if (k !== 'approach') all.push({ k, s: w * (100 - v), v });
-  all.sort((x, y) => y.s - x.s);
-  const out: { k: string }[] = [];
-  for (const g of all) {
-    if (out.find((o) => o.k === g.k) || (g.k === 'tier' && out.find((o) => o.k === 'list'))) continue;
-    if (g.v >= 80) continue;
-    out.push(g);
-    if (out.length === 3) break;
-  }
-  return out;
-}
+const ICON = {
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/><circle cx="16" cy="8" r="1.6" fill="currentColor" stroke="none"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/></svg>',
+  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 5-9 5-9-5 9-5z"/><path d="M3 14l9 5 9-5"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z"/></svg>',
+  tick: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+};
 
 /* ---------------- rendering ---------------- */
 
 // The Maturity Grid as a chart: x = prioritisation ability, y = detectability,
-// both 0–100 with the quadrant boundaries at 50. Used on the intro (no result)
-// and the results page, where it adds your marker, the peer baseline and
-// guide lines from your marker to both axes.
+// both 0–100 with the quadrant boundaries at 50. Used on the landing page
+// (no result, and the example in the preview card) and the results page,
+// where it adds your marker, the baseline and guide lines to both axes.
 function chartHTML(r: Result | null): string {
   const region = (k: QuadKey): string =>
     `<div class="sca-chart-q sca-chart-${k}${k === 'pro' ? ' is-target' : ''}${r && r.quad === k ? ' is-here' : ''}"><span>${QUADS[k].short}</span></div>`;
@@ -190,13 +128,13 @@ function chartHTML(r: Result | null): string {
     (you === undefined ? '' : `<span class="sca-tick sca-tick-${axis} is-you" style="${axis === 'x' ? `left:${you}%` : `top:${100 - you}%`}">${you}</span>`);
   let marks = `<span class="sca-mk sca-mk-target" style="left:${TARGET.P}%;top:${100 - TARGET.D}%"><b>Target</b></span>`;
   if (r) {
-    const x = clamp(r.P, 0, 100), y = clamp(r.D, 0, 100);
-    // Nudge the peer marker clear of yours when the two nearly coincide.
+    const x = Math.max(0, Math.min(100, r.P)), y = Math.max(0, Math.min(100, r.D));
+    // Nudge the baseline marker clear of yours when the two nearly coincide.
     const near = Math.hypot(r.ind.P - r.P, r.ind.D - r.D) < 6;
     marks += `
       <span class="sca-guide sca-guide-v" style="left:${x}%;top:${100 - y}%"></span>
       <span class="sca-guide sca-guide-h" style="width:${x}%;top:${100 - y}%"></span>
-      <span class="sca-mk sca-mk-peer${near ? ' is-nudged' : ''}" style="left:${r.ind.P}%;top:${100 - r.ind.D}%" title="${esc(r.ind.name)} peer baseline"></span>
+      <span class="sca-mk sca-mk-peer${near ? ' is-nudged' : ''}" style="left:${r.ind.P}%;top:${100 - r.ind.D}%" title="Typical organisation baseline"></span>
       <span class="sca-mk sca-mk-you" style="left:${x}%;top:${100 - y}%"><b>You</b></span>`;
   }
   return `<figure class="sca-chart" aria-label="${r ? `Your position: detectability ${r.D}, prioritisation ability ${r.P}, in ${QUADS[r.quad].name}` : 'The Supply Chain Risk Maturity Grid'}">
@@ -225,20 +163,17 @@ function quadCardsHTML(here?: QuadKey): string {
   return `<div class="sca-quads">${card('over')}${card('pro')}${card('re')}${card('blind')}</div>`;
 }
 
-// One segment per screen (organisation, each question, your details).
-// Screens already reached are buttons, so people can go straight back to
-// an answer; screens not yet reached can't be skipped to.
+// One segment per screen (each question, your details). Screens already reached are buttons, so people can go
+// straight back to an answer; screens not yet reached can't be skipped to.
 function progressHTML(): string {
   const st = STEPS[S.step];
-  const label = st.id === 'org'
-    ? 'About your organisation'
-    : st.id === 'lead'
-      ? 'Last step: your details'
-      : `Question ${QUESTION_STEPS.indexOf(S.step) + 1} of ${QUESTION_STEPS.length}`;
-  const segs = STEPS.slice(1, LEAD + 1)
+  const label = st.id === 'lead'
+    ? 'Last step: your details'
+    : `Question ${QUESTION_STEPS.indexOf(S.step) + 1} of ${QUESTION_STEPS.length}`;
+  const segs = STEPS.slice(FIRST_Q, GATE + 1)
     .map((step, idx) => {
-      const i = idx + 1;
-      const name = esc(step.name);
+      const i = idx + FIRST_Q;
+      const name = esc(step.name ?? '');
       if (i === S.step) return `<span class="sca-seg is-current" aria-current="step" title="${name}"><span class="sr-only">${name}, current</span></span>`;
       if (i <= S.furthest) return `<button type="button" class="sca-seg is-done" data-jump="${i}" title="${name}"><span class="sr-only">Go to ${name}</span></button>`;
       return `<span class="sca-seg" aria-hidden="true"></span>`;
@@ -256,10 +191,11 @@ function optsHTML(qid: string): string {
     .join('');
   let extra = '';
   if (qid === 'coverage' && val === 'cap') {
-    extra += `<div class="sca-fields"><div class="sca-field"><label for="sca-cap">How many suppliers does your licence cover?</label><input id="sca-cap" inputmode="numeric" value="${esc(S.cap)}" placeholder="e.g. 50"></div></div>`;
+    const N = supplierCount(S.a);
+    extra += `<div class="sca-fields"><div class="sca-field"><label for="sca-cap">How many suppliers does your licence cover?</label><input id="sca-cap" inputmode="numeric" value="${esc(S.cap)}" placeholder="e.g. 50">${N ? `<span class="sca-hint">Out of roughly ${fmt(N)} suppliers</span>` : ''}</div></div>`;
   }
   if (q.sub && val && val !== 'none') {
-    const sq = Q[q.sub], sv = multi(q.sub);
+    const sq = Q[q.sub], sv = mVal(q.sub);
     extra += `<div class="sca-q-sub"><p class="sca-q-help">${esc(sq.label)}</p><div class="sca-opts">${sq.opts.map((o) => opt(q.sub!, o, true, sv.includes(o.v))).join('')}</div></div>`;
   }
   // The divider between questions sits on the wrapper, not the fieldset:
@@ -271,101 +207,115 @@ function navHTML(next = 'Continue', act = 'next'): string {
   return `<div class="sca-nav"><button type="button" class="sca-btn sca-btn-outline" data-act="back">Back</button><button type="button" class="sca-btn sca-btn-primary" data-act="${act}">${next} <span aria-hidden="true">→</span></button></div>`;
 }
 
+// Landing page, following the marketing mockup: navy hero with one big
+// call to action and the example result card, what the assessment covers,
+// then the Maturity Grid explained with a second call to action.
 function introHTML(): string {
-  const resuming = S.step === 0 && !!single('approach');
-  return `<section class="sca-hero">
+  const resuming = !!sVal('approach') && S.resume > 1;
+  const startLabel = resuming ? 'Continue the self-assessment' : 'Start the self-assessment';
+  const ex = score(EXAMPLE.a, EXAMPLE.cap);
+  const feature = (icon: string, h: string, p: string): string =>
+    `<div class="lp-feature"><span class="lp-tile">${icon}</span><div><h3>${h}</h3><p>${p}</p></div></div>`;
+  return `<section class="sca-hero lp-dark">
+    <div class="sca-inner sca-hero-inner">
       <div class="sca-hero-copy">
-        <span class="sca-eyebrow">✳ Supply chain risk assessment</span>
-        <h1>Where does your supply chain risk sit on the grid?</h1>
-        <p class="sca-lede">Answer seven questions about your supplier base and how you manage it. Cytidel scores your position on the Maturity Grid, scales it by the size of your supplier base and compares it with organisations in your industry.</p>
+        <span class="lp-eyebrow">Supplier risk self-assessment</span>
+        <h1 class="lp-h1">How mature is your <em>supplier risk</em> approach?</h1>
+        <p class="lp-sub">Eight quick questions. See where your supplier risk sits on the Maturity Grid, where to focus first and how you compare with a typical organisation.</p>
+        <ul class="lp-trust">
+          <li>${ICON.clock}<span><b>About 2 minutes</b>to complete</span></li>
+          <li>${ICON.grid}<span><b>Instant results</b>on screen</span></li>
+          <li>${ICON.lock}<span><b>No sensitive</b>data required</span></li>
+        </ul>
+        <div class="sca-hero-cta">
+          <button type="button" class="lp-btn-xl" data-act="start">${startLabel} <span class="arrow" aria-hidden="true">→</span></button>
+          <button type="button" class="sca-link sca-link-dark" data-act="example">See an example result</button>
+        </div>
+      </div>
+      <aside class="sca-preview lp-island" aria-label="Example result">
+        <div class="sca-preview-head"><span class="sca-preview-brand">Cytidel</span><span class="sca-preview-tag">Example result</span></div>
+        <p class="sca-preview-title">Your supplier risk position</p>
+        ${chartHTML(ex)}
+        <ul class="sca-preview-list">
+          <li>${ICON.tick}Your position on the Maturity Grid</li>
+          <li>${ICON.tick}Where to focus first</li>
+          <li>${ICON.tick}How you compare with a typical organisation</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+  <section class="lp-light sca-covers-sec">
+    <div class="sca-inner sca-covers">
+      <div class="sca-covers-head"><h2 class="lp-h2">What does the assessment cover?</h2><p class="lp-lead">Eight questions across the four things that decide how much supplier risk you can see, and how fast you can act on it.</p></div>
+      <div class="lp-features">
+        ${feature(ICON.eye, 'Visibility', 'Whether you hold one list of your suppliers, and how far you see beyond the direct ones.')}
+        ${feature(ICON.layers, 'Coverage', 'How much of the supplier base your current providers actually monitor.')}
+        ${feature(ICON.target, 'Prioritisation', 'How you decide which supplier risk to act on first.')}
+        ${feature(ICON.bolt, 'Early warning', 'Whether you would hear that a supplier is being targeted before it reaches the news.')}
+      </div>
+    </div>
+  </section>
+  <section class="sca-section sca-section-last">
+    <div class="sca-inner">
+      <div class="sca-card">
+        <div class="sca-card-head"><h2>The Supply Chain Risk Maturity Grid</h2><p>Where does your supply chain risk sit today, and which quadrant do you need to be in twelve months from now?</p></div>
+        <div class="sca-chart-wrap">${chartHTML(null)}</div>
+        ${quadCardsHTML()}
         <div class="sca-row">
-          <button type="button" class="sca-btn sca-btn-primary" data-act="start">${resuming ? 'Continue assessment' : 'Start the assessment'} <span aria-hidden="true">→</span></button>
+          <button type="button" class="sca-btn sca-btn-primary" data-act="start">${startLabel} <span aria-hidden="true">→</span></button>
           <button type="button" class="sca-link" data-act="example">See an example result</button>
         </div>
       </div>
-      <dl class="sca-facts">
-        <div><dt>48%</dt><dd>of breaches involved a third party, up from 30% the year before (<a href="${SOURCES.v26.url}" target="_blank" rel="noopener">Verizon 2026 DBIR</a>)</dd></div>
-        <div><dt>15%</dt><dd>of UK businesses formally review cyber risk from their immediate suppliers (<a href="${SOURCES.csbs26.url}" target="_blank" rel="noopener">UK Government, 2026</a>)</dd></div>
-        <div><dt>3 min</dt><dd>to complete, with your report shown at the end</dd></div>
-      </dl>
-    </section>
-    <section class="sca-card">
-      <div class="sca-card-head"><h2>The Supply Chain Risk Maturity Grid</h2><p>Where does your supply chain risk sit today, and which quadrant do you need to be in twelve months from now?</p></div>
-      <div class="sca-chart-wrap">
-        ${chartHTML(null)}
-      </div>
-      ${quadCardsHTML()}
-    </section>`;
+    </div>
+  </section>`;
 }
 
-function orgHTML(): string {
-  const o = S.org;
-  const f = (id: keyof State['org'], label: string, hint: string, ph: string, mode = 'numeric'): string =>
-    `<div class="sca-field"><label for="sca-${id}">${label}</label><input id="sca-${id}" data-org="${id}" inputmode="${mode}" value="${esc(o[id])}" placeholder="${ph}">${hint ? `<span class="sca-hint">${hint}</span>` : ''}</div>`;
-  const st = STEPS[S.step];
+// The details gate. Three fields, in the same order as the site's other
+// forms; company is prefilled from the email domain when it is left empty.
+function gateHTML(): string {
+  const l = S.lead, st = STEPS[S.step];
   return `<section class="sca-card"><div class="sca-card-head"><h2>${st.title}</h2><p>${st.lede}</p></div>
-    <div class="sca-fields">
-      ${f('company', 'Company name', '', 'e.g. Northbridge Group', 'text')}
-      <div class="sca-field"><label for="sca-industry">Industry</label><select id="sca-industry" required><option value="" disabled ${o.industry ? '' : 'selected'}>Select an industry</option>${Object.entries(INDUSTRIES)
-        .map(([k, v]) => `<option value="${k}" ${o.industry === k ? 'selected' : ''}>${v.name}</option>`)
-        .join('')}</select></div>
-      ${f('headcount', 'Total headcount', 'Employees across the group', 'e.g. 4,500')}
-      ${f('fte', 'Headcount focused on supplier risk', 'Full-time equivalent, across security, risk and procurement. Use 0.5 for part of a role.', 'e.g. 1.5', 'decimal')}
-      ${f('suppliers', 'Number of third-party suppliers', 'Suppliers with access to your systems, data or operations', 'e.g. 1,200')}
-      ${f('critical', 'Of which, business-critical suppliers', 'Suppliers whose failure or compromise would stop operations', 'e.g. 140')}
+    <div class="sca-fields sca-fields-gate">
+      <div class="sca-field"><label for="sca-name">Name</label><input id="sca-name" data-lead="name" autocomplete="name" value="${esc(l.name)}"></div>
+      <div class="sca-field"><label for="sca-email">Work email</label><input id="sca-email" data-lead="email" type="email" inputmode="email" autocomplete="email" value="${esc(l.email)}"></div>
+      <div class="sca-field"><label for="sca-company">Company</label><input id="sca-company" data-lead="company" autocomplete="organization" value="${esc(l.company)}"></div>
     </div>
-    <p class="sca-err" id="sca-org-err" hidden></p>
-    ${navHTML()}</section>`;
-}
-
-function leadHTML(): string {
-  const l = S.lead;
-  return `<section class="sca-card"><div class="sca-card-head"><h2>Where should we send your results?</h2><p>Your full report appears straight after this step.</p></div>
-    <div class="sca-fields">
-      <div class="sca-field"><label for="sca-firstname">First name</label><input id="sca-firstname" data-lead="firstname" autocomplete="given-name" value="${esc(l.firstname)}"></div>
-      <div class="sca-field"><label for="sca-lastname">Last name</label><input id="sca-lastname" data-lead="lastname" autocomplete="family-name" value="${esc(l.lastname)}"></div>
-      <div class="sca-field"><label for="sca-email">Work email</label><input id="sca-email" data-lead="email" type="email" autocomplete="email" value="${esc(l.email)}"></div>
-      <div class="sca-field"><label for="sca-title">Job title</label><input id="sca-title" data-lead="title" autocomplete="organization-title" value="${esc(l.title)}"></div>
-      <div class="sca-field"><label for="sca-lcompany">Company</label><input id="sca-lcompany" data-org="company" autocomplete="organization" value="${esc(S.org.company)}"></div>
-    </div>
-    <label class="sca-check"><input type="checkbox" id="sca-walk" ${l.walk ? 'checked' : ''}><span>I'd like a Cytidel specialist to walk me through my results.</span></label>
     <label class="sca-check"><input type="checkbox" id="sca-marketing" ${l.marketing ? 'checked' : ''}><span>Keep me updated on supply chain risk research and events from Cytidel. You can opt out at any time.</span></label>
-    <p class="sca-privacy">We use these details to show and send your results and, if you ask, to arrange a walkthrough. See our <a href="/privacy">privacy policy</a>.</p>
+    <p class="sca-privacy">We use these details to show your results and to follow up if you ask us to. See our <a href="/privacy">privacy policy</a>.</p>
     ${LIVE ? '' : '<p class="sca-note">Preview build. Details entered here are not sent anywhere until the HubSpot form is configured.</p>'}
     <p class="sca-err" id="sca-lead-err" hidden></p>
     ${navHTML('See my results', 'submit')}</section>`;
 }
 
+// Results headline, shown in the navy band above the report.
+function resultsHeadHTML(): string {
+  const r = score(S.a, S.cap), co = esc(S.lead.company.trim() || 'Your organisation');
+  return `${S.example ? '<p class="sca-example"><span>Example result</span> A sample manufacturer with 1,000 to 5,000 suppliers, not your data.</p>' : ''}
+    <span class="lp-eyebrow">${co} · supply chain risk position</span>
+    <h1 class="lp-h1 sca-res-h1">${co} sits in <em>${QUADS[r.quad].name}</em></h1>`;
+}
+
 function resultsHTML(): string {
-  const r = score(), qd = QUADS[r.quad], co = esc(S.org.company || 'Your organisation'), g = gaps(r);
-  const indName = r.ind.name.toLowerCase();
+  const r = score(S.a, S.cap), qd = QUADS[r.quad], co = esc(S.lead.company.trim() || 'Your organisation'), g = gaps(r);
   const ratioTxt =
     r.ratio >= 1.05
-      ? `<strong>${r.ratio.toFixed(1)}x</strong> the modelled exposure of a typical ${indName} organisation with the same supplier base`
+      ? `<strong>${r.ratio.toFixed(1)}x</strong> the modelled exposure of a typical organisation with the same supplier base`
       : r.ratio <= 0.95
-        ? `<strong>${Math.round((1 - r.ratio) * 100)}% lower</strong> modelled exposure than a typical ${indName} organisation with the same supplier base`
-        : `modelled exposure <strong>in line with</strong> a typical ${indName} organisation with the same supplier base`;
+        ? `<strong>${Math.round((1 - r.ratio) * 100)}% lower</strong> modelled exposure than a typical organisation with the same supplier base`
+        : `modelled exposure <strong>in line with</strong> a typical organisation with the same supplier base`;
   const pct = (n: number): number => (r.N > 0 ? (n / r.N) * 100 : 0);
   const bar = (label: string, val: number, cls: string): string =>
     `<div class="sca-cmp-row"><span class="sca-cmp-l">${label}</span><div class="sca-cmp-track"><i class="${cls}" style="width:${val}%"></i></div><b>${val}</b></div>`;
   const src = SOURCES[r.ind.rateSrc];
-  const regs = multi('regs').filter((v) => v !== 'none').map((v) => optOf('regs', v).t);
-  const cta = S.lead.walk && S.sent && LIVE
-    ? '<p class="sca-done">Walkthrough requested. The Cytidel team will be in touch to arrange a time.</p>'
-    : `<a class="sca-btn sca-btn-primary" href="${esc(bookingUrl)}" data-analytics="CTA|Book a Demo|Assessment Results">Book a results walkthrough <span aria-hidden="true">→</span></a>`;
+  const regs = mVal('regs').filter((v) => v !== 'none').map((v) => optOf('regs', v).t);
+  const band = optOf('suppliers', sVal('suppliers')).t.toLowerCase();
 
-  return `${S.example ? '<p class="sca-example"><span>Example result</span> A sample 4,500-person manufacturer, not your data.</p>' : ''}
-  <section class="sca-res-head">
-    <span class="sca-eyebrow">${co} · supply chain risk position</span>
-    <h1>${co} sits in ${qd.name}</h1>
-  </section>
-
-  <section class="sca-card sca-position">
+  return `<section class="sca-card sca-position">
     ${chartHTML(r)}
     <div class="sca-position-side">
       <div class="sca-legend">
         <span><i class="sca-mk-you"></i>You</span>
-        <span><i class="sca-mk-peer"></i>${esc(r.ind.name)} peer baseline</span>
+        <span><i class="sca-mk-peer"></i>Typical organisation baseline</span>
         <span><i class="sca-mk-target"></i>Cytidel target state</span>
       </div>
       <div class="sca-scores">
@@ -378,24 +328,23 @@ function resultsHTML(): string {
   </section>
 
   <section class="sca-card">
-    <div class="sca-card-head"><h2>Your supplier base, by level of oversight</h2><p>Your scores applied to ${fmt(r.N)} suppliers${r.C ? `, ${fmt(r.C)} of them business-critical` : ''}. Modelled from your answers, not a scan of your suppliers.</p></div>
-    <div class="sca-stack" role="img" aria-label="${fmt(r.prioritised)} prioritised, ${fmt(r.inView - r.prioritised)} in view without prioritisation, ${fmt(r.outside)} outside effective view"><div class="is-good" style="width:${pct(r.prioritised)}%"></div><div class="is-mid" style="width:${pct(r.inView - r.prioritised)}%"></div><div class="is-bad" style="width:${pct(r.outside)}%"></div></div>
+    <div class="sca-card-head"><h2>Your supplier base, by level of oversight</h2><p>Your scores applied to a supplier base of ${esc(band)}, modelled as ${fmt(r.N)} suppliers. Modelled from your answers, not a scan of your suppliers.</p></div>
+    <div class="sca-stack-bar" role="img" aria-label="${fmt(r.prioritised)} prioritised, ${fmt(r.inView - r.prioritised)} in view without prioritisation, ${fmt(r.outside)} outside effective view"><div class="is-good" style="width:${pct(r.prioritised)}%"></div><div class="is-mid" style="width:${pct(r.inView - r.prioritised)}%"></div><div class="is-bad" style="width:${pct(r.outside)}%"></div></div>
     <div class="sca-stack-key">
       <div class="is-good"><b>${fmt(r.prioritised)}</b>In view and prioritised by real risk</div>
       <div class="is-mid"><b>${fmt(r.inView - r.prioritised)}</b>In view, without threat-led prioritisation</div>
       <div class="is-bad"><b>${fmt(r.outside)}</b>Outside effective view</div>
     </div>
-    <p class="sca-sub">${r.perFte !== null ? `Capacity: ${fmt(r.perFte)} suppliers for each person focused on supply chain risk.` : 'Capacity: no headcount is currently focused on supply chain risk.'}</p>
   </section>
 
   <section class="sca-card">
-    <div class="sca-card-head"><h2>Compared with your industry</h2><p>${co} carries ${ratioTxt}.</p></div>
+    <div class="sca-card-head"><h2>Compared with a typical organisation</h2><p>${co} carries ${ratioTxt}.</p></div>
     <div class="sca-cmp">
       ${bar(co, r.R, 'is-you')}
-      ${bar(`${esc(r.ind.name)} baseline`, r.Rp, 'is-peer')}
+      ${bar('Typical organisation', r.Rp, 'is-peer')}
       ${bar('Cytidel target state', r.Rt, 'is-target')}
     </div>
-    <p class="sca-sub">Supply chain risk exposure, 0 to 100. Higher means more unmanaged exposure. Every bar uses your supplier count, with business-critical suppliers weighted three times, so the difference comes from maturity alone. Industry baselines are Cytidel's modelled estimates, not survey results.</p>
+    <p class="sca-sub">Supply chain risk exposure, 0 to 100. Higher means more unmanaged exposure. Every bar uses your supplier count, so the difference comes from maturity alone. The baseline is Cytidel's modelled estimate for a typical mid-to-large organisation, not a survey result.</p>
   </section>
 
   <section class="sca-card">
@@ -413,41 +362,48 @@ function resultsHTML(): string {
   <section class="sca-card">
     <div class="sca-card-head"><h2>The wider picture</h2></div>
     <div class="sca-stats">
-      <div class="sca-stat"><b>${r.ind.rate}%</b><span>of breaches involved a third party${r.ind.cross ? ' across all sectors' : ` in ${esc(indName)}`}</span><cite><a href="${src.url}" target="_blank" rel="noopener">${src.label}</a></cite></div>
+      <div class="sca-stat"><b>${r.ind.rate}%</b><span>of breaches involved a third party across all sectors</span><cite><a href="${src.url}" target="_blank" rel="noopener">${src.label}</a></cite></div>
       <div class="sca-stat"><b>$4.91m</b><span>average cost of a breach starting with a third-party or supply chain compromise, taking 267 days to identify and contain</span><cite><a href="${SOURCES.ibm25.url}" target="_blank" rel="noopener">${SOURCES.ibm25.label}</a></cite></div>
       <div class="sca-stat"><b>15%</b><span>of UK businesses formally review cyber risk from immediate suppliers, and 6% their wider supply chain</span><cite><a href="${SOURCES.csbs26.url}" target="_blank" rel="noopener">${SOURCES.csbs26.label}</a></cite></div>
     </div>
   </section>
 
-  <section class="sca-cta">
+  <section class="sca-cta lp-dark">
     <div><h2>Walk through your results with Cytidel</h2><p>Cytidel maps live threat actor activity and real exploitation across your supplier base, so supply chain risk arrives as one prioritisation decision rather than another queue. In 30 minutes we'll take you through your position on the grid and what moving to Risk-Led Action would take.</p></div>
-    <div>${cta}</div>
+    <div><a class="lp-btn-xl" href="${esc(bookingUrl)}" data-analytics="CTA|Book a Demo|Assessment Results">Book a results walkthrough <span class="arrow" aria-hidden="true">→</span></a></div>
   </section>
 
   <details class="sca-card sca-method"><summary>How this assessment is calculated</summary>
     <ul>
       <li>Detectability (0 to 100) combines your self-placement (15%), supplier register (20%), monitoring coverage (30%), visibility beyond P1 suppliers (25%) and early warning across the supply chain (10%).</li>
-      <li>Prioritisation ability (0 to 100) combines your self-placement (15%), supplier tiering (10%), how you decide which supplier risk to act on (30%), threat actor intelligence and speed to act (35%) and team capacity (10%).</li>
+      <li>Prioritisation ability (0 to 100) combines your self-placement (17%), supplier tiering (11%), how you decide which supplier risk to act on (33%) and threat actor intelligence and speed to act (39%).</li>
       <li>Grid position uses 50 as the midpoint on each axis.</li>
-      <li>Effective oversight equals detectability multiplied by a prioritisation factor (40% credit for visibility alone, rising to 100% with full prioritisation). Supply chain risk exposure is the unmanaged share of your weighted supplier base (business-critical suppliers count three times), scaled for supplier base size.</li>
-      <li>Peer baselines are Cytidel modelled positions for a typical organisation of 2,000 or more employees in each industry, informed by the published research below. They are indicative, not survey results.</li>
+      <li>Effective oversight equals detectability multiplied by a prioritisation factor (40% credit for visibility alone, rising to 100% with full prioritisation). Supply chain risk exposure is the unmanaged share of your supplier base, scaled for its size using the midpoint of the band you chose.</li>
+      <li>The baseline is Cytidel's modelled position for a typical organisation of 2,000 or more employees, informed by the published research below. It is indicative, not a survey result.</li>
       <li>Sources: ${Object.values(SOURCES).map((s) => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join('; ')}.</li>
     </ul>
   </details>
   <div class="sca-row"><button type="button" class="sca-btn sca-btn-outline" data-act="edit">Change my answers</button><button type="button" class="sca-btn sca-btn-outline" data-act="restart">Start a new assessment</button></div>`;
 }
 
+const bandHTML = (inner: string): string =>
+  `<section class="sca-topband lp-dark"><div class="sca-inner sca-topband-inner">${inner}</div></section>`;
+
 function render(): void {
   if (!app) return;
   const st = STEPS[S.step];
-  if (st.id === 'intro') app.innerHTML = introHTML();
-  else if (st.id === 'org') app.innerHTML = progressHTML() + orgHTML();
-  else if (st.id === 'lead') app.innerHTML = progressHTML() + leadHTML();
-  else if (st.id === 'res') app.innerHTML = resultsHTML();
-  else
+  if (st.id === 'intro') {
+    app.innerHTML = introHTML();
+  } else if (st.id === 'res') {
+    app.innerHTML = bandHTML(resultsHeadHTML()) + `<div class="sca-inner sca-stack sca-lift">${resultsHTML()}</div>`;
+  } else {
+    const card = st.id === 'lead'
+      ? gateHTML()
+      : `<section class="sca-card sca-qcard">${(st.qs ?? []).map(optsHTML).join('')}${navHTML()}</section>`;
     app.innerHTML =
-      progressHTML() +
-      `<section class="sca-card sca-qcard">${(st.qs ?? []).map(optsHTML).join('')}${navHTML()}</section>`;
+      bandHTML(`<span class="lp-eyebrow">Supplier risk self-assessment</span>${progressHTML()}`) +
+      `<div class="sca-inner sca-stack sca-lift">${card}</div>`;
+  }
   bind();
   save();
 }
@@ -483,17 +439,22 @@ function bind(): void {
   });
   const cap = $<HTMLInputElement>('#sca-cap', app);
   cap?.addEventListener('input', () => { S.cap = cap.value; save(); });
-  app.querySelectorAll<HTMLInputElement>('[data-org]').forEach((el) =>
-    el.addEventListener('input', () => { S.org[el.dataset.org as keyof State['org']] = el.value; save(); }));
-  const ind = $<HTMLSelectElement>('#sca-industry', app);
-  ind?.addEventListener('change', () => { S.org.industry = ind.value; save(); });
-  app.querySelectorAll<HTMLInputElement>('[data-lead]').forEach((el) =>
-    el.addEventListener('input', () => {
-      const k = el.dataset.lead as 'firstname' | 'lastname' | 'email' | 'title';
-      S.lead[k] = el.value;
-    }));
-  const walk = $<HTMLInputElement>('#sca-walk', app);
-  walk?.addEventListener('change', () => { S.lead.walk = walk.checked; });
+  app.querySelectorAll<HTMLInputElement>('[data-lead]').forEach((el) => {
+    const k = el.dataset.lead as 'name' | 'email' | 'company';
+    el.addEventListener('input', () => { S.lead[k] = el.value; });
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); void act('submit'); } });
+    if (k === 'email') {
+      // Guess the company from the work email's domain, unless one is typed.
+      el.addEventListener('change', () => {
+        if (S.lead.company.trim()) return;
+        const guess = companyFromEmail(el.value);
+        if (!guess) return;
+        S.lead.company = guess;
+        const c = $<HTMLInputElement>('#sca-company', app);
+        if (c) c.value = guess;
+      });
+    }
+  });
   const mkt = $<HTMLInputElement>('#sca-marketing', app);
   mkt?.addEventListener('change', () => { S.lead.marketing = mkt.checked; });
   app.querySelectorAll<HTMLElement>('[data-act]').forEach((b) => b.addEventListener('click', () => act(b.dataset.act!)));
@@ -502,13 +463,14 @@ function bind(): void {
 
 function go(step: number): void {
   S.step = step;
-  if (step <= LEAD) S.furthest = Math.max(S.furthest, step);
+  if (step <= GATE) S.furthest = Math.max(S.furthest, step);
   render();
   window.scrollTo({ top: 0 });
   const h = $<HTMLElement>('h1, h2', app!);
   if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
   const st = STEPS[step];
   if (st.name) track('Step', st.name);
+  if (step === GATE) track('Gate shown');
 }
 
 function showErr(el: Element | null, msg: string): void {
@@ -519,26 +481,6 @@ function showErr(el: Element | null, msg: string): void {
 
 function mark(id: string, ok: boolean): void {
   $(`#${id}`, app!)?.setAttribute('aria-invalid', ok ? 'false' : 'true');
-}
-
-function validateOrg(): boolean {
-  const o = S.org, bad: string[] = [];
-  const check = (id: string, ok: boolean): void => { mark(`sca-${id}`, ok); if (!ok) bad.push(id); };
-  check('company', o.company.trim().length > 0);
-  check('industry', !!o.industry);
-  check('headcount', num(o.headcount) > 0);
-  check('fte', num(o.fte) >= 0);
-  check('suppliers', num(o.suppliers) > 0);
-  check('critical', num(o.critical) >= 0 && num(o.critical) <= num(o.suppliers));
-  const err = $('#sca-org-err', app!);
-  if (bad.length) {
-    showErr(err, bad.includes('critical') && num(o.critical) > num(o.suppliers)
-      ? "Business-critical suppliers can't exceed the total number of suppliers."
-      : 'Complete the highlighted fields. Estimates are fine.');
-    return false;
-  }
-  showErr(err, '');
-  return true;
 }
 
 function validateQs(): boolean {
@@ -560,33 +502,32 @@ function validateQs(): boolean {
 // Plain-text summary for the contact's "message" property, so the result
 // lands in HubSpot without any custom properties set up.
 function summary(r: Result): string {
-  const opt = (qid: string): string => optOf(qid, single(qid)).t;
+  const opt = (qid: string): string => optOf(qid, sVal(qid)).t;
   return [
     'Supply Chain Risk Maturity Grid result',
     `Quadrant: ${QUADS[r.quad].name}`,
     `Detectability: ${r.D}/100 · Prioritisation ability: ${r.P}/100`,
-    `Risk exposure: ${r.R}/100 (${r.band}); ${r.ind.name} baseline ${r.Rp}/100; ${r.ratio.toFixed(2)}x the baseline`,
-    `Industry: ${r.ind.name} · Headcount: ${S.org.headcount} · Supply chain risk FTE: ${S.org.fte}`,
-    `Suppliers: ${S.org.suppliers} (business-critical: ${S.org.critical})`,
+    `Risk exposure: ${r.R}/100 (${r.band}); typical organisation baseline ${r.Rp}/100; ${r.ratio.toFixed(2)}x the baseline`,
+    `Suppliers: ${opt('suppliers')} (modelled as ${fmt(r.N)})`,
     `Oversight: ${fmt(r.prioritised)} prioritised · ${fmt(r.inView - r.prioritised)} in view, not prioritised · ${fmt(r.outside)} outside effective view`,
-    `Approach: ${opt('approach')} · Register: ${opt('list')} · Coverage: ${single('coverage') === 'cap' ? `capped at ${S.cap}` : opt('coverage')} (${Math.round(r.cov * 100)}% of suppliers)`,
-    `Providers: ${multi('providers').map((v) => optOf('providers', v).t).join(', ') || 'none given'}`,
+    `Approach: ${opt('approach')} · Register: ${opt('list')} · Coverage: ${sVal('coverage') === 'cap' ? `capped at ${S.cap}` : opt('coverage')} (${Math.round(r.cov * 100)}% of suppliers)`,
+    `Providers: ${mVal('providers').map((v) => optOf('providers', v).t).join(', ') || 'none given'}`,
     `Beyond P1: ${opt('nth')} · Prioritise by: ${opt('prioritise')} · Early warning: ${opt('threat')}`,
-    `Regulations: ${multi('regs').map((v) => optOf('regs', v).t).join(', ') || 'none given'}`,
-    `Walkthrough requested: ${S.lead.walk ? 'yes' : 'no'} · Marketing updates: ${S.lead.marketing ? 'yes' : 'no'}`,
+    `Regulations: ${mVal('regs').map((v) => optOf('regs', v).t).join(', ') || 'none given'}`,
+    `Marketing updates: ${S.lead.marketing ? 'yes' : 'no'}`,
   ].join('\n');
 }
 
 async function sendLead(): Promise<boolean> {
   if (!LIVE) return false;
-  const r = score();
+  const r = score(S.a, S.cap);
+  const { firstname, lastname } = splitName(S.lead.name);
   const field = (name: string, value: string): HSFormsField => ({ objectTypeId: '0-1', name, value });
   const fields: HSFormsField[] = [
-    field('firstname', S.lead.firstname.trim()),
-    field('lastname', S.lead.lastname.trim()),
+    field('firstname', firstname),
+    ...(lastname ? [field('lastname', lastname)] : []),
     field('email', S.lead.email.trim()),
-    field('company', S.org.company.trim()),
-    field('jobtitle', S.lead.title.trim()),
+    field('company', S.lead.company.trim()),
     field('message', summary(r)),
   ];
   try {
@@ -607,56 +548,56 @@ async function sendLead(): Promise<boolean> {
 function loadExample(): void {
   S = blank();
   S.example = true;
-  S.org = { company: 'Example Manufacturing Group', industry: 'mfg', headcount: '4500', fte: '1.5', suppliers: '1200', critical: '140' };
-  S.a = { approach: 'over', list: 'flat', coverage: 'cap', providers: ['grc', 'ratings'], nth: 'mapped', prioritise: 'score', threat: 'reports', regs: ['nis2', 'cra'] };
-  S.cap = '300';
+  S.a = { ...EXAMPLE.a };
+  S.cap = EXAMPLE.cap;
+  S.lead.company = EXAMPLE.company;
 }
 
 // Jump from the progress bar. Going forward checks the current screen first,
 // like Continue, so no answer is skipped.
 function jump(target: number): void {
-  if (!(target >= 1 && target <= S.furthest) || target === S.step) return;
-  if (target > S.step) {
-    if (STEPS[S.step].id === 'org' && !validateOrg()) return;
-    if (STEPS[S.step].qs && !validateQs()) return;
-  }
+  if (!(target >= FIRST_Q && target <= S.furthest) || target === S.step) return;
+  if (target > S.step && STEPS[S.step].qs && !validateQs()) return;
   go(target);
 }
 
+const GATE_MESSAGES: Record<Exclude<LeadProblem, 'ok'>, { field: string; msg: string }> = {
+  name: { field: 'sca-name', msg: 'Add your name.' },
+  email: { field: 'sca-email', msg: 'Enter a valid work email.' },
+  free: { field: 'sca-email', msg: "Please use your work email. We can't show results for personal email addresses." },
+  company: { field: 'sca-company', msg: 'Add your company name.' },
+};
+
 async function act(a: string): Promise<void> {
   if (a === 'start') {
+    if (STEPS[S.step].qs && !validateQs()) return;
     S.example = false;
-    track('Start');
-    go(single('approach') && S.step === 0 ? Math.max(1, Math.min(S.resume, LEAD)) : 1);
+    if (!started) { started = true; track('Start'); }
+    go(Math.min(Math.max(S.resume, FIRST_Q), GATE));
     return;
   }
   if (a === 'example') { loadExample(); track('Example'); go(RES); return; }
   if (a === 'back') { go(Math.max(0, S.step - 1)); return; }
   if (a === 'next') {
-    if (STEPS[S.step].id === 'org' && !validateOrg()) return;
     if (STEPS[S.step].qs && !validateQs()) return;
     S.resume = S.step + 1;
     go(S.step + 1);
     return;
   }
   if (a === 'submit') {
-    const l = S.lead, err = $('#sca-lead-err', app!);
-    const email = l.email.trim();
-    const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-    mark('sca-firstname', !!l.firstname.trim());
-    mark('sca-lastname', !!l.lastname.trim());
-    mark('sca-email', okEmail);
-    mark('sca-lcompany', !!S.org.company.trim());
-    if (!l.firstname.trim() || !l.lastname.trim() || !okEmail || !S.org.company.trim()) {
-      showErr(err, 'Add your name, a valid work email and your company.');
+    const err = $('#sca-lead-err', app!);
+    const problem = validateLead(S.lead);
+    for (const id of ['sca-name', 'sca-email', 'sca-company']) mark(id, true);
+    if (problem !== 'ok') {
+      const { field, msg } = GATE_MESSAGES[problem];
+      mark(field, false);
+      showErr(err, msg);
+      $<HTMLInputElement>(`#${field}`, app!)?.focus();
+      if (problem === 'free') track('Rejected Free Email');
       return;
     }
-    if (isFreeEmail(email)) {
-      mark('sca-email', false);
-      showErr(err, "Please use your work email. We can't send results to personal email addresses.");
-      track('Rejected Free Email');
-      return;
-    }
+    showErr(err, '');
+    track('Gate submitted');
     const btn = $<HTMLButtonElement>('[data-act="submit"]', app!);
     if (btn) { btn.disabled = true; btn.textContent = 'Preparing your results…'; }
     S.sent = await sendLead();

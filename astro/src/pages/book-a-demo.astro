@@ -20,7 +20,7 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
     <link rel="preconnect" href="https://meetings-eu1.hubspot.com" crossorigin />
   </Fragment>
 
-  <section class="demo-section" aria-labelledby="hero-h1">
+  <section class="demo-section lp-dark" aria-labelledby="hero-h1">
     <div class="container">
       <div class="demo-grid">
         <div class="demo-intro">
@@ -29,7 +29,7 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
           <p class="hero-sub">Meet with a Cytidel expert to discuss how you can get ahead of emerging threats, understand latest threat actor activity, and monitor your software and suppliers 24/7.</p>
         </div>
 
-        <div class="demo-form-wrap">
+        <div class="demo-form-wrap lp-island">
           <form
             id="book-demo-form"
             class="demo-form"
@@ -225,17 +225,29 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
 
   .demo-intro { max-width: 560px; }
   .eyebrow {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 500;
+    /* Nov 2026 uplift: plain capitals with a rule, from the marketing mockups (was a pill / small text) */
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+    line-height: 1.4;
     color: var(--color-accent-deep);
     margin-bottom: 1.25rem;
   }
+  .eyebrow::after {
+    content: "";
+    flex: none;
+    width: 56px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.8;
+  }
   .demo-intro h1 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.025em;
     line-height: 1.06;
     margin: 0;
@@ -261,9 +273,11 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
     display: grid;
     gap: clamp(18px, 2.5vw, 22px);
     padding: clamp(28px, 4vw, 40px);
-    background: var(--color-bg-elev);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+    /* White card on the navy hero (Nov 2026 uplift, as in the white paper mockup) */
+    background: #fff;
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(128, 252, 19, 0.18);
   }
   @media (max-width: 880px) {
     .demo-form { margin: 0 auto; }
@@ -295,7 +309,7 @@ const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/gary-fagan/book-a-
     font: inherit;
     font-size: 1rem;
     padding: 12px 14px;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-strong);
     border-radius: 8px;
     background: #fff;
     color: var(--color-text);

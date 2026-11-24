@@ -17,7 +17,7 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
 ---
 <Layout
   title="Supply Chain Risk Maturity Grid · Cytidel"
-  description="Score your supplier monitoring in about three minutes. See where your supply chain risk sits on the Maturity Grid, how you compare with your industry, and where to focus first."
+  description="Eight quick questions on how you manage supplier risk. See where you sit on the Supply Chain Risk Maturity Grid, how you compare with a typical organisation, and where to focus first."
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://api.hsforms.com" crossorigin />
@@ -46,78 +46,122 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
 
 <style is:global>
   /* All rules are prefixed .sca: the app renders its markup from script, so
-     Astro's scoped styles can't reach it. Semantic colours are local to the
-     assessment and defined on the wrapper. */
+     Astro's scoped styles can't reach it. The shared landing style (navy
+     bands, big call to action, trust row, feature row) comes from
+     src/styles/landing.css; this block covers the assessment itself.
+
+     The wrapper re-points the site's text and surface tokens at the landing
+     palette (ink on white paper), so every rule below that reads
+     --color-text or --color-surface picks up the new look. */
   .sca {
     --sca-amber: #b7791f;
     --sca-amber-soft: #fbf1de;
     --sca-red: #b8432f;
     --sca-red-soft: #fbe6e3;
-    --sca-ink: #0b0e0a;
-    background: var(--color-bg);
+    --sca-ink: var(--color-ink);
+    --color-text: var(--color-ink);
+    --color-text-secondary: var(--color-ink-secondary);
+    --color-text-tertiary: #7b8890;
+    --color-bg: var(--color-paper);
+    --color-surface: var(--color-paper-alt);
+    --color-surface-2: #e6ebed;
+    --color-border: var(--color-line);
+    --color-border-strong: var(--color-line-strong);
+    background: var(--color-paper-alt);
   }
-  .sca-wrap {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 48px) clamp(56px, 7vw, 96px);
-    display: flex;
-    flex-direction: column;
-    gap: clamp(20px, 2.5vw, 28px);
+  .sca-wrap { display: block; min-width: 0; }
+  /* Page column. Bands run full width with their own inner column. */
+  .sca-inner { max-width: 1120px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 48px); min-width: 0; }
+  .sca-stack {
+    display: flex; flex-direction: column; gap: clamp(20px, 2.5vw, 28px);
+    padding-block: clamp(40px, 6vw, 72px) clamp(56px, 7vw, 96px);
   }
+  .sca-section { padding-top: clamp(48px, 6vw, 80px); }
+  .sca-section-last { padding-bottom: clamp(56px, 7vw, 96px); }
   .sca h1, .sca h2, .sca h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; color: var(--color-text); }
+  .sca .lp-dark h1, .sca .lp-dark h2, .sca .lp-dark h3 { color: #f4f7f6; }
   .sca p { margin: 0; }
   .sca a { color: var(--color-accent-deep); text-underline-offset: 2px; }
   .sca :focus-visible { outline: 2px solid var(--color-accent-deep); outline-offset: 3px; }
-
-  /* Labels */
-  .sca-eyebrow {
-    align-self: flex-start;
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 7px 15px; border-radius: 999px;
-    background: var(--color-accent-dim); color: var(--color-accent-deep);
-    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-  }
-  .sca-eyebrow-plain { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-deep); }
+  .sca .lp-dark :focus-visible { outline-color: var(--color-accent); }
 
   /* Buttons */
-  .sca-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .sca-row { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
   .sca-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 14px 22px; border-radius: 10px; border: 1px solid transparent;
-    font: inherit; font-weight: 600; font-size: 0.98rem; line-height: 1.2;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 52px; padding: 14px 26px; border-radius: 12px; border: 1.5px solid transparent;
+    font: inherit; font-weight: 700; font-size: 1.02rem; line-height: 1.2;
     text-decoration: none; cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.15s ease;
   }
   .sca a.sca-btn-primary, .sca-btn-primary { background: var(--color-accent); color: #0b2000; }
-  .sca-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(128, 252, 19, 0.35); }
+  .sca-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(128, 252, 19, 0.35); }
   .sca-btn-primary:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
-  .sca-btn-outline { background: transparent; color: var(--color-text); border-color: var(--color-border-strong); }
+  .sca-btn-outline { background: var(--color-paper); color: var(--color-text); border-color: var(--color-border-strong); }
   .sca-btn-outline:hover { border-color: var(--color-text); }
-  .sca-link { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--color-accent-deep); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .sca a.lp-btn-xl { color: #0b2000; }
+  .sca-link { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--color-accent-deep); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .sca-link-dark { color: #f4f7f6; text-decoration-color: rgba(128, 252, 19, 0.7); }
+  .sca-link-dark:hover { color: var(--color-accent); }
 
-  /* Intro */
-  .sca-hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: end; }
-  .sca-hero-copy { display: flex; flex-direction: column; gap: 20px; }
-  .sca-hero h1, .sca-res-head h1 { font-weight: 600; letter-spacing: -0.028em; line-height: 1.06; font-size: clamp(2.1rem, 4.6vw, 3.4rem); }
-  .sca-lede { font-size: clamp(1.05rem, 1.5vw, 1.18rem); line-height: 1.6; color: var(--color-text-secondary); max-width: 60ch; }
-  .sca-facts { margin: 0; display: grid; gap: 18px; padding-left: 20px; border-left: 3px solid var(--color-accent); }
-  .sca-facts div { display: grid; gap: 2px; }
-  .sca-facts dt { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; color: var(--color-text); }
-  .sca-facts dd { margin: 0; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); }
+  /* Landing page hero: copy, trust row and the big call to action on the
+     left, the example result card on the right. */
+  .sca-hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 7vw, 104px); }
+  .sca-hero .sca-inner { max-width: 1280px; }
+  .sca-hero-inner {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px); align-items: center;
+  }
+  .sca-hero-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .sca-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+  /* Example result card, floating on a green glow */
+  .sca-preview {
+    background: #fff; color: var(--color-text);
+    border-radius: 20px; padding: clamp(20px, 2.5vw, 30px);
+    box-shadow: 0 0 0 1px rgba(128, 252, 19, 0.28), 0 30px 90px rgba(0, 0, 0, 0.45), 0 0 80px rgba(128, 252, 19, 0.18);
+    transform: perspective(1400px) rotateY(-9deg) rotateX(3deg) rotate(1deg);
+    display: flex; flex-direction: column; gap: 14px; min-width: 0;
+  }
+  .sca-preview-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .sca-preview-brand { font-family: var(--font-display); font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; }
+  .sca-preview-tag { padding: 5px 12px; border-radius: 999px; background: var(--color-accent-tile); color: var(--color-accent-deep); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+  .sca-preview-title { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.015em; }
+  .sca-preview .sca-chart { max-width: 100%; }
+  .sca-preview .sca-chart-plot { padding-left: 8px; }
+  .sca-preview .sca-ticks-x, .sca-preview .sca-ticks-y { display: none; }
+  .sca-preview .sca-chart-xl { padding-top: 8px; }
+  .sca-preview .sca-chart-q span { font-size: 0.74rem; }
+  .sca-preview-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 0.95rem; font-weight: 500; color: var(--color-text); }
+  .sca-preview-list li { display: flex; gap: 10px; align-items: center; }
+  .sca-preview-list svg { width: 20px; height: 20px; flex: none; color: var(--color-accent-deep); }
+
+  /* What the assessment covers */
+  .sca-covers-sec { padding-block: clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--color-line); }
+  .sca-covers { display: flex; flex-direction: column; gap: clamp(32px, 4vw, 52px); }
+  .sca-covers-head { text-align: center; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Navy band above every flow screen: progress, or the results headline.
+     The card below lifts over its bottom edge. */
+  .sca-topband { padding-block: clamp(32px, 4.5vw, 52px) clamp(88px, 10vw, 112px); }
+  .sca-topband-inner { display: flex; flex-direction: column; gap: 18px; }
+  .sca-lift { position: relative; z-index: 1; margin-top: clamp(-80px, -8vw, -64px); padding-top: 0; }
+  .sca-res-h1 { font-size: clamp(2rem, 4.2vw, 3.4rem); max-width: 22ch; }
 
   /* Cards */
   .sca-card {
-    background: var(--color-surface);
-    border-radius: 12px;
-    padding: clamp(22px, 3.5vw, 40px);
-    display: flex; flex-direction: column; gap: 24px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgba(12, 26, 34, 0.04), 0 18px 40px -24px rgba(12, 26, 34, 0.25);
+    padding: clamp(24px, 3.5vw, 44px);
+    display: flex; flex-direction: column; gap: 26px;
     min-width: 0;
   }
   .sca-card-head { display: flex; flex-direction: column; gap: 10px; }
-  .sca-card-head h2 { font-weight: 600; letter-spacing: -0.018em; line-height: 1.12; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
-  .sca-card-head p { font-size: 1.02rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 68ch; }
+  .sca-card-head h2 { font-weight: 700; letter-spacing: -0.022em; line-height: 1.12; font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+  .sca-card-head p { font-size: 1.04rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 68ch; }
   .sca-card-head p strong { color: var(--color-text); }
-  .sca-sub { font-size: 0.93rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 72ch; }
+  .sca-sub { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); max-width: 72ch; }
 
   /* The Maturity Grid chart (intro and results). Plot area is 0–100 on both
      axes; quadrant boundaries sit at 50. */
@@ -188,11 +232,11 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
 
   /* Quadrant explanation cards, in the chart's 2×2 order */
   .sca-quads { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .sca-quad { position: relative; background: var(--color-bg); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
-  .sca-quad h3 { font-size: 1.08rem; font-weight: 600; letter-spacing: -0.01em; padding-right: 96px; }
+  .sca-quad { position: relative; background: var(--color-surface); border-radius: 12px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .sca-quad h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; padding-right: 96px; }
   .sca-quad p { font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
   .sca-quad .sca-quad-sub { font-size: 0.8rem; font-weight: 600; color: var(--color-accent-deep); }
-  .sca-quad.is-target { background: var(--color-dark-bg); }
+  .sca-quad.is-target { background: var(--color-navy); }
   .sca-quad.is-target h3 { color: var(--color-dark-text); }
   .sca-quad.is-target p { color: var(--color-dark-text-secondary); }
   .sca-quad.is-target .sca-quad-sub { color: var(--color-accent); }
@@ -207,47 +251,48 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
 
   /* Progress: one segment per screen. Reached screens are buttons; the
      button is taller than its bar so it's an easy target. */
-  .sca-progress { display: flex; flex-direction: column; gap: 6px; }
-  .sca-segs { display: flex; gap: 4px; }
-  .sca-seg { position: relative; flex: 1; height: 20px; padding: 0; border: 0; background: none; }
-  .sca-seg::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 6px; border-radius: 3px; background: var(--color-border-strong); transition: background 0.15s ease; }
+  .sca-progress { display: flex; flex-direction: column; gap: 8px; }
+  .sca-segs { display: flex; gap: 6px; }
+  .sca-seg { position: relative; flex: 1; height: 22px; padding: 0; border: 0; background: none; }
+  .sca-seg::before { content: ""; position: absolute; left: 0; right: 0; top: 8px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.16); transition: background 0.15s ease; }
   .sca-seg.is-done { cursor: pointer; }
-  .sca-seg.is-done::before { background: var(--color-accent-deep); }
-  .sca-seg.is-done:hover::before { background: var(--color-text); }
-  .sca-seg.is-current::before { background: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent-deep); }
-  .sca-progress-label { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
+  .sca-seg.is-done::before { background: rgba(128, 252, 19, 0.55); }
+  .sca-seg.is-done:hover::before { background: #f4f7f6; }
+  .sca-seg.is-current::before { background: var(--color-accent); box-shadow: 0 0 12px rgba(128, 252, 19, 0.6); }
+  .sca-progress-label { font-size: 0.95rem; font-weight: 600; color: rgba(244, 247, 246, 0.8); }
 
   /* Questions */
   .sca-q { min-width: 0; }
   .sca-q + .sca-q { border-top: 1px solid var(--color-border); padding-top: 24px; }
   .sca-q-set { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
   .sca-q-label { padding: 0; margin-bottom: 10px; }
-  .sca-q-label h2 { font-weight: 600; font-size: clamp(1.3rem, 2.4vw, 1.7rem); line-height: 1.2; letter-spacing: -0.018em; color: var(--color-text); }
-  .sca-q-help { font-size: 1rem; line-height: 1.55; color: var(--color-text-secondary); max-width: 68ch; }
+  .sca-q-label h2 { font-weight: 700; font-size: clamp(1.45rem, 2.8vw, 2rem); line-height: 1.18; letter-spacing: -0.022em; color: var(--color-text); }
+  .sca-q-help { font-size: 1.04rem; line-height: 1.55; color: var(--color-text-secondary); max-width: 68ch; }
   /* A single question per screen gets more room */
-  .sca-qcard { padding: clamp(26px, 4vw, 48px); gap: 32px; }
+  .sca-qcard { padding: clamp(26px, 4vw, 52px); gap: 32px; }
   .sca-qcard .sca-q-set { gap: 16px; }
   .sca-qcard .sca-opts { gap: 12px; margin-top: 8px; }
   .sca-q-sub { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
   .sca-q-sub .sca-q-help { font-weight: 500; }
   /* Same two-column grid for every question; one column on phones */
-  .sca-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .sca-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .sca-opt {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 16px 18px; border-radius: 10px; cursor: pointer; min-width: 0;
-    background: var(--color-bg); border: 1px solid var(--color-border);
-    transition: border-color 0.15s ease;
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 18px 20px; border-radius: 12px; cursor: pointer; min-width: 0;
+    background: var(--color-paper); border: 1.5px solid var(--color-border-strong);
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
   }
-  .sca-opt:hover { border-color: var(--color-border-strong); }
-  .sca-opt input { margin: 3px 0 0; flex: none; accent-color: var(--color-accent-deep); }
-  .sca-opt b { display: block; font-weight: 600; font-size: 0.95rem; color: var(--color-text); }
-  .sca-opt small { display: block; margin-top: 3px; font-size: 0.85rem; line-height: 1.45; color: var(--color-text-secondary); }
-  .sca-opt.is-sel { border-color: var(--color-accent-deep); background: var(--color-accent-dim); box-shadow: inset 0 0 0 1px var(--color-accent-deep); }
+  .sca-opt:hover { border-color: var(--color-accent-deep); transform: translateY(-1px); }
+  .sca-opt input { margin: 3px 0 0; flex: none; width: 18px; height: 18px; accent-color: var(--color-accent-deep); }
+  .sca-opt b { display: block; font-weight: 650; font-size: 1.02rem; color: var(--color-text); }
+  .sca-opt small { display: block; margin-top: 4px; font-size: 0.9rem; line-height: 1.45; color: var(--color-text-secondary); }
+  .sca-opt.is-sel { border-color: var(--color-accent-deep); background: var(--color-accent-tile); box-shadow: inset 0 0 0 1px var(--color-accent-deep); }
 
   /* Fields */
   /* Each field spans three shared rows (label, input, hint) so inputs line
      up across a row even when one label wraps or one hint is longer. */
   .sca-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 18px; }
+  .sca-fields-gate { grid-template-columns: 1fr; max-width: 520px; }
   .sca-field { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; row-gap: 6px; padding-bottom: 18px; min-width: 0; }
   .sca-field label { align-self: end; }
   .sca-field label { font-weight: 600; font-size: 0.92rem; color: var(--color-text); }
@@ -275,9 +320,8 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
   .sca-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: 20px; }
 
   /* Results */
-  .sca-example { font-size: 0.9rem; color: var(--color-text-secondary); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .sca-example { font-size: 0.92rem; color: rgba(244, 247, 246, 0.8); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .sca-example span { padding: 3px 10px; border-radius: 999px; background: var(--sca-amber-soft); color: var(--sca-amber); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-  .sca-res-head { display: flex; flex-direction: column; gap: 16px; }
 
   .sca-position { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
   .sca-position-side { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
@@ -303,10 +347,10 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
   .sca-band-elevated, .sca-band-high { background: var(--sca-red-soft); color: var(--sca-red); }
 
   /* Oversight bar */
-  .sca-stack { display: flex; height: 36px; border-radius: 8px; overflow: hidden; background: var(--color-bg); }
-  .sca-stack .is-good { background: var(--color-accent-deep); }
-  .sca-stack .is-mid { background: var(--sca-amber); }
-  .sca-stack .is-bad { background: var(--sca-red); }
+  .sca-stack-bar { display: flex; height: 36px; border-radius: 8px; overflow: hidden; background: var(--color-bg); }
+  .sca-stack-bar .is-good { background: var(--color-accent-deep); }
+  .sca-stack-bar .is-mid { background: var(--sca-amber); }
+  .sca-stack-bar .is-bad { background: var(--sca-red); }
   .sca-stack-key { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .sca-stack-key div { display: flex; flex-direction: column; gap: 2px; padding-left: 12px; border-left: 4px solid; font-size: 0.9rem; line-height: 1.45; color: var(--color-text-secondary); }
   .sca-stack-key div.is-good { border-color: var(--color-accent-deep); }
@@ -343,20 +387,21 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
 
   /* Walkthrough CTA */
   .sca-cta {
-    background: linear-gradient(135deg, var(--color-dark-surface) 0%, var(--color-cta-bg) 100%);
-    border-radius: 16px; padding: clamp(28px, 4.5vw, 52px);
+    border-radius: 18px; padding: clamp(28px, 4.5vw, 56px);
     display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: center;
   }
-  .sca-cta h2 { color: #f7f9f3; font-weight: 600; letter-spacing: -0.018em; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
-  .sca-cta p { margin-top: 10px; color: rgba(247, 249, 243, 0.86); font-size: 1rem; line-height: 1.6; }
+  .sca-cta h2 { font-weight: 700; letter-spacing: -0.022em; font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+  .sca-cta p { margin-top: 10px; color: rgba(244, 247, 246, 0.86); font-size: 1rem; line-height: 1.6; }
   .sca-cta > div:last-child { justify-self: end; }
+  .sca-cta .lp-btn-xl { white-space: nowrap; }
   .sca-done { color: var(--color-accent); font-weight: 600; }
 
   .sca-method summary { cursor: pointer; font-weight: 600; color: var(--color-text); }
   .sca-method ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 0.9rem; line-height: 1.55; color: var(--color-text-secondary); }
 
   @media (max-width: 860px) {
-    .sca-hero, .sca-position, .sca-cta { grid-template-columns: 1fr; }
+    .sca-hero-inner, .sca-position, .sca-cta { grid-template-columns: 1fr; }
+    .sca-preview { transform: none; max-width: 520px; }
     .sca-cta > div:last-child { justify-self: start; }
     .sca-gaps, .sca-stats, .sca-stack-key { grid-template-columns: 1fr; }
     .sca-cmp-row { grid-template-columns: minmax(0, 1fr) 44px; }
@@ -364,10 +409,23 @@ const LINKEDIN_LEAD_CONVERSION_ID = '31479762';
     .sca-cmp-row .sca-cmp-track { grid-column: 1; }
   }
   @media (max-width: 640px) {
+    /* Phones: the Start button sits in the first screenful, above the trust
+       row, even with a cookie banner along the bottom. */
+    .sca-hero { padding-block: 24px 44px; }
+    .sca-hero-copy { gap: 16px; }
+    .sca-hero .lp-eyebrow { display: none; }
+    .sca-hero .lp-h1 { font-size: 2rem; }
+    .sca-hero .lp-sub { font-size: 1rem; }
+    .sca-hero-cta { order: 3; flex-direction: column; align-items: stretch; gap: 14px; }
+    .sca-hero-cta .sca-link { align-self: center; }
+    .sca-hero .lp-trust { order: 4; margin-top: 8px; }
+    .sca-topband { padding-block: 22px 84px; }
     .sca-quads { grid-template-columns: 1fr; }
     .sca-chart-q { padding: 8px 10px; }
     .sca-chart-q span { font-size: 0.72rem; }
     .sca-opts { grid-template-columns: 1fr; }
+    .sca-opt { padding: 15px 16px; }
+    .sca-row .sca-btn-primary, .sca-nav .sca-btn-primary { flex: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .sca * { transition: none !important; }

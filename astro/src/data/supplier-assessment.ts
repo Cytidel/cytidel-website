@@ -26,6 +26,8 @@ export interface Option {
   p?: number;
   tier?: number;
   f?: number;
+  /** Representative supplier count for a size band */
+  n?: number;
 }
 
 export interface Question {
@@ -39,11 +41,12 @@ export interface Question {
 
 export interface Step {
   /** 'q' is a single-question screen; the question is in qs[0] */
-  id: 'intro' | 'org' | 'q' | 'lead' | 'res';
+  id: 'intro' | 'q' | 'lead' | 'res';
   /** Short name, used for Matomo step events */
   name?: string;
   title?: string;
   lede?: string;
+  /** Questions on this screen. On the intro they render inside the hero. */
   qs?: string[];
 }
 
@@ -145,6 +148,17 @@ export const Q: Record<string, Question> = {
       { v: 'none', t: 'No single list', s: 'We would need to build one from scratch.', d: 5, tier: 0 },
     ],
   },
+  suppliers: {
+    label: 'Roughly how many third-party suppliers do you rely on?',
+    help: 'Suppliers with access to your systems, data or operations. A rough band is fine.',
+    opts: [
+      { v: 'r50', t: 'Fewer than 50', n: 25 },
+      { v: 'r200', t: '50 to 200', n: 100 },
+      { v: 'r1k', t: '200 to 1,000', n: 500 },
+      { v: 'r5k', t: '1,000 to 5,000', n: 2500 },
+      { v: 'r5kp', t: 'More than 5,000', n: 8000 },
+    ],
+  },
   coverage: {
     label: 'Are there limits on how many suppliers your current providers cover?',
     help: 'Include GRC and third-party risk platforms, procurement tools, security ratings and threat intelligence services.',
@@ -219,18 +233,21 @@ export const Q: Record<string, Question> = {
 };
 
 // One question per screen: less to take in at once, and Matomo step events
-// show exactly which question people leave on.
+// show exactly which question people leave on. The landing page carries one
+// big "Start" button (as in the marketing mockup); to put question 1 inside
+// the hero instead, give the intro step qs: ['approach'] and drop the
+// Approach step.
 export const STEPS: Step[] = [
   { id: 'intro' },
-  { id: 'org', name: 'Organisation', title: 'About your organisation', lede: 'These figures set the scale of your supplier base and the team looking after it. Estimates are fine.' },
   { id: 'q', name: 'Approach', qs: ['approach'] },
   { id: 'q', name: 'Supplier register', qs: ['list'] },
+  { id: 'q', name: 'Supplier count', qs: ['suppliers'] },
   { id: 'q', name: 'Coverage', qs: ['coverage'] },
   { id: 'q', name: 'Beyond P1', qs: ['nth'] },
   { id: 'q', name: 'Prioritisation', qs: ['prioritise'] },
   { id: 'q', name: 'Early warning', qs: ['threat'] },
   { id: 'q', name: 'Regulation', qs: ['regs'] },
-  { id: 'lead', name: 'Your details', title: 'Where should we send your results?', lede: 'Your full report appears straight after this step.' },
+  { id: 'lead', name: 'Your details', title: 'One last step', lede: 'Add your details and your full report appears straight away.' },
   { id: 'res', name: 'Results' },
 ];
 
@@ -238,10 +255,8 @@ export const STEPS: Step[] = [
 export interface GapCopy {
   ax: 'Detectability' | 'Prioritisation';
   h: string;
-  p: string | ((r: { cov: number; perFte: number | null }) => string);
+  p: string | ((r: { cov: number }) => string);
 }
-
-const fmt = (n: number): string => Math.round(n).toLocaleString('en-GB');
 
 export const GAP_TEXT: Record<string, GapCopy> = {
   list: {
@@ -276,13 +291,5 @@ export const GAP_TEXT: Record<string, GapCopy> = {
     ax: 'Prioritisation',
     h: 'Get early warning across the whole supply chain',
     p: 'Hearing about a supplier breach from the supplier or the news means acting weeks late, with contractual obligations already exposed. Cytidel combines threat actor intelligence with live exploitation data, and has flagged vulnerabilities later confirmed as exploited 79 days ahead of CISA KEV on average.',
-  },
-  capacity: {
-    ax: 'Prioritisation',
-    h: 'Match team capacity to the supplier base',
-    p: (r) =>
-      r.perFte
-        ? `At roughly ${fmt(r.perFte)} suppliers per person focused on supply chain risk, manual review cannot keep pace. Triage has to be automated so people spend time on the exposures that matter.`
-        : 'With no one dedicated to supply chain risk, triage has to be automated so the little time available goes to the exposures that matter.',
   },
 };
