@@ -1,5 +1,6 @@
-// Shared helpers for the site's lead forms (the assessment gate and the
-// white paper form). Pure functions, unit-tested in lead-fields.test.ts.
+// Shared helpers for the site's lead forms (the assessment's details step,
+// and the white paper form when it lands). Pure functions, unit-tested in
+// lead-fields.test.ts.
 
 import { isFreeEmail } from './free-email';
 
