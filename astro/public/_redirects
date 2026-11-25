@@ -34,6 +34,8 @@
 # ---------------------------------------------------------------------------
 /contact-us                               /book-a-demo                           301
 /request-a-trial                          /book-a-demo                           301
+/contact                                  /book-a-demo                           301
+/home                                     /                                      301
 
 # ---------------------------------------------------------------------------
 # Old about pages → why-cytidel
@@ -59,6 +61,40 @@
 /blog/categories                          https://blog.cytidel.com/              301
 /blog/categories/cve-intel-insights       https://blog.cytidel.com/              301
 /blog/categories/industry-insights        https://blog.cytidel.com/              301
+
+# ---------------------------------------------------------------------------
+# Old blog tag + pagination pages (must sit above the /blog/* catch-all).
+# Tags that still exist on Ghost map to /tag/<slug>/; the rest go to the blog root.
+# ---------------------------------------------------------------------------
+/blog/tags/apache                         https://blog.cytidel.com/tag/apache/   301
+/blog/tags/apple                          https://blog.cytidel.com/tag/apple/    301
+/blog/tags/atlassian                      https://blog.cytidel.com/tag/atlassian/  301
+/blog/tags/barracuda                      https://blog.cytidel.com/tag/barracuda/  301
+/blog/tags/cisa                           https://blog.cytidel.com/tag/cisa/     301
+/blog/tags/cisa-kev                       https://blog.cytidel.com/tag/cisa-kev/  301
+/blog/tags/cisco                          https://blog.cytidel.com/tag/cisco/    301
+/blog/tags/citrix                         https://blog.cytidel.com/tag/citrix/   301
+/blog/tags/it-security                    https://blog.cytidel.com/tag/it-security/  301
+/blog/tags/ivanti                         https://blog.cytidel.com/tag/ivanti/   301
+/blog/tags/microsoft                      https://blog.cytidel.com/tag/microsoft/  301
+/blog/tags/moveit                         https://blog.cytidel.com/tag/moveit/   301
+/blog/tags/office                         https://blog.cytidel.com/tag/office/   301
+/blog/tags/ransomware                     https://blog.cytidel.com/tag/ransomware/  301
+/blog/tags/rarlab                         https://blog.cytidel.com/tag/rarlab/   301
+/blog/tags/rbvm                           https://blog.cytidel.com/tag/rbvm/     301
+/blog/tags/remote-code-execution          https://blog.cytidel.com/tag/remote-code-execution/  301
+/blog/tags/risk-based-vulnerability-management  https://blog.cytidel.com/tag/risk-based-vulnerability-management/  301
+/blog/tags/threat-actors                  https://blog.cytidel.com/tag/threat-actors/  301
+/blog/tags/threat-intelligence            https://blog.cytidel.com/tag/threat-intelligence/  301
+/blog/tags/top-vulnerabilities-of-2023    https://blog.cytidel.com/tag/top-vulnerabilities-of-2023/  301
+/blog/tags/trending-vulnerabilities       https://blog.cytidel.com/tag/trending-vulnerabilities/  301
+/blog/tags/vulnerability-management       https://blog.cytidel.com/tag/vulnerability-management/  301
+/blog/tags/*                              https://blog.cytidel.com/              301
+/blog/page/*                              https://blog.cytidel.com/page/:splat/  301
+
+# ---------------------------------------------------------------------------
+# Any other /blog/<slug> → same slug on the blog subdomain
+# ---------------------------------------------------------------------------
 /blog/*                                    https://blog.cytidel.com/:splat        301
 
 # ---------------------------------------------------------------------------
@@ -75,6 +111,7 @@
 /post/9-tips-cytidel-used-to-get-iso27001-ready-in-just-6-weeks                                                  https://blog.cytidel.com/9-tips-cytidel-used-to-get-iso27001-ready-in-just-6-weeks                                                  301
 /post/threat-intelligence-one-of-the-11-new-controls-introduced-in-the-iso-27001-2022-update                     https://blog.cytidel.com/threat-intelligence-one-of-the-11-new-controls-introduced-in-the-iso-27001-2022-update                     301
 /post/cytidel-raises-1-35-million-to-transform-how-organisations-protect-themselves-from-cyber-attacks           https://blog.cytidel.com/cytidel-raises-eu1-35-million-to-transform-how-organisations-protect-themselves-from-cyber-attacks/         301
+/post/8-benefits-organisations-can-get-from-adopting-a-risk-based-vulnerability-management-rbvm                  https://blog.cytidel.com/8-benefits-organisations-can-get-from-adopting-a-risk-based-vulnerability-management-rbvm/  301
 
 # ---------------------------------------------------------------------------
 # Blog posts — slug didn't migrate, send to blog root
@@ -88,3 +125,9 @@
 /post/urgent-alert-critical-vulnerability-in-moveit-transfer-puts-your-data-at-risk-cve-2023-34362               https://blog.cytidel.com/  301
 /post/veeam-backup-plan-gone-wrong-the-uninvited-guest-at-your-data-breach-party-cve-2023-27532                  https://blog.cytidel.com/  301
 /post/beware-of-malicious-word-documents-new-vulnerability-discovered-in-microsoft-office-cve-2023-2171          https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-cve-2021-26084                                                                      https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-cve-2022-22047                                                                      https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-cve-2022-26138                                                                      https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-cve-2022-30190                                                                      https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-cve-2023-23529                                                                      https://blog.cytidel.com/  301
+/post/cytidel-intel-insights-google-chrome                                                                       https://blog.cytidel.com/  301
