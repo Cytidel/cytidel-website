@@ -18,6 +18,10 @@
 /rbvm-case-study                          /cytidel-for-vulnerability-management  301
 /tvm-risk-assessment                      /cytidel-for-vulnerability-management  301
 /advanced-vulnerability-management        /cytidel-for-vulnerability-management  301
+/advanced-vulnerability-assessment        /cytidel-for-vulnerability-management  301
+/intelligent-vulnerability-management     /cytidel-for-vulnerability-management  301
+/vulnerability-risk-management            /cytidel-for-vulnerability-management  301
+/risk-contextualisation                   /cytidel-for-vulnerability-management  301
 
 # ---------------------------------------------------------------------------
 # Threat Intelligence funnel (legacy → cytidel-for-threat-intelligence)
@@ -34,6 +38,8 @@
 # ---------------------------------------------------------------------------
 /contact-us                               /book-a-demo                           301
 /request-a-trial                          /book-a-demo                           301
+/pricing                                  /book-a-demo                           301
+/plans                                    /book-a-demo                           301
 /contact                                  /book-a-demo                           301
 /home                                     /                                      301
 
@@ -47,6 +53,14 @@
 # Old features page → platform overview
 # ---------------------------------------------------------------------------
 /features                                 /cytidel-platform                      301
+/product-overview                         /cytidel-platform                      301
+/see-how-it-works                         /cytidel-platform                      301
+/intel-as-a-service                       /cytidel-platform                      301
+
+# ---------------------------------------------------------------------------
+# Old supplier monitoring page → supplier-breach-monitoring
+# ---------------------------------------------------------------------------
+/third-party-supplier-monitoring          /supplier-breach-monitoring            301
 
 # ---------------------------------------------------------------------------
 # Legacy Wix CMS asset → careers
