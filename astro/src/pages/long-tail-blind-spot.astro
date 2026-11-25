@@ -337,6 +337,9 @@ const svg = (name: string): string =>
     background: #fff; color: var(--color-ink);
     border-radius: 20px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(128, 252, 19, 0.18);
   }
+  /* The hero button jumps to the form, and the success state takes focus;
+     leave room for the sticky nav so neither heading lands under it */
+  .wp-form { scroll-margin-top: 92px; }
   .wp-form h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(1.4rem, 2vw, 1.75rem); margin: 0; color: var(--color-text); }
   .wp-form-lede { margin: -6px 0 2px; font-size: 0.95rem; line-height: 1.5; color: var(--color-text-secondary); }
   /* minmax(0, …) and min-width: 0 let the inputs shrink: an input's default
