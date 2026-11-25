@@ -53,6 +53,7 @@
 /blog/categories                          https://blog.cytidel.com/              301
 /blog/categories/cve-intel-insights       https://blog.cytidel.com/              301
 /blog/categories/industry-insights        https://blog.cytidel.com/              301
+/blog/*                                    https://blog.cytidel.com/:splat        301
 
 # ---------------------------------------------------------------------------
 # Blog posts — specific slug migrated to blog.cytidel.com
