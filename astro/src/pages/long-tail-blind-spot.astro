@@ -301,11 +301,12 @@ const svg = (name: string): string =>
     padding-bottom: clamp(56px, 8vw, 104px);
   }
   .wp-hero-inner {
-    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.75fr) minmax(0, 0.95fr);
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.7fr) minmax(0, 1.1fr);
     gap: clamp(28px, 4vw, 56px); align-items: center;
   }
   .wp-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
-  .wp-hero .lp-h1 { font-size: clamp(2.2rem, 4.4vw, 3.8rem); }
+  .wp-hero .lp-h1 { font-size: clamp(2.1rem, 3.7vw, 3.3rem); }
+  .wp-hero .lp-h1 :global(em) { white-space: nowrap; }
   .wp-cta { display: flex; flex-wrap: wrap; gap: 12px; }
   /* Narrow copy column: icon above its label so all three fit on one row */
   .wp-hero .lp-trust li { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 0.95rem; }
@@ -338,12 +339,15 @@ const svg = (name: string): string =>
   }
   .wp-form h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-size: clamp(1.4rem, 2vw, 1.75rem); margin: 0; color: var(--color-text); }
   .wp-form-lede { margin: -6px 0 2px; font-size: 0.95rem; line-height: 1.5; color: var(--color-text-secondary); }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* minmax(0, …) and min-width: 0 let the inputs shrink: an input's default
+     width (~20 characters) otherwise pushes the pair past the card edge */
+  .field-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
   @media (max-width: 420px) { .field-row { grid-template-columns: 1fr; gap: 16px; } }
-  .field { display: grid; gap: 6px; }
+  .field { display: grid; gap: 6px; min-width: 0; }
   .field label { font-size: 0.88rem; font-weight: 500; color: var(--color-text); }
   .field label .req { color: var(--color-accent-deep); margin-left: 2px; }
   .field input {
+    width: 100%; min-width: 0;
     font: inherit; font-size: 1rem; padding: 12px 14px;
     border: 1px solid var(--color-border-strong); border-radius: 8px;
     background: #fff; color: var(--color-text);
