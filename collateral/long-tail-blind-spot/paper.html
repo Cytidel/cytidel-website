@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Don’t Let the Long Tail Be Your Blind Spot</title>
+<meta name="author" content="Cytidel">
+<meta name="description" content="Executive summary on cyber supply chain risk, November 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=block" rel="stylesheet">
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<!--
+  Executive summary "Don't Let the Long Tail Be Your Blind Spot".
+  Copy: GTM's v2 draft of 25 Nov 2026, word for word. Layout: Cytidel's
+  Nov 2026 site style. Every .page is one A4 page; `yarn build` prints them
+  to PDF and fails if any page's content overflows.
+-->
+
+<!-- ============================ COVER ============================ -->
+<section class="page cover">
+  <img class="cover-art" src="assets/cover-network.svg" alt="">
+  <div class="cover-body">
+    <p class="eyebrow">Executive summary · Cyber supply chain risk</p>
+    <h1>Don’t Let the <em>Long Tail</em> Be Your Blind Spot</h1>
+    <p class="cover-sub">How the surge in supply chain breaches, the software your suppliers run, and the explosion in AI vulnerabilities are reshaping cyber supply chain risk, and why continuous exposure intelligence across hundreds to thousands of suppliers is now a board-level requirement.</p>
+  </div>
+  <div class="cover-foot">
+    <img src="assets/logo_dark_backgrounds.svg" alt="Cytidel" class="cover-logo">
+    <span>November 2026 · cytidel.com</span>
+  </div>
+</section>
+
+<!-- ======================= EXECUTIVE SUMMARY ===================== -->
+<section class="page">
+  <p class="eyebrow">Executive summary</p>
+  <h2>The supply chain is now a software estate, and AI is multiplying the risk inside it</h2>
+  <p>Most organisations still picture their supply chain as a list of vendors. In reality it is a sprawling, constantly changing software estate: SaaS platforms, managed services, logistics partners, component makers, and the open-source and AI building blocks every one of them runs on. Your risk now extends to every line of code your suppliers depend on.</p>
+  <p>Supply chain breaches are no longer the exception. Verizon’s 2026 Data Breach Investigations Report found <strong>48% of breaches now involve a third party</strong>, up 60% in a single year, and exploitation of vulnerabilities is now the most common way attackers get in.</p>
+  <p>Yet most organisations still track suppliers across disparate lists, depend on affected suppliers to tell them when something goes wrong, and have little or no visibility of the software those suppliers provide. Regulation is closing that gap fast: DORA and the EU Cyber Resilience Act now expect organisations to know their ICT providers and the software components in their products.</p>
+  <p>All of this is happening while vulnerabilities explode. A record 48,185 CVEs were published in 2025, and AI-related vulnerabilities grew almost twice as fast as the market overall.</p>
+  <p>The result is a long tail: hundreds to thousands of suppliers and their software sitting outside any continuous oversight. That is exactly where attackers look for the path of least resistance.</p>
+
+  <div class="stats stats-4">
+    <div class="stat"><b>48%</b><span>of breaches now involve a third party, up 60% year on year</span><cite>Verizon DBIR 2026</cite></div>
+    <div class="stat"><b>48,185</b><span>CVEs published in 2025, an all-time high</span><cite>CVE Data Review 2025</cite></div>
+    <div class="stat"><b>+34.6%</b><span>growth in AI-related CVEs, nearly 2x the market</span><cite>Trend Micro, 2026</cite></div>
+    <div class="stat"><b>79 days</b><span>average Cytidel lead time ahead of CISA KEV</span><cite>Cytidel benchmark</cite></div>
+  </div>
+
+  <div class="callout dark">
+    <p class="eyebrow">The bottom line</p>
+    <p class="lead">You cannot assess your way out of a real-time problem. Supply chain risk now moves at the speed of exploitation, and oversight has to move with it.</p>
+    <p>Cytidel Breach Monitoring watches your suppliers and the software they provide, gives advanced early warning on vulnerabilities and pre-CVEs, and distils global threat, exploit and breach news into exposure intelligence for your business, industry, geography and suppliers, underpinned by threat actor and vulnerability data and Cytidel’s own AI models. No supplier cap, no waiting to be told.</p>
+  </div>
+</section>
+
+<!-- ====================== 01 SUPPLY CHAIN PROBLEM ================ -->
+<section class="page">
+  <p class="eyebrow">01 · The supply chain problem</p>
+  <h2>Pulling apart the supply chain problem</h2>
+  <p class="intro">Supply chain risk is not one problem. Pull it apart and it shows up from several directions at once: a sharp rise in third-party breaches, fragmented supplier data and poor disclosure, and a vast, largely unmonitored software estate, all while the number of vulnerabilities explodes.</p>
+
+  <h3><span class="kicker">Angle 1</span>Third-party breaches are surging</h3>
+  <p>Verizon’s 2026 DBIR shows how quickly the centre of gravity has shifted. Third-party involvement in breaches rose from 30% to <strong>48%</strong> in a year, and <strong>vulnerability exploitation (31%)</strong> has overtaken credential abuse (13%) as the leading initial access vector. As Verizon puts it, as organisations rely more on third parties for services and software, “their exposure increases, as well.”</p>
+  <div class="stats stats-3">
+    <div class="stat"><b>48%</b><span>of breaches involved a third party, up 60% year on year</span><cite>Verizon DBIR 2026</cite></div>
+    <div class="stat"><b>31%</b><span>of breaches began with vulnerability exploitation, now the #1 way in</span><cite>Verizon DBIR 2026</cite></div>
+    <div class="stat"><b>43 days</b><span>median time to fully remediate a known-exploited vulnerability, up from 32</span><cite>Verizon DBIR 2026</cite></div>
+  </div>
+  <p>Third-party risk programmes were built for a slower world. They concentrate effort on a strategic tier, usually the few dozen suppliers with the biggest contracts, and assess them periodically. Everyone else sits in the long tail: smaller software vendors, niche service providers, sub-processors and the fourth parties behind them.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 1000 400" role="img" aria-label="Oversight per supplier falls steeply after the strategic tier; the long tail of suppliers has little or no oversight and holds live exposures.">
+      <line x1="60" y1="20" x2="60" y2="340" class="axis"/>
+      <line x1="60" y1="340" x2="985" y2="340" class="axis"/>
+      <path id="tail-area" class="tail-fill" d=""/>
+      <path id="tier-area" class="tier-fill" d=""/>
+      <path id="tail-curve" class="curve" d=""/>
+      <g class="reds">
+        <circle cx="220" cy="327" r="9"/><circle cx="380" cy="330" r="9"/><circle cx="550" cy="332" r="9"/><circle cx="720" cy="333" r="9"/><circle cx="900" cy="334" r="9"/>
+      </g>
+      <text x="138" y="92" class="lbl-strong">Strategic tier</text>
+      <text x="138" y="118" class="lbl-strong">(the ~40 you assess)</text>
+      <text x="600" y="196" class="lbl-strong" text-anchor="middle">The long tail</text>
+      <text x="600" y="224" class="lbl" text-anchor="middle">hundreds to thousands of suppliers, software vendors</text>
+      <text x="600" y="248" class="lbl" text-anchor="middle">and AI components with little or no continuous oversight</text>
+      <circle cx="700" cy="292" r="8" class="red"/><text x="716" y="298" class="lbl red-text">live exposure no one is watching</text>
+      <text x="30" y="180" class="lbl-axis" transform="rotate(-90 30 180)" text-anchor="middle">Oversight per supplier</text>
+      <text x="520" y="378" class="lbl-axis" text-anchor="middle">Suppliers, ranked by spend / perceived criticality →</text>
+    </svg>
+    <figcaption><b>Figure 1.</b> Oversight concentrates on a strategic few. Exposure is spread across the many.</figcaption>
+  </figure>
+</section>
+
+<section class="page">
+  <h3><span class="kicker">Angle 2</span>Disparate lists, poor reporting, no breach visibility</h3>
+  <ul class="ticks">
+    <li><strong>Supplier data is fragmented.</strong> Supplier lists live across procurement, finance, IT and security, in spreadsheets, contract systems and questionnaires that rarely agree with each other.</li>
+    <li><strong>Affected suppliers report late, partially, or not at all.</strong> Notification depends on the supplier noticing, deciding to tell you and finding the right contact. Fourth-party breaches often never reach you.</li>
+    <li><strong>There is no live view of breach activity.</strong> When a supplier appears in breach news, on an advisory or in threat actor chatter, nobody is watching for it. In one recent case, a fourth-party breach could have gone <strong>undetected for 20+ days</strong> without voluntary disclosure (see the case in point at the end of this section).</li>
+  </ul>
+
+  <h3><span class="kicker">Angle 3</span>Exposed software needs monitoring, at scale</h3>
+  <p>Every supplier is also software. The platforms, products and components your suppliers provide carry their own vulnerabilities, and regulators now expect you to know about them:</p>
+  <ul class="ticks">
+    <li><strong>DORA</strong>, applicable since 17 January 2025, requires financial entities to keep a register of information covering all contractual arrangements with ICT third-party service providers, and to monitor the risk they introduce.</li>
+    <li><strong>The EU Cyber Resilience Act</strong> requires manufacturers to report actively exploited vulnerabilities in their products, with a 24-hour early warning, from 11 September 2026, and to document product components in a <strong>software bill of materials (SBOM)</strong> as the main obligations take effect from December 2027.</li>
+  </ul>
+  <p>SBOMs turn a supplier list into a component list, and the numbers grow quickly:</p>
+  <div class="scale">
+    <div><b>500</b><span>suppliers</span></div>
+    <i aria-hidden="true">→</i>
+    <div><b>2,500</b><span>software products and services</span></div>
+    <i aria-hidden="true">→</i>
+    <div class="is-big"><b>250,000+</b><span>components to watch for new vulnerabilities and exploits</span></div>
+  </div>
+  <p class="note">Illustrative: 500 suppliers × ~5 products each × ~100 components per product. No team can monitor this manually.</p>
+
+  <h3>And all while vulnerabilities are exploding</h3>
+  <p>Each of these angles would be hard enough on its own. They are converging at the exact moment AI is driving the biggest surge in vulnerabilities the industry has seen.</p>
+
+  <div class="callout dark case">
+    <p class="eyebrow">Case in point · Global luxury automotive manufacturer</p>
+    <p>A primary supplier to the manufacturer was affected when <strong>one of that supplier’s own suppliers</strong> suffered a breach of its Salesforce environment. Timely disclosure meant the manufacturer was not left blind, but without that notification the exposure could have gone <strong>undetected for 20+ days</strong>.</p>
+    <p>Its existing intelligence feed was capped at 40 suppliers, lacked threat actor context and offered <strong>no early warning on AI vulnerabilities</strong>. A wider industry cyber incident, reaching it through shared services rather than its own systems, had already exposed the risk.</p>
+    <p>The conclusion from its security leadership was clear: <strong>reliance on a third party choosing to disclose is not a control.</strong></p>
+  </div>
+</section>
+
+<!-- ========================= 02 AI EXPLOSION ===================== -->
+<section class="page">
+  <p class="eyebrow">02 · The new threat landscape</p>
+  <h2>The AI vulnerability explosion</h2>
+  <p class="intro">Vulnerability volume has been climbing for a decade, but the last two years have broken the curve. Published CVEs rose 67% in two years, from 28,818 in 2023 to 48,185 in 2025. Behind that headline sits a structural shift: AI is now accelerating both sides of the equation.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 1000 410" role="img" aria-label="All CVEs published: 28,818 in 2023, 39,962 in 2024, 48,185 in 2025. AI-related CVEs: about 1,580 in 2024 and 2,130 in 2025.">
+      <text x="20" y="34" class="chart-title">All CVEs published</text>
+      <text x="20" y="66" class="chart-delta">+67% in two years</text>
+      <line x1="20" y1="340" x2="590" y2="340" class="axis"/>
+      <rect x="45"  y="202.4" width="140" height="137.6" class="bar-old"/><text x="115" y="190" class="bar-val" text-anchor="middle">28,818</text><text x="115" y="370" class="bar-year" text-anchor="middle">2023</text>
+      <rect x="235" y="149.3" width="140" height="190.7" class="bar-old"/><text x="305" y="137" class="bar-val" text-anchor="middle">39,962</text><text x="305" y="370" class="bar-year" text-anchor="middle">2024</text>
+      <rect x="425" y="110"   width="140" height="230"   class="bar-navy"/><text x="495" y="98" class="bar-val strong" text-anchor="middle">48,185</text><text x="495" y="370" class="bar-year" text-anchor="middle">2025</text>
+
+      <text x="660" y="34" class="chart-title">AI-related CVEs</text>
+      <text x="660" y="66" class="chart-delta">+34.6% YoY</text>
+      <line x1="660" y1="340" x2="985" y2="340" class="axis"/>
+      <rect x="685" y="169.4" width="120" height="170.6" class="bar-old"/><text x="745" y="157" class="bar-val" text-anchor="middle">~1,580</text><text x="745" y="370" class="bar-year" text-anchor="middle">2024</text>
+      <rect x="845" y="110"   width="120" height="230"   class="bar-neon"/><text x="905" y="98" class="bar-val strong" text-anchor="middle">2,130</text><text x="905" y="370" class="bar-year" text-anchor="middle">2025</text>
+      <text x="20" y="402" class="chart-src">Sources: Jerry Gamblin CVE Data Reviews (2024, 2025); Trend Micro, State of AI Security Report</text>
+    </svg>
+    <figcaption><b>Figure 2.</b> Total CVE volume and AI-related CVE growth</figcaption>
+  </figure>
+
+  <h3>AI is creating a new class of exposure</h3>
+  <ul class="ticks">
+    <li><strong>AI is the fastest-growing category.</strong> Trend Micro counted 2,130 AI-related CVEs in 2025, up 34.6% year on year and the highest share of all CVEs ever recorded.</li>
+    <li><strong>Brand-new attack surfaces appear almost overnight.</strong> Model Context Protocol (MCP) servers, the connectors that let AI agents act on enterprise systems, went from virtually no CVEs to 95 in 2025 alone.</li>
+    <li><strong>The AI supply chain is the riskiest layer.</strong> Nearly half (46.5%) of AI supply chain vulnerabilities are rated High or Critical, the highest concentration of any AI category.</li>
+    <li><strong>Your suppliers are adopting AI faster than you can assess it.</strong> Each new copilot, agent or model integration adds dependencies, and vulnerabilities, that no annual questionnaire captured.</li>
+  </ul>
+
+  <h3>AI is also accelerating discovery and exploitation</h3>
+  <p>Google’s threat intelligence analysis, published in September 2026, shows monthly vulnerability disclosures doubling from 5,045 in January to 10,477 in July 2026. More exploited vulnerabilities were observed in the first eight months of 2026 (141) than in all of 2025 (127). AI-discovered vulnerabilities are also nastier: 50% enable remote code execution, against 26% for the rest. Verizon’s 2026 DBIR adds that the median threat actor now uses AI assistance across 15 different attack techniques.</p>
+  <p>Defenders are falling behind: the median time to fully remediate a known-exploited vulnerability rose to <strong>43 days</strong>, and only <strong>26%</strong> of them were fully remediated in 2025, down from 38% (Verizon DBIR 2026). Multiply that across hundreds of suppliers and their software, and the gap becomes a <strong>supply chain visibility crisis</strong>.</p>
+</section>
+
+<section class="page">
+  <blockquote class="pull first">AI hasn’t just added a new category of vulnerability. It has changed the speed of the whole game. Exploitation now often comes before a patch, a CVE record or a supplier advisory exists.</blockquote>
+
+  <!-- 03 starts on the same page as 02's closing quote, so no page is left half empty -->
+  <div class="section-break">
+    <p class="eyebrow">03 · The as-is reality</p>
+    <h2>Six challenges, and the need for a scalable answer</h2>
+    <p class="intro">Across the security and risk leaders we work with, from automotive and manufacturing to financial services, the same pattern repeats. These are not failures of effort. They are the limits of a model designed before AI changed the pace of risk.</p>
+  </div>
+  <ol class="challenges">
+    <li><b>01</b><h4>Point-in-time assurance in a real-time threat landscape</h4><p>Annual questionnaires and certifications describe a supplier’s posture on the day they were completed. Exploitation now moves in hours and days, not audit cycles.</p></li>
+    <li><b>02</b><h4>Capped coverage, fragmented supplier lists</h4><p>Legacy monitoring services often cap coverage at a few dozen suppliers. One manufacturer we work with was limited to 40 suppliers against a base many times that size, with supplier data spread across teams.</p></li>
+    <li><b>03</b><h4>Waiting to be told</h4><p>Most organisations learn of a supplier breach when the supplier chooses to disclose it. Without that notice, exposure can go undetected for 20 days or more. Disclosure is not a control.</p></li>
+    <li><b>04</b><h4>Severity scores that mislead</h4><p>CVSS measures theoretical severity, not real-world threat. 30% of vulnerabilities linked to known threat actors in 2025 were rated Low or Medium, so CVSS-led triage pushes them down the queue.</p></li>
+    <li><b>05</b><h4>No line of sight to supplier software, pre-CVE and AI risk</h4><p>Teams have no view of the vulnerabilities in the software their suppliers provide, no dedicated capability for AI-associated vulnerabilities and no early warning before NVD publication. They react after the fact.</p></li>
+    <li><b>06</b><h4>Lean teams, manual triage, context-poor intel</h4><p>Generic threat feeds lack context, currency and threat actor linkage. Analysts spend their time researching and sorting rather than deciding and acting.</p></li>
+  </ol>
+</section>
+
+<section class="page">
+  <h3>Why the answer has to be scalable and autonomous</h3>
+  <p>Hiring more analysts will not close a gap measured in thousands of suppliers and hundreds of thousands of components. What works is a model that scales without adding headcount:</p>
+  <div class="principles">
+    <div><b>Ingest once, monitor continuously.</b><p>Supplier lists, technology stacks and SBOMs feed monitoring automatically, with no supplier cap.</p></div>
+    <div><b>Correlate and triage automatically.</b><p>Every new breach, advisory, exploit and threat actor signal is matched to your suppliers and their software and scored without manual research.</p></div>
+    <div><b>Route, don’t broadcast.</b><p>The one alert that matters goes to the owner who can act, in the tools they already use, with the evidence attached.</p></div>
+  </div>
+
+  <div class="section-break">
+    <p class="eyebrow">04 · Why Cytidel</p>
+    <h2>Exposure intelligence for your suppliers and their software</h2>
+    <p class="intro">Cytidel brings exposure intelligence to the supply chain. We monitor <strong>your suppliers and the software they provide</strong>, warn you early about the vulnerabilities and breaches that affect them, including <strong>pre-CVE and AI vulnerabilities</strong>, and distil global threat, exploit and breach news into what matters to <strong>your business, industry, geography and suppliers</strong>.</p>
+  </div>
+
+  <h3><span class="kicker">1</span>We monitor your suppliers, AND their software</h3>
+  <p>Most supplier monitoring stops at the company. Cytidel follows the risk into the technology your suppliers provide, so you see both the breach at the supplier and the vulnerable product in your stack.</p>
+  <table class="grid two-col">
+    <thead><tr><th></th><th>Your suppliers</th><th>Their software</th></tr></thead>
+    <tbody>
+      <tr><th>What we watch</th><td>Breach events, vendor advisories, and threat actors targeting the supplier or its sector</td><td>The products, platforms and components your suppliers provide, matched to new vulnerabilities and exploits</td></tr>
+      <tr><th>What you get</th><td>An alert when a supplier, or a supplier’s supplier, is breached or targeted</td><td>An alert when software you depend on is exposed, often before NVD or an advisory</td></tr>
+      <tr><th>How it scales</th><td>Full supplier base, no cap, fed from onboarding and procurement lists</td><td>Technology stacks today, maturing to SBOM-level component visibility</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page">
+  <h3><span class="kicker">2</span>Advanced early warning on vulnerabilities and pre-CVEs</h3>
+  <p>For supplier software, the official record is the slowest signal of all. NVD enrichment lags, supplier advisories arrive weeks later if at all, and CISA KEV confirms exploitation only after it is well under way. Cytidel picks up the earliest signals, including exploitation evidence, public exploit code and emerging AI vulnerabilities, often before a CVE is published, so you can act at the start of the window of exposure rather than the end.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="Timeline: a signal emerges, Cytidel alerts with early warning and threat actor context, NVD enrichment follows, supplier disclosure comes weeks later if at all, and CISA KEV lists the vulnerability last.">
+      <rect x="128" y="126" width="772" height="52" rx="26" class="window"/>
+      <line x1="40" y1="152" x2="960" y2="152" class="track"/>
+      <circle cx="70" cy="152" r="14" class="node n-signal"/>
+      <circle cx="150" cy="152" r="14" class="node n-cytidel"/>
+      <circle cx="400" cy="152" r="14" class="node n-nvd"/>
+      <circle cx="640" cy="152" r="14" class="node n-supplier"/>
+      <circle cx="880" cy="152" r="14" class="node n-kev"/>
+      <text x="70" y="56" class="t-head" text-anchor="start">Signal emerges</text>
+      <text x="70" y="82" class="t-sub">exploit code, chatter,</text><text x="70" y="104" class="t-sub">breach or advisory</text>
+      <text x="400" y="56" class="t-head" text-anchor="middle">NVD enrichment</text>
+      <text x="400" y="82" class="t-sub" text-anchor="middle">often delayed</text><text x="400" y="104" class="t-sub" text-anchor="middle">or incomplete</text>
+      <text x="880" y="56" class="t-head" text-anchor="end">CISA KEV listing</text>
+      <text x="880" y="82" class="t-sub" text-anchor="end">public confirmation</text><text x="880" y="104" class="t-sub" text-anchor="end">of exploitation</text>
+      <text x="150" y="218" class="t-head" text-anchor="start">Cytidel alert</text>
+      <text x="150" y="244" class="t-sub">early warning +</text><text x="150" y="266" class="t-sub">threat actor context</text>
+      <text x="640" y="218" class="t-head" text-anchor="middle">Supplier disclosure</text>
+      <text x="640" y="244" class="t-sub" text-anchor="middle">weeks later,</text><text x="640" y="266" class="t-sub" text-anchor="middle">if at all</text>
+    </svg>
+    <p class="fig-claim">≈ 79 days average lead time ahead of CISA KEV <span>(Cytidel product benchmark)</span></p>
+    <figcaption><b>Figure 3.</b> Acting at the signal, not the listing</figcaption>
+  </figure>
+
+  <h3><span class="kicker">3</span>Exposure intelligence for your business, industry and suppliers</h3>
+  <p>Signals only matter in context. Cytidel scores every signal against who you are, where you operate and who you depend on, using a data and AI foundation built for the job:</p>
+  <div class="cards">
+    <div class="card"><span class="tag">Data</span><h4>Threat actor intelligence</h4><p class="card-lede">Know who is targeting your world.</p>
+      <ul><li>Adversaries mapped to vulnerabilities with TTP context</li><li>Alias tracking and campaign history</li><li>Sector and geography targeting, e.g. manufacturing</li></ul></div>
+    <div class="card"><span class="tag">Data</span><h4>Vulnerability intelligence</h4><p class="card-lede">Know what is being exploited, right now.</p>
+      <ul><li>Exploitation evidence from ~1,000 Cytidel data sources</li><li>Public exploit code flagged before CISA KEV</li><li>Dynamic Risk Rating: Low to High within hours</li></ul></div>
+    <div class="card"><span class="tag tag-model">Models</span><h4>Algorithms and ML models</h4><p class="card-lede">Turn signal into a decision.</p>
+      <ul><li>Cytidel’s own AI models predict exploitation probability</li><li>Relevance scored by industry, geography, software and suppliers</li><li>Continuous learning from every alert outcome</li></ul></div>
+  </div>
+  <p class="note-box">In one benchmark of CVEs linked to active threat actor groups, 34 of 113 carried Low or Medium CVSS scores. A severity-led process would have deprioritised almost a third of the vulnerabilities attackers were actually using. Threat actor context is what surfaces them.</p>
+</section>
+
+<section class="page">
+  <h3><span class="kicker">4</span>Noise distillation: from global news to one alert</h3>
+  <p>Every day brings a flood of new vulnerabilities, exploit releases and breach headlines. Cytidel’s Smart Alerts take all of it, filter it by your industry, geography, software and suppliers, and route the one item that needs action to the person who owns the decision, with the context already attached.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 1000 330" role="img" aria-label="Funnel: 300 trending items, 3 relevant to you, 1 prioritised alert to the right owner.">
+      <polygon points="40,10 480,10 400,100 120,100" class="f1"/><text x="260" y="70" class="f-num dark" text-anchor="middle">300</text>
+      <polygon points="122,114 398,114 330,204 190,204" class="f2"/><text x="260" y="174" class="f-num light" text-anchor="middle">3</text>
+      <polygon points="192,218 328,218 300,308 220,308" class="f3"/><text x="260" y="278" class="f-num dark" text-anchor="middle">1</text>
+      <line x1="500" y1="55" x2="540" y2="55" class="f-lead"/><text x="556" y="48" class="f-lbl">All trending vulnerability, exploit</text><text x="556" y="74" class="f-lbl">and breach news</text>
+      <line x1="420" y1="159" x2="540" y2="159" class="f-lead"/><text x="556" y="152" class="f-lbl">Relevant to your industry, geography,</text><text x="556" y="178" class="f-lbl">software and suppliers</text>
+      <line x1="340" y1="263" x2="540" y2="263" class="f-lead"/><text x="556" y="256" class="f-lbl strong">Prioritised alert to the right owner,</text><text x="556" y="282" class="f-lbl strong">in their workflow</text>
+    </svg>
+    <figcaption><b>Figure 4.</b> Smart Alerts distil global exposure news into a single, actionable alert</figcaption>
+  </figure>
+
+  <h3><span class="kicker">5</span>What changes with Cytidel</h3>
+  <table class="grid compare">
+    <thead><tr><th></th><th>As is</th><th>With Cytidel</th></tr></thead>
+    <tbody>
+      <tr><th>Coverage</th><td>A monitored shortlist of strategic suppliers; the long tail assessed annually, if at all</td><td>Your full supplier base and their software monitored continuously, with no cap</td></tr>
+      <tr><th>Supplier data</th><td>Disparate lists across procurement, finance, IT and security</td><td>One monitored view, fed automatically from onboarding and SBOMs</td></tr>
+      <tr><th>Breach detection</th><td>Dependent on the supplier choosing to disclose; 20+ days of potential blindness</td><td>Breach and vulnerability activity at a supplier surfaced before it propagates into your environment</td></tr>
+      <tr><th>AI &amp; pre-CVE risk</th><td>No dedicated capability; discovered after NVD or advisories catch up</td><td>Advanced early warning on AI-associated and pre-CVE vulnerabilities</td></tr>
+      <tr><th>Relevance</th><td>Generic feeds, not linked to your business or adversaries</td><td>Filtered by industry, geography, software and suppliers, with threat actor context</td></tr>
+      <tr><th>Workflow</th><td>Manual research, triage and chasing suppliers</td><td>Autonomous correlation and triage; one alert routed to the right owner</td></tr>
+      <tr><th>Timing</th><td>Act on public confirmation (NVD, CISA KEV, supplier disclosure)</td><td>Act on the signal, on average 79 days ahead of CISA KEV</td></tr>
+      <tr><th>Evidence</th><td>Hard to show regulators and the board how supplier risk decisions were made</td><td>An auditable trail behind every decision, supporting DORA, the CRA and NIS2</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========================= 05 OUTCOMES ========================= -->
+<section class="page">
+  <p class="eyebrow">05 · Measured outcomes</p>
+  <h2>From early warning to business outcomes</h2>
+  <p class="intro">Our published benchmarks come from vulnerability intelligence deployments. Expressed as outcomes, this is what they mean for a security and risk team:</p>
+  <div class="stats stats-4 outcomes">
+    <div class="stat"><b>79 days</b><span><strong>earlier action:</strong> average lead time ahead of CISA KEV</span><cite>Cytidel product benchmark</cite></div>
+    <div class="stat"><b>99%+</b><span><strong>less noise</strong> for analysts to work through</span><cite>Cytidel product benchmark</cite></div>
+    <div class="stat"><b>&lt;300</b><span><strong>items needing action</strong>, from ~49,000 CVEs over 12 months</span><cite>Comparable enterprise deployment</cite></div>
+    <div class="stat"><b>80%</b><span><strong>capacity back:</strong> up to 80% less patch workload</span><cite>Cytidel product benchmark</cite></div>
+  </div>
+
+  <h3>Supply chain outcomes we measure in every deployment</h3>
+  <p>For Breach Monitoring, value is measured against a baseline captured at the start of each proof of value, so every claim is evidenced with the customer’s own data:</p>
+  <table class="grid measure">
+    <thead><tr><th>Outcome</th><th>How it is measured</th><th>Typical starting point</th></tr></thead>
+    <tbody>
+      <tr><th>Supplier coverage</th><td>% of supplier base, and their software, under continuous monitoring</td><td>A few dozen suppliers (e.g. 40) on a capped feed</td></tr>
+      <tr><th>Time to awareness</th><td>Days from a supplier breach or exploit to an alert reaching the owner</td><td>Dependent on disclosure; 20+ days possible</td></tr>
+      <tr><th>Time to decision</th><td>Time from signal to an agreed action or supplier engagement</td><td>Manual research cycle, measured in days</td></tr>
+      <tr><th>Alert actionability</th><td>% of alerts that lead to an action</td><td>Not measured today</td></tr>
+      <tr><th>Analyst effort</th><td>Hours per week on supplier research and triage</td><td>Current manual effort</td></tr>
+      <tr><th>Regulatory readiness</th><td>Evidence available for DORA registers, CRA reporting and board reviews</td><td>Assembled by hand, after the fact</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout soft">
+    <h3>Built for regulated, resilience-driven organisations</h3>
+    <p>Supply chain oversight is no longer optional. NIS2 and DORA put explicit obligations on third-party and ICT supply chain risk, the EU Cyber Resilience Act introduces 24-hour reporting of actively exploited vulnerabilities and SBOM requirements, and in automotive, UNECE R155 and R156 require cyber risk management across the vehicle supply chain. Cytidel is ISO 27001:2022 certified, NIS2 Ready and DORA Ready, and was named European CISO Startup of the Year 2026.</p>
+  </div>
+</section>
+
+<!-- ===================== 06 START THE CONVERSATION =============== -->
+<section class="page">
+  <p class="eyebrow">06 · Start the conversation</p>
+  <h2>Five questions every board should be asking</h2>
+  <ol class="questions">
+    <li>How many suppliers do we have, and how many are continuously monitored today? <span>If the answer is a few dozen, the long tail is your blind spot.</span></li>
+    <li>If one of our long-tail suppliers were breached tonight, how long until we knew? <span>If the answer depends on them telling us, it is not a control.</span></li>
+    <li>Do we know what software our suppliers provide us, and is any of it exposed right now?</li>
+    <li>Which threat actors are targeting our sector, and which supplier technologies are they exploiting?</li>
+    <li>Could we evidence our supplier risk decisions to a regulator tomorrow?</li>
+  </ol>
+
+  <h3>Conclusion</h3>
+  <p>Supply chain breaches have nearly doubled their share of all breaches in a year, supplier data is fragmented, disclosure is unreliable, and the software your suppliers provide is a vast and largely unmonitored attack surface. AI has permanently changed the economics of vulnerability on top of that. Organisations that keep managing supply chain risk through annual assessments and capped watchlists will keep learning about supplier breaches from the supplier, or from the attacker.</p>
+  <p>The alternative is continuous, autonomous exposure intelligence across the entire supply chain: <strong>your suppliers and their software monitored together</strong>, early warning before the CVE, context on who is exploiting what, and a single, actionable alert for the person who needs to act. That is what Cytidel Breach Monitoring delivers.</p>
+
+  <div class="cta">
+    <p class="eyebrow">See your long tail</p>
+    <p class="cta-title">Don’t let the long tail be your blind spot.</p>
+    <p>Ask us for a Supplier Exposure Assessment: share your supplier list and we will show you what Breach Monitoring sees across your long tail, including AI and pre-CVE exposures and the threat actors behind them.</p>
+    <a class="cta-link" href="https://cytidel.com/cytidel-platform/#supplier-software-monitoring">cytidel.com/cytidel-platform →</a>
+  </div>
+</section>
+
+<!-- ====================== BACK COVER + SOURCES ==================== -->
+<section class="page back">
+  <p class="eyebrow">Sources &amp; notes</p>
+  <ul class="sources">
+    <li>Third-party involvement, exploitation as initial access, KEV remediation times and threat actor AI use: Verizon 2026 Data Breach Investigations Report, Executive Summary.</li>
+    <li>CVE volumes: Jerry Gamblin, 2024 and 2025 CVE Data Reviews. AI-related CVEs, MCP and AI supply chain severity: Trend Micro, State of AI Security Report (2024 AI CVE figure derived from the reported 34.6% growth).</li>
+    <li>2026 disclosure and exploitation trends: Google threat intelligence analysis, reported by SecurityWeek, 30 September 2026.</li>
+    <li>DORA register of information: European Banking Authority. CRA reporting obligations: European Commission; SBOM requirement per CRA Annex I.</li>
+    <li>Cytidel benchmarks (79 days ahead of CISA KEV, 99%+ noise reduction, ~49k to &lt;300 CVEs, up to 80% patch workload reduction, 34 of 113): Cytidel product benchmarks and comparable enterprise deployments. 30% threat-actor-linked Low/Medium CVSS: cytidel.com. Case study anonymised.</li>
+  </ul>
+  <div class="back-block">
+    <img src="assets/logo_dark_backgrounds.svg" alt="Cytidel" class="back-logo">
+    <p>The early warning layer for vulnerabilities, threat actors and supplier risk.</p>
+    <p class="back-url"><a href="https://cytidel.com">cytidel.com</a></p>
+  </div>
+</section>
+
+<script>
+  // Figure 1: oversight per supplier, h(x) = 300 · 14 / (x − 46), drawn from
+  // the y-axis to the right edge. The strategic tier is the first ~50 units.
+  (() => {
+    const base = 340, x0 = 62, x1 = 985, tierEnd = 112;
+    const h = (x) => Math.min(318, 300 * 14 / (x - 46));
+    const pts = [];
+    for (let x = x0; x <= x1; x += x < 140 ? 1 : 6) pts.push([x, base - h(x)]);
+    const line = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+    document.getElementById('tail-curve').setAttribute('d', line);
+    document.getElementById('tail-area').setAttribute('d', `${line} L${x1},${base} L${x0},${base} Z`);
+    const tier = pts.filter(([x]) => x <= tierEnd);
+    document.getElementById('tier-area').setAttribute('d', tier.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ') + ` L${tierEnd},${base} L${x0},${base} Z`);
+  })();
+  // Running header, footer and page numbers on every page except the front and back covers.
+  document.querySelectorAll('.page:not(.cover):not(.back)').forEach((p, i) => {
+    p.insertAdjacentHTML('afterbegin', `<header class="run-head"><img src="assets/logo_light_backgrounds.svg" alt=""><span>Don’t Let the Long Tail Be Your Blind Spot</span></header>`);
+    p.insertAdjacentHTML('beforeend', `<footer class="run-foot"><span>cytidel.com · Executive Summary · November 2026</span><span>${i + 2}</span></footer>`);
+  });
+</script>
+</body>
+</html>

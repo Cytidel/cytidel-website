@@ -1,0 +1,12 @@
+{
+  "name": "cytidel-paper-long-tail-blind-spot",
+  "private": true,
+  "description": "Executive summary 'Don't Let the Long Tail Be Your Blind Spot', laid out as HTML and printed to PDF",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.61.1"
+  }
+}
